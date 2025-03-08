@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import logo from "../../components/../assets/images/web-logo.svg";
+import logo from "../../components/../assets/images/web-logo.png";
 
 import "./navbar.css";
 
@@ -85,12 +85,17 @@ const Navbar = () => {
   }, [openDropdown]);
 
   return (
-    
-    <div className="nav-container">
 
+    <div className="nav-container">
       <nav className="navbar">
-        <div className="navbar-logo">
-          <img src={logo} alt="Logo" className="logo" />
+        <div className="logo-container">
+          <div className="logo">
+            <div className="text-container">
+              <div className="site front-face">SITE</div>
+              <div className="dot front-face">.</div>
+              <div className="xp front-face">XP</div>
+            </div>
+          </div>
         </div>
 
         <ul className="navbar-menu">
@@ -387,7 +392,7 @@ const Navbar = () => {
         </ul>
       </nav>
 
-      <div class="navbar-search-area">
+      <div className="navbar-search-area">
         <div className="search-bar">
           <div
             className={`https-dropdown dropdown ${
@@ -510,7 +515,12 @@ const Navbar = () => {
           >
             {/* <span>Dashboard</span> */}
 
-            <svg className="input-dropdown-icon" height="14px" width="14px" viewBox="0 0 14 14">
+            <svg
+              className="input-dropdown-icon"
+              height="14px"
+              width="14px"
+              viewBox="0 0 14 14"
+            >
               <path
                 className="css-kqzqgg"
                 d="M11.83 3C11.42 1.83 10.31 1 9 1C7.69 1 6.58 1.83 6.17 3H0V5H6.17C6.58 6.17 7.69 7 9 7C10.31 7 11.42 6.17 11.83 5H14V3H11.83ZM9 5C8.45 5 8 4.55 8 4C8 3.45 8.45 3 9 3C9.55 3 10 3.45 10 4C10 4.55 9.55 5 9 5ZM5 7C3.69 7 2.58 7.83 2.17 9H0V11H2.17C2.58 12.17 3.69 13 5 13C6.31 13 7.42 12.17 7.83 11H14V9H7.83C7.42 7.83 6.31 7 5 7ZM5 11C4.45 11 4 10.55 4 10C4 9.45 4.45 9 5 9C5.55 9 6 9.45 6 10C6 10.55 5.55 11 5 11Z"
@@ -589,12 +599,10 @@ const Navbar = () => {
           </svg>
           <span>How to use</span>
         </div>
-        
       </div>
-
     </div>
 
-  );
+);
 
 };
 

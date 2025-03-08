@@ -6,7 +6,12 @@
     flex-wrap: wrap;
     font-family: Arial, sans-serif;
     width: 100%;
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 85%, #f0f5ff 100%);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 4px 8px rgba(18, 25, 97, 0.03),
+        0 8px 16px rgba(18, 25, 97, 0.04),
+        0 16px 24px rgba(18, 25, 97, 0.03);
     margin-top: 15px;
 }
 
@@ -76,7 +81,7 @@
 }
 
 .purple-chart .value-circle {
-    stroke: #7867cf;
+    stroke: yellow;
 }
 
 .green-chart .bg-circle {
@@ -84,7 +89,7 @@
 }
 
 .green-chart .value-circle {
-    stroke: #a9d068;
+    stroke: red;
 }
 
 .metric-text-container {
@@ -128,7 +133,7 @@
 }
 
 .blue-text {
-    color: #3573e5;
+    color: green;
 }
 
 .ar-container {
@@ -184,6 +189,5 @@
         transform: translateY(-45px);
     }
 }
-
 
 /* Backlink Profile Dashboard Ends */

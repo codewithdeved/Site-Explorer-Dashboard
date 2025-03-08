@@ -17,7 +17,13 @@
 }
 
 #generalbacklinkorganic-buttons button.active {
-    background-color: #dbdfe3;
+    background-color: #ffffff;
+    color: #000000;
+        box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 4px 8px rgba(18, 25, 97, 0.03),
+    0 8px 16px rgba(18, 25, 97, 0.04),
+    0 16px 24px rgba(18, 25, 97, 0.03);
 }
 
 @media (max-width: 768px) {

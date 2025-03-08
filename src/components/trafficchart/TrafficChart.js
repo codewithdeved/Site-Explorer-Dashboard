@@ -124,6 +124,7 @@ const TrafficChart = () => {
   };
 
   return (
+
     <div id="dashboard-container">
       <div id="trafficchart-container">
         <div className="chart-header">
@@ -244,17 +245,16 @@ const TrafficChart = () => {
             <span>0</span>
           </div>
 
-          {/* <div className="graph"> */}
           <svg viewBox="0 0 800 400" className="line-chart">
             <path
               d={`M ${generatePathData()}`}
               fill="none"
-              stroke="#FF8C00"
+              stroke="#0AB05B"
               strokeWidth="2"
             />
             <path
               d={`M ${generatePathData()} L 700,400 L 0,400`}
-              fill="rgba(255, 140, 0, 0.2)"
+              fill="rgba(10, 176, 91, 0.2)"
             />
           </svg>
 
@@ -271,14 +271,15 @@ const TrafficChart = () => {
             ].map((date, index) => (
               <span key={date}>{date}</span>
             ))}
-            {/* </div> */}
           </div>
         </div>
       </div>
 
       <TrafficAndDomainsDashboard />
     </div>
-  );
+
+);
+
 };
 
 export default TrafficChart;

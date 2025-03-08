@@ -12,7 +12,12 @@
 
 .traffic-section,
 .referring-domains-section {
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 85%, #f0f5ff 100%);
+    box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 4px 8px rgba(18, 25, 97, 0.03),
+    0 8px 16px rgba(18, 25, 97, 0.04),
+    0 16px 24px rgba(18, 25, 97, 0.03);
     padding: 20px;
 }
 
@@ -42,13 +47,14 @@
 
 .organic-tag,
 .paid-tag {
-    background-color: #f9d5a5;
-    border: 1px solid #f9d5a5;
-    color: #000;
+    background-color: #1A237E;
+    border: 1px solid #1A237E;
+    color: #ffffff;
     font-weight: normal;
 }
 
 .paid-tag {
+    color: #000000;
     background-color: transparent;
     border: 1px solid #e0e0e0;
 }
@@ -83,7 +89,7 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: #ffe8cc;
+    background-color: rgba(10, 176, 91, 0.2);
     z-index: -1;
 }
 
@@ -121,7 +127,7 @@
 
 .traffic-table td:nth-child(4),
 .referring-domains-table tr:nth-child(1) td:nth-child(2) {
-    color: #3573e5;
+    color: red; 
 }
 
 .referring-domains-table td small {

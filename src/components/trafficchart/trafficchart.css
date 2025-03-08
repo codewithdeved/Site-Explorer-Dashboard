@@ -8,9 +8,15 @@
 #trafficchart-container {
     width: 100%;
     max-width: 850px;
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 85%, #f0f5ff 100%);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 4px 8px rgba(18, 25, 97, 0.03),
+        0 8px 16px rgba(18, 25, 97, 0.04),
+        0 16px 24px rgba(18, 25, 97, 0.03);
     margin-top: 15px;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 .chart-header {
@@ -42,8 +48,9 @@
 }
 
 .chart-header .active {
-    border: 1px solid #f9d5a5;
-    background-color: #f9d5a5;
+    color: #ffffff;
+    border: 1px solid #1A237E;
+    background-color: #1A237E;
 }
 
 .performance-title {
@@ -81,7 +88,7 @@
 }
 
 .chart-options input[type="checkbox"]:checked {
-    background-color: #FF8800;
+    background-color: rgba(43, 136, 216, 0.8);
     border: 0;
 }
 
@@ -106,7 +113,7 @@
     position: absolute;
     top: -10px;
     right: 10px;
-    color: #FF8800;
+    color: red;
     font-size: 1em;
     font-weight: normal;
 }
@@ -121,7 +128,7 @@
     justify-content: space-between;
     text-align: right;
     font-size: 1em;
-    color: #FF8800;
+    color: red;
 }
 
 .line-chart {
