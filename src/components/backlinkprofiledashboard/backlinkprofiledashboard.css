@@ -1,0 +1,189 @@
+/* Backlink Profile Dashboard Starts */
+
+#backlinkprofile-dashboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 15px;
+}
+
+.section {
+    position: relative;
+    padding: 20px;
+}
+
+.organic-section::before,
+.paid-section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 80%;
+    background-color: #f2f2f2;
+}
+
+.backlink-section-metric-text::before {
+    left: -15px;
+}
+
+.section-title {
+    color: #555;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 0 20px 0;
+}
+
+.metrics-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.backlink-section-metric-text {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+.metric-chart-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.donut-chart {
+    width: 55px;
+    height: 55px;
+    margin-right: 10px;
+}
+
+.bg-circle {
+    stroke-width: 4;
+}
+
+.value-circle {
+    stroke-width: 4;
+}
+
+.purple-chart .bg-circle {
+    stroke: #e9e5f9;
+}
+
+.purple-chart .value-circle {
+    stroke: #7867cf;
+}
+
+.green-chart .bg-circle {
+    stroke: #ebf4dc;
+}
+
+.green-chart .value-circle {
+    stroke: #a9d068;
+}
+
+.metric-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.metric-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-label {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 2px;
+    text-wrap: nowrap !important;
+}
+
+.metric-label sup {
+    font-size: 10px;
+    color: #999;
+    margin-left: 1px;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.metric-subtext {
+    font-size: 13px;
+    color: #777;
+    font-weight: bold;
+    text-wrap: nowrap !important;
+}
+
+.blue-text {
+    color: #3573e5;
+}
+
+.ar-container {
+    margin-top: -15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+@media (max-width: 525px) {
+    .metrics-row {
+        gap: 5px;
+    }
+
+    .backlink-section-metric-text {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 475px) {
+
+    .metrics-row,
+    .backlink-section-metric-text {
+        gap: 0;
+    }
+
+    .section {
+        padding-left: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+    .section {
+        padding-top: 10px;
+    }
+
+    .backlink-section-metric-text {
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .ar-container {
+        transform: translateY(-90px);
+    }
+}
+
+@media (max-width: 340px) {
+    .metric-chart-container {
+        flex-direction: column;
+    }
+
+    .ar-container {
+        transform: translateY(-45px);
+    }
+}
+
+
+/* Backlink Profile Dashboard Ends */

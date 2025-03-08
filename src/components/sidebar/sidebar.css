@@ -1,0 +1,148 @@
+/* Sidebar Starts */
+
+.sidebar-container {
+    position: fixed;
+    top: 90px;
+    width: 250px;
+    height: calc(100% - 90px);
+    text-wrap: nowrap;
+    overflow-y: auto;
+    /* background-color: #ffffff; */
+    transition: width 0.3s ease;
+}
+
+.sidebar-container.close {
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.sidebar-container::-webkit-scrollbar {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-container:hover::-webkit-scrollbar {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-container:hover::-webkit-scrollbar-thumb {
+    background-color: #e8e8e8;
+}
+
+.sidebar-container:hover::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar {
+    padding: 15px 0;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* margin-top: 5px; */
+}
+
+.nav-item {
+    padding: 5px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: #ebebeb;
+}
+
+.overview {
+    background-color: #ebebeb;
+}
+
+.overview svg {
+    display: none;
+}
+
+.section-header {
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.section-header:hover {
+    background-color: #ebebeb;
+}
+
+.toggle-icon {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.sub-menu {
+    list-style: none;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.sub-menu.expanded {
+    max-height: 500px;
+}
+
+.sub-item {
+    padding: 5px 20px;
+    cursor: pointer;
+    color: #555;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.sub-item:hover {
+    background-color: #ebebeb;
+}
+
+.badge {
+    background-color: #ff8800;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .sidebar-container {
+        width: 0;
+        background-color: #ffffff;
+        transform: translateX(-100%);
+        z-index: 10;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-container.close {
+        width: 250px;
+        transform: translateX(0);
+    }
+
+    .overview svg {
+        display: block;
+        position: relative;
+        z-index: 11;
+    }
+}
+
+/* Sidebar Ends */

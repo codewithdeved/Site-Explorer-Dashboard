@@ -1,0 +1,183 @@
+.traffic-dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.main-container.move .traffic-dashboard {
+    max-width: 700px;
+}
+
+.traffic-section,
+.referring-domains-section {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.referring-domains-section {
+    margin-top: 10px;
+}
+
+.traffic-section-header {
+    display: flex;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.traffic-summary {
+    display: flex;
+    align-items: center;
+}
+
+.organic-tag,
+.paid-tag {
+    padding: 3px 8px;
+    font-size: 0.8em;
+}
+
+.organic-tag,
+.paid-tag {
+    background-color: #f9d5a5;
+    border: 1px solid #f9d5a5;
+    color: #000;
+    font-weight: normal;
+}
+
+.paid-tag {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+}
+
+.traffic-table,
+.referring-domains-table {
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+.traffic-table th,
+.traffic-table td,
+.referring-domains-table td {
+    position: relative;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1;
+}
+
+.traffic-table td {
+    padding-left: 20px !important;
+}
+
+.main-container.move .traffic-table td {
+    text-align: center;
+}
+
+.traffic-table td:nth-child(1):after,
+.referring-domains-table td::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ffe8cc;
+    z-index: -1;
+}
+
+.traffic-table tr:nth-child(1) td:nth-child(1):after {
+    width: 100%;
+}
+
+.traffic-table tr:nth-child(2) td:nth-child(1):after {
+    width: 75%;
+}
+
+.traffic-table tr:nth-child(3) td:nth-child(1):after {
+    width: 50%;
+}
+
+.traffic-table tr:nth-child(4) td:nth-child(1):after {
+    width: 40%;
+}
+
+.traffic-table tr:nth-child(5) td:nth-child(1):after {
+    width: 25%;
+}
+
+.referring-domains-table td::after {
+    background-color: #e8f2fe;
+}
+
+.referring-domains-table tr:nth-child(1) td:nth-child(1)::after {
+    width: 110%;
+}
+
+.referring-domains-table tr:nth-child(2) td:nth-child(1)::after {
+    width: 35%;
+}
+
+.traffic-table td:nth-child(4),
+.referring-domains-table tr:nth-child(1) td:nth-child(2) {
+    color: #3573e5;
+}
+
+.referring-domains-table td small {
+    color: #adadad;
+}
+
+.traffic-table th,
+.referring-domains-table th,
+.traffic-table td,
+.referring-domains-table td {
+    padding: 8px;
+}
+
+.traffic-table th,
+.referring-domains-table th {
+    font-weight: bold;
+}
+
+.table-footer {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 5px;
+    cursor: pointer;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 10px;
+    color: #acacac;
+}
+
+.navigation-buttons span:nth-child(2) {
+    color: #000000;
+}
+
+.compare-option {
+    color: #000000;
+}
+
+.referring-domains-section th:first-child,
+.referring-domains-section td:first-child {
+    text-align: left;
+}
+
+@media (max-width: 1309px) {
+    .traffic-section,
+    .referring-domains-section {
+        width: 100%;
+    }
+    .traffic-dashboard {
+        max-width: 100%;
+    }
+    .traffic-table td {
+        padding-left: 0 !important;
+        text-align: center;
+    }
+}
