@@ -19,7 +19,6 @@ input {
     position: fixed;
     top: 0;
     left: 0;
-    /* background-color: #1E2A3B; */
     background: #141821;
     background-image:
         linear-gradient(180deg, #141821 0%, #1D2331 100%),
@@ -164,8 +163,20 @@ input {
 .more-dropdown .dropdown-menu,
 .dashboard-dropdown .dropdown-menu,
 .https-dropdown .dropdown-menu {
-    width: 15.625rem;
+    width: 15.625rem !important;
 }
+
+/* .user-dropdown .dropdown-menu {
+    width: 13.5rem !important;
+}
+
+.subdomains-dropdown .dropdown-menu {
+    width: 12rem !important;
+}
+
+.input-dropdown .dropdown-menu {
+    width: 17rem !important;
+} */
 
 .https-dropdown .dropdown-menu,
 .subdomains-dropdown .dropdown-menu {
@@ -307,7 +318,7 @@ input {
 }
 
 .dashboard-academy-icon {
-    margin-left: 9.9rem;
+    margin-left: 9.85rem;
 }
 
 .upgrade {
@@ -433,6 +444,8 @@ input {
 
     .questionmark-icon {
         display: block;
+        margin-top: 3px !important;
+        margin-left: 2px !important;
     }
 
     .search-bar {

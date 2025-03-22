@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import logo from "../../components/../assets/images/web-logo.png";
-
 import "./navbar.css";
 
 const Navbar = () => {
@@ -87,6 +85,7 @@ const Navbar = () => {
   return (
 
     <div className="nav-container">
+      
       <nav className="navbar">
         <div className="logo-container">
           <div className="logo">
@@ -99,6 +98,7 @@ const Navbar = () => {
         </div>
 
         <ul className="navbar-menu">
+          
           <div
             className={`dashboard-dropdown dropdown ${
               openDropdown === "dashboard" ? "active" : ""
@@ -393,7 +393,9 @@ const Navbar = () => {
       </nav>
 
       <div className="navbar-search-area">
+        
         <div className="search-bar">
+          
           <div
             className={`https-dropdown dropdown ${
               openDropdown === "https" ? "active" : ""
@@ -513,7 +515,6 @@ const Navbar = () => {
             onClick={() => toggleDropdown("input")}
             ref={inputDropdownRef}
           >
-            {/* <span>Dashboard</span> */}
 
             <svg
               className="input-dropdown-icon"
@@ -587,6 +588,7 @@ const Navbar = () => {
               />
             </svg>
           </span>
+
         </div>
 
         <div className="how-to-use">
@@ -600,6 +602,7 @@ const Navbar = () => {
           <span>How to use</span>
         </div>
       </div>
+
     </div>
 
 );

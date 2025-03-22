@@ -273,9 +273,11 @@ const TrafficChart = () => {
             ))}
           </div>
         </div>
+
       </div>
 
       <TrafficAndDomainsDashboard />
+      
     </div>
 
 );

@@ -19,8 +19,13 @@
 #main {
     display: flex;
     align-items: center;
-    gap: 1rem;
     width: 100%;
+}
+
+.main-head-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .sidebar-toggle-icon svg {
@@ -32,7 +37,7 @@
 }
 
 .sidebar-toggle-icon svg:hover {
-    fill: #ff8800;
+    fill: #1A237E;
 }
 
 #main h2 span {
@@ -72,7 +77,7 @@
 
 @media (max-width: 1215px) {
     #main .how-to-use {
-        top: 9px !important;
+        top: 8px !important;
     }
 
     #main .how-to-use .api {
@@ -134,32 +139,29 @@
 
 @media (max-width: 768px) {
     .main-container {
-        left: 15px !important;
-        width: calc(100% - 15px) !important;
+        left: 10px !important;
+        width: calc(100% - 10px) !important;
         transition: none !important;
     }
 }
 
 @media (max-width: 680px) {
 
-    #main .how-to-use svg {
-        margin-top: 4px;
-    }
-
-    #main .how-to-use .how-to-use-text {
-        display: none;
+    #main .how-to-use {
+        top: 8px !important;
     }
 
 }
 
 @media (max-width: 460px) {
-    h2 {
-        font-size: 0;
-    }
-
     h2 span {
-        font-size: 24px;
-        display: inline-block;
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    #main .how-to-use {
+        display: none;
     }
 }
 

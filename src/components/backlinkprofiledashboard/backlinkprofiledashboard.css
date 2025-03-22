@@ -76,20 +76,50 @@
     stroke-width: 4;
 }
 
-.purple-chart .bg-circle {
+.red-chart .bg-circle {
     stroke: #e9e5f9;
 }
 
-.purple-chart .value-circle {
+.red-chart .value-circle {
     stroke: yellow;
 }
 
-.green-chart .bg-circle {
+.yellow-chart .bg-circle {
     stroke: #ebf4dc;
 }
 
-.green-chart .value-circle {
+.yellow-chart .value-circle {
     stroke: red;
+}
+
+.yellow-chart .value-circle {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: fillEmpty 3s ease-in-out infinite;
+}
+
+.red-chart .value-circle {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transform: rotate(90deg) scale(-1, 1);
+    transform-origin: center;
+    animation: fillEmpty 3s ease-in-out infinite;
+}
+
+@keyframes fillEmpty {
+    0% {
+        stroke-dashoffset: 100;
+    }
+
+    50% {
+        stroke-dashoffset: 0;
+    }
+
+    100% {
+        stroke-dashoffset: 100;
+    }
 }
 
 .metric-text-container {

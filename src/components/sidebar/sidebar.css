@@ -4,7 +4,7 @@
     position: fixed;
     top: 90px;
     width: 250px;
-    height: calc(100% - 90px);
+    height: calc(100vh - 90px);
     text-wrap: nowrap;
     overflow-y: auto;
     transition: width 0.3s ease;
@@ -57,16 +57,19 @@
     transition: background-color 0.2s ease;
 }
 
-.nav-item:hover {
-    background-color: #ebebeb;
-}
-
-.overview {
-    background-color: #ebebeb;
+.overview-active,
+.item-active {
+    color: #ffffff !important;
+    border: 1px solid #1A237E;
+    background-color: #1A237E;
 }
 
 .overview svg {
+    fill: black;
     display: none;
+}
+.overview-active svg {
+    fill: white !important;
 }
 
 .section-header {
@@ -79,10 +82,6 @@
     font-size: 16px;
     font-weight: 600;
     transition: background-color 0.2s ease;
-}
-
-.section-header:hover {
-    background-color: #ebebeb;
 }
 
 .toggle-icon {
@@ -110,7 +109,7 @@
     transition: background-color 0.2s ease;
 }
 
-.sub-item:hover {
+.sub-item:hover:not(.overview-active, .item-active) {
     background-color: #ebebeb;
 }
 
@@ -133,6 +132,7 @@
 @media (max-width: 768px) {
     .sidebar-container {
         width: 0;
+        height: calc(100vh - 90px);
         background-color: #ffffff;
         transform: translateX(-100%);
         z-index: 10;
@@ -142,6 +142,7 @@
     .sidebar-container.close {
         width: 250px;
         transform: translateX(0);
+        transition: all 0.3s ease;
     }
 
     .overview svg {

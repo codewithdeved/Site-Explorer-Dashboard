@@ -1,0 +1,362 @@
+.table-container {
+    margin-top: 15px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 85%, #f0f5ff 100%);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 4px 8px rgba(18, 25, 97, 0.03),
+        0 8px 16px rgba(18, 25, 97, 0.04),
+        0 16px 24px rgba(18, 25, 97, 0.03);
+    width: 100%;
+    max-width: 100%;
+}
+
+.header-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    gap: 10px;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.keyword-count {
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    margin-right: 12px;
+    white-space: nowrap;
+}
+
+.header-button {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 12px;
+    margin: 0 4px;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.calender-btn {
+    border: 0;
+}
+
+.calender-btn .date-container {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+.calender-btn .date-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    /* max-width: 120px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.calender-btn .date-picker {
+    position: absolute;
+    top: 90px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dropdown-icon {
+    margin-left: 6px;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.header-button .dropdown-icon:hover {
+    color: #555;
+}
+
+.calender-btn .dropdown-icon {
+    margin-left: 0;
+}
+
+.filter-icon {
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    width: 100%;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 100%;
+}
+
+.data-table th {
+    text-align: center;
+    background-color: #f8f8f8;
+    padding: 12px;
+    text-align: left;
+    font-size: 15px;
+    color: #555;
+    font-weight: 700;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table td {
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    border-top: 1px solid #e0e0e0;
+}
+
+.data-table td:nth-child(3) span {
+    background-color: #e0e0e0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 50%;
+}
+
+.checkbox-column {
+    width: 40px;
+    text-align: center;
+}
+
+.table-row:hover {
+    background-color: #f5f5f5;
+}
+
+.keyword-cell {
+    display: flex;
+    align-items: center;
+}
+
+.verified-icon,
+.new-icon {
+    color: #909090;
+    margin-right: 8px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.keyword-text {
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+.kd-badge {
+    display: inline-block;
+    text-align: center;
+    padding: 2px 0;
+    width: 32px;
+    font-size: 12px;
+    color: white;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+.kd-badge-green {
+    background-color: #22c55e;
+    transform: translateX(-5px);
+}
+
+.kd-badge-yellow {
+    background-color: #eab308;
+    transform: translateX(-5px);
+}
+
+.kd-badge-orange {
+    background-color: #f97316;
+    transform: translateX(-5px);
+}
+
+.kd-badge-red {
+    background-color: #ef4444;
+    transform: translateX(-5px);
+}
+
+.url-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.url-link {
+    color: #3366ff;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.url-link:hover {
+    text-decoration: underline;
+}
+
+.more-info {
+    color: #888;
+    font-size: 12px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.updated-cell {
+    text-align: left !important;
+    white-space: nowrap;
+    color: #666;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ebebeb;
+    border-radius: 3px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    margin: 0 auto;
+    display: block;
+}
+
+input[type="checkbox"]:checked {
+    background-color: rgba(43, 136, 216, 0.8);
+    border: 0;
+}
+
+input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    color: white;
+    top: 50%;
+    left: 50%;
+    font-size: 0.7em;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+input[type="checkbox"]:focus {
+    outline: 2px solid rgba(43, 136, 216, 0.4);
+    outline-offset: 1px;
+}
+
+.data-table th:nth-child(1),
+.data-table td:nth-child(1) {
+    width: 40px;
+    max-width: 40px;
+}
+
+.data-table th:nth-child(2),
+.data-table td:nth-child(2) {
+    width: 200px;
+    max-width: 200px;
+}
+
+.data-table th:nth-child(3),
+.data-table td:nth-child(3) {
+    width: 45px;
+    max-width: 45px;
+}
+
+.data-table th:nth-child(4),
+.data-table td:nth-child(4) {
+    width: 75px;
+    max-width: 75px;
+}
+
+.data-table th:nth-child(5),
+.data-table td:nth-child(5) {
+    width: 45px;
+    max-width: 45px;
+}
+
+.data-table th:nth-child(6),
+.data-table td:nth-child(6) {
+    width: 65px;
+    max-width: 65px;
+}
+
+.data-table th:nth-child(7),
+.data-table td:nth-child(7) {
+    width: 75px;
+    max-width: 75px;
+}
+
+.data-table th:nth-child(8),
+.data-table td:nth-child(8) {
+    width: 45px;
+    max-width: 45px;
+}
+
+.data-table th:nth-child(9),
+.data-table td:nth-child(9) {
+    width: 100px;
+    max-width: 100px;
+}
+
+.data-table th:nth-child(10),
+.data-table td:nth-child(10) {
+    width: 475px;
+    max-width: 475px;
+}
+
+@media (max-width: 915px) {
+    .header-left,
+    .header-right {
+        width: 100%;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-left,
+    .header-right {
+        justify-content: center;
+    }
+    .header-button,
+    .calender-btn,
+    .date-container,
+    .export-container {
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .header-left,
+    .header-right {
+        flex-direction: column;
+        justify-content: center;
+    }
+}

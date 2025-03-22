@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //CSS File
 import "./backlinkprofiledashboard.css";
@@ -12,8 +12,9 @@ const BacklinkProfileDashboard = () => {
         <h3 className="section-title">Backlink profile</h3>
 
         <div className="metrics-row">
+          
           <div className="metric-chart-container">
-            <svg className="donut-chart purple-chart" viewBox="0 0 36 36">
+            <svg className="donut-chart red-chart" viewBox="0 0 36 36">
               <circle
                 className="bg-circle"
                 cx="18"
@@ -40,7 +41,7 @@ const BacklinkProfileDashboard = () => {
           </div>
 
           <div className="metric-chart-container">
-            <svg className="donut-chart green-chart" viewBox="0 0 36 36">
+            <svg className="donut-chart yellow-chart" viewBox="0 0 36 36">
               <circle
                 className="bg-circle"
                 cx="18"

@@ -5,7 +5,7 @@
     margin-top: 15px;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 #generalbacklinkorganic-buttons button {
@@ -29,6 +29,18 @@
 @media (max-width: 768px) {
     #generalbacklinkorganic-buttons {
         justify-content: center;
+    }
+}
+
+@media (max-width: 376px) {
+    #generalbacklinkorganic-buttons button {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 349px) {
+    #generalbacklinkorganic-buttons button {
+        padding: 0.5rem 0.75rem;
     }
 }
 

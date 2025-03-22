@@ -36,7 +36,6 @@
     cursor: pointer;
 }
 
-
 .right-tabs button {
     border: 0;
     outline: 0;
@@ -139,6 +138,47 @@
     left: 50%;
     transform: translateX(-50%);
     top: 10px;
+}
+
+.line-chart path:first-child {
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation: drawAndRetractLine 5s ease-in-out infinite;
+}
+
+.line-chart path:last-child {
+    opacity: 0;
+    animation: fadeAreaInOut 5s ease-in-out infinite;
+}
+
+@keyframes drawAndRetractLine {
+    0% {
+        stroke-dashoffset: 1500;
+    }
+    45% {
+        stroke-dashoffset: 0;
+    }
+    55% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 1500;
+    }
+}
+
+@keyframes fadeAreaInOut {
+    0% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.8;
+    }
+    55% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .x-axis {
@@ -518,6 +558,75 @@
 
     .y-axis-labels {
         gap: 20px;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .chart-label,
+    .y-axis-labels {
+        right: 10px;
+    }
+
+    .line-chart {
+        max-width: 325px;
+        left: 48%;
+    }
+
+    .chart-label {
+        top: 90px;
+    }
+
+    .x-axis {
+        left: 47%;
+        bottom: 22%;
+        gap: 5px;
+    }
+
+    .y-axis-labels {
+        gap: 18px;
+        font-size: 0.85em;
+    }
+
+}
+
+@media (max-width: 349px) {
+
+    .chart-header {
+        justify-content: center;
+    }
+
+    .left-tabs span,
+    .right-tabs span {
+        padding: 2px 3px;
+        white-space: nowrap;
+    }
+
+    .left-tabs span {
+        padding: 2.5px 3px;
+    }
+
+    .line-chart {
+        max-width: 275px;
+        left: 46%;
+    }
+
+    .chart-label {
+        top: 100px;
+    }
+
+    .x-axis {
+        left: 45%;
+        bottom: 24%;
+    }
+
+    .x-axis span {
+        font-size: 0.7em;
+    }
+
+    .y-axis-labels {
+        gap: 15px;
     }
 
 }
