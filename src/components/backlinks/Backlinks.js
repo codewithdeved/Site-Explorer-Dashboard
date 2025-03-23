@@ -4,7 +4,7 @@ import "./backlinks.css";
 
 const Backlinks = () => {
   
-    const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("all");
   const [showDomainDropdown, setShowDomainDropdown] = useState(false);
   const [showHistoryDropdown, setShowHistoryDropdown] = useState(false);
   const [onePerDomainOption, setOnePerDomainOption] = useState(
@@ -256,7 +256,7 @@ const Backlinks = () => {
                 onClick={() => setShowHistoryDropdown(!showHistoryDropdown)}
               >
                 <span className="calendar-icon">📅</span>
-                Show history: {historyOption} ▼
+                Show history: {historyOption} <span style={{color: "#666"}} className="backlinks-dropdown-icon">▼</span>
               </button>
 
               {showHistoryDropdown && (
@@ -282,15 +282,15 @@ const Backlinks = () => {
 
           <div className="backlinks-action-buttons">
             
-            <button className="api-button">
+            <button className="backlinks-api-button">
               <span className="icon">{'{}'}</span>
               API
             </button>
 
-            <div className="export-container" ref={exportDropdownRef}>
+            <div className="backlinks-export-container" ref={exportDropdownRef}>
               
               <button
-                className="export-button"
+                className="backlinks-export-button"
                 onClick={() => setShowExportOptions(!showExportOptions)}
               >
                 <svg

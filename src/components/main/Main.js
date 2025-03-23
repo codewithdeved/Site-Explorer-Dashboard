@@ -16,7 +16,7 @@ import SeoXpress from "../seoxpress/SeoXpress";
 import ReferringIPs from "../referringips/ReferringIPs";
 
 const Main = ({
-  
+ 
   isSidebarClose,
   handleSidebarClose,
   isOverviewButtonClick,
@@ -26,19 +26,25 @@ const Main = ({
   isReferringDomainsButtonClick,
   isCalendarButtonClick,
   isSeoXpressButtonClick,
-  isReferringIPsButtonClick
+  isReferringIPsButtonClick,
 
 }) => {
   
-  return (
+    return (
     
     <div className={!isSidebarClose ? "main-container" : "main-container move"}>
       
       <div id="main">
         
         <div className="main-head-content">
+          
           <div onClick={handleSidebarClose} className="sidebar-toggle-icon">
-            <svg className="css-0" height="14px" width="14px" viewBox="0 0 14 14">
+            <svg
+              className="css-0"
+              height="14px"
+              width="14px"
+              viewBox="0 0 14 14"
+            >
               <path
                 className="css-kqzqgg"
                 d="M0 1H14V3H0V1ZM0 6H14V8H0V6ZM0 11H14V13H0V11Z"
@@ -48,33 +54,31 @@ const Main = ({
           </div>
 
           <h2>
-            {
-              isReferringIPsButtonClick && !isOverviewButtonClick ? (
-                  "Referring IPs"
-              ) : isSeoXpressButtonClick && !isOverviewButtonClick ? (
-                  "SEO XPress"
-              ) : isCalendarButtonClick && !isOverviewButtonClick ? (
-                "Calendar"
-              ) : isBacklinksButtonClick && !isOverviewButtonClick ? (
-                "Backlinks"
-              ) : isReferringDomainsButtonClick && !isOverviewButtonClick ? (
-                "Referring Domains"
-              ) : isOrganicKeywordsButtonClick && !isOverviewButtonClick ? (
+            {isReferringIPsButtonClick && !isOverviewButtonClick ? (
+              "Referring IPs"
+            ) : isSeoXpressButtonClick && !isOverviewButtonClick ? (
+              "SEO XPress"
+            ) : isCalendarButtonClick && !isOverviewButtonClick ? (
+              "Calendar"
+            ) : isBacklinksButtonClick && !isOverviewButtonClick ? (
+              "Backlinks"
+            ) : isReferringDomainsButtonClick && !isOverviewButtonClick ? (
+              "Referring Domains"
+            ) : isOrganicKeywordsButtonClick && !isOverviewButtonClick ? (
               "Organic keywords"
-              ) : isTopPagesButtonClick && !isOverviewButtonClick ? (
+            ) : isTopPagesButtonClick && !isOverviewButtonClick ? (
               "Top pages"
-              ) : (
-                <>
-                  Overview: <span>ahrefs.com/</span>{" "}
-                  <small>
-                    Ahrefs - SEO Tools & Resources To Grow Your Search Traffic
-                  </small>
-                </>
-              )}
+            ) : (
+              <>
+                Overview: <span>ahrefs.com/</span>{" "}
+                <small>
+                  Ahrefs - SEO Tools & Resources To Grow Your Search Traffic
+                </small>
+              </>
+            )}
           </h2>
 
           <div className="how-to-use">
-            
             <svg height="14px" width="14px" viewBox="0 0 14 14">
               <path
                 className="css-kqzqgg"
@@ -82,20 +86,19 @@ const Main = ({
                 fillRule="evenodd"
               />
             </svg>
-            
+
             <span className="how-to-use-text">How to use</span>
 
             <div className="api">
               <span>{"{}"}</span> API
             </div>
-          
           </div>
+
         </div>
       
       </div>
 
-      {
-      isReferringIPsButtonClick ? (
+      {isReferringIPsButtonClick ? (
         <ReferringIPs />
       ) : isSeoXpressButtonClick ? (
         <SeoXpress />

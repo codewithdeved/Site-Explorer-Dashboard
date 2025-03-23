@@ -1,26 +1,27 @@
 import { useState, useEffect, useRef } from "react";
 
 export const useSidebarFunctions = () => {
+  
   const [isSidebarClose, setIsSidebarClose] = useState(false);
   const sidebarRef = useRef(null);
-  
+
   const handleSidebarClose = () => {
     setIsSidebarClose((prevState) => !prevState);
   };
-  
+
   const handleClickOutside = (event) => {
     if (
       window.innerWidth <= 768 &&
-      sidebarRef.current && 
+      sidebarRef.current &&
       !sidebarRef.current.contains(event.target)
     ) {
       setIsSidebarClose(false);
     }
   };
-  
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -103,8 +104,7 @@ export const useSidebarFunctions = () => {
     }
   };
 
-  const [isBacklinksButtonClick, setIsBacklinksButtonClick] =
-  useState(false);
+  const [isBacklinksButtonClick, setIsBacklinksButtonClick] = useState(false);
 
   const handleBacklinksButtonClick = () => {
     setIsBacklinksButtonClick(true);
@@ -122,7 +122,7 @@ export const useSidebarFunctions = () => {
   };
 
   const [isReferringDomainsButtonClick, setIsReferringDomainsButtonClick] =
-  useState(false);
+    useState(false);
 
   const handleReferringDomainsButtonClick = () => {
     setIsReferringDomainsButtonClick(true);
@@ -139,8 +139,7 @@ export const useSidebarFunctions = () => {
     }
   };
 
-  const [isCalendarButtonClick, setIsCalendarButtonClick] =
-  useState(false);
+  const [isCalendarButtonClick, setIsCalendarButtonClick] = useState(false);
 
   const handleCalendarButtonClick = () => {
     setIsCalendarButtonClick(true);
@@ -157,8 +156,7 @@ export const useSidebarFunctions = () => {
     }
   };
 
-  const [isSeoXpressButtonClick, setIsSeoXpressButtonClick] =
-  useState(false);
+  const [isSeoXpressButtonClick, setIsSeoXpressButtonClick] = useState(false);
 
   const handleSeoXpressButtonClick = () => {
     setIsSeoXpressButtonClick(true);
@@ -176,7 +174,7 @@ export const useSidebarFunctions = () => {
   };
 
   const [isReferringIPsButtonClick, setIsReferringIPsButtonClick] =
-  useState(false);
+    useState(false);
 
   const handleReferringIPsButtonClick = () => {
     setIsReferringIPsButtonClick(true);
@@ -216,8 +214,9 @@ export const useSidebarFunctions = () => {
     isSeoXpressButtonClick,
     handleSeoXpressButtonClick,
     isReferringIPsButtonClick,
-    handleReferringIPsButtonClick
+    handleReferringIPsButtonClick,
   };
+
 };
 
 export default useSidebarFunctions;

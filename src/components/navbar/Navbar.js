@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./navbar.css";
 
 const Navbar = () => {
-  const [openDropdown, setOpenDropdown] = useState(null);
+  
+    const [openDropdown, setOpenDropdown] = useState(null);
 
   const moreDropdownRef = useRef(null);
   const creditsDropdownRef = useRef(null);
@@ -83,7 +84,7 @@ const Navbar = () => {
   }, [openDropdown]);
 
   return (
-
+    
     <div className="nav-container">
       
       <nav className="navbar">
@@ -98,7 +99,6 @@ const Navbar = () => {
         </div>
 
         <ul className="navbar-menu">
-          
           <div
             className={`dashboard-dropdown dropdown ${
               openDropdown === "dashboard" ? "active" : ""
@@ -391,11 +391,9 @@ const Navbar = () => {
           </div>
         </ul>
       </nav>
-
+      
       <div className="navbar-search-area">
-        
         <div className="search-bar">
-          
           <div
             className={`https-dropdown dropdown ${
               openDropdown === "https" ? "active" : ""
@@ -515,7 +513,6 @@ const Navbar = () => {
             onClick={() => toggleDropdown("input")}
             ref={inputDropdownRef}
           >
-
             <svg
               className="input-dropdown-icon"
               height="14px"
@@ -588,7 +585,6 @@ const Navbar = () => {
               />
             </svg>
           </span>
-
         </div>
 
         <div className="how-to-use">
@@ -602,9 +598,9 @@ const Navbar = () => {
           <span>How to use</span>
         </div>
       </div>
-
+    
     </div>
-
+  
 );
 
 };

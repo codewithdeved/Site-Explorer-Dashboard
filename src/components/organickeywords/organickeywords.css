@@ -86,6 +86,14 @@
     pointer-events: none;
 }
 
+.organic-keywords-export-container {
+    position: relative;
+}
+
+.organic-keywords-dropdown-menu {
+    left: -85px !important;
+}
+
 .dropdown-icon {
     margin-left: 6px;
     font-size: 10px;
@@ -342,21 +350,21 @@ input[type="checkbox"]:focus {
     .header-left,
     .header-right {
         justify-content: center;
+        gap: 6px !important;
     }
+
+}
+
+@media (max-width: 330px) {
     .header-button,
     .calender-btn,
     .date-container,
-    .export-container {
+    .organic-keywords-export-container {
         margin: 0;
         width: 100%;
         justify-content: center;
     }
-}
-
-@media (max-width: 500px) {
-    .header-left,
-    .header-right {
-        flex-direction: column;
-        justify-content: center;
+    .organic-keywords-dropdown-menu {
+        margin-left: auto;
     }
 }

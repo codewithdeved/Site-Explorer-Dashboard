@@ -102,6 +102,7 @@
 }
 
 .calendar-icon {
+    margin-top: -2px;
     margin-right: 4px;
     color: #666;
     font-size: 12px;
@@ -114,8 +115,8 @@
     justify-content: flex-end;
 }
 
-.backlinks-action-buttons .api-button,
-.backlinks-action-buttons .export-container .export-button {
+.backlinks-action-buttons .backlinks-api-button,
+.backlinks-action-buttons .backlinks-export-container .backlinks-export-button {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -370,7 +371,7 @@
 
 .page-url-container,
 .anchor-url-container,
-.export-container,
+.backlinks-export-container,
 .history-filter,
 .domain-dropdown {
     position: relative;
@@ -380,7 +381,7 @@
 
 .domain-button.active,
 .history-button.active,
-.export-button.active {
+.backlinks-export-button.active {
     background-color: #f8f9fa;
     border-color: #ccc;
 }
@@ -426,22 +427,6 @@
         padding: 8px;
     }
 
-    .backlinks-action-buttons {
-        justify-content: flex-start !important;
-    }
-}
-
-@media (max-width: 726px) {
-    .backlinks-action-buttons {
-        flex-direction: column;
-    }
-
-    .backlinks-action-buttons .api-button,
-    .backlinks-action-buttons .export-container .export-button {
-        width: 75% !important;
-        justify-content: center;
-        margin: 0 auto;
-    }
 }
 
 @media (max-width: 480px) {
@@ -462,13 +447,6 @@
         width: 100%;
         left: 0;
         right: 0;
-    }
-
-    .domain-button,
-    .history-button,
-    .api-button {
-        width: 100%;
-        justify-content: center;
     }
 
     .links-count {

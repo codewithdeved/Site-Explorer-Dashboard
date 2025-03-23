@@ -11,7 +11,7 @@ import { useSidebarFunctions } from "./SidebarFunctions";
 
 const Sidebar = () => {
   
-  const {
+    const {
     isSidebarClose,
     handleSidebarClose,
     sidebarRef,
@@ -34,21 +34,21 @@ const Sidebar = () => {
     isSeoXpressButtonClick,
     handleSeoXpressButtonClick,
     isReferringIPsButtonClick,
-    handleReferringIPsButtonClick
+    handleReferringIPsButtonClick,
   } = useSidebarFunctions();
 
   return (
     <>
+      
       <div
         ref={sidebarRef}
         className={
           !isSidebarClose ? "sidebar-container" : "sidebar-container close"
         }
       >
+        
         <nav className="sidebar">
-          
           <ul className="sidebar-nav">
-            
             <li
               className={`nav-item overview ${
                 isSidebarMenuItemClick[0] ? "overview-active" : ""
@@ -91,28 +91,30 @@ const Sidebar = () => {
               <span className="badge">New</span>
             </li>
 
-            <li style={{textDecoration: "underline"}}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[2] ? "item-active" : ""
-                  }`}
-                  onClick={() => {
-                    handleSeoXpressButtonClick();
-                    handleSidebarMenuItemClick(2);
-                  }}
-                >
-                  SEO XPress
+            <li
+              style={{ textDecoration: "underline" }}
+              className={`sub-item ${
+                isSidebarMenuItemClick[2] ? "item-active" : ""
+              }`}
+              onClick={() => {
+                handleSeoXpressButtonClick();
+                handleSidebarMenuItemClick(2);
+              }}
+            >
+              SEO XPress
             </li>
 
-            <li style={{textDecoration: "underline"}}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[3] ? "item-active" : ""
-                  }`}
-                  onClick={() => {
-                    handleCalendarButtonClick();
-                    handleSidebarMenuItemClick(3);
-                  }}
-                >
-                  Calendar
+            <li
+              style={{ textDecoration: "underline" }}
+              className={`sub-item ${
+                isSidebarMenuItemClick[3] ? "item-active" : ""
+              }`}
+              onClick={() => {
+                handleCalendarButtonClick();
+                handleSidebarMenuItemClick(3);
+              }}
+            >
+              Calendar
             </li>
 
             <li className="nav-item">
@@ -121,7 +123,6 @@ const Sidebar = () => {
             </li>
 
             <li className="nav-section">
-              
               <div
                 className="section-header"
                 onClick={() => toggleSection("Backlink profile")}
@@ -131,14 +132,14 @@ const Sidebar = () => {
                   {expanded["Backlink profile"] ? "▼" : "▲"}
                 </span>
               </div>
-              
+
               <ul
                 className={`sub-menu ${
                   expanded["Backlink profile"] ? "expanded" : ""
                 }`}
               >
-
-                <li style={{textDecoration: "underline"}}
+                <li
+                  style={{ textDecoration: "underline" }}
                   className={`sub-item ${
                     isSidebarMenuItemClick[5] ? "item-active" : ""
                   }`}
@@ -149,10 +150,11 @@ const Sidebar = () => {
                 >
                   Backlinks
                 </li>
-                
+
                 <li className="sub-item">Broken backlinks</li>
-                
-                <li style={{textDecoration: "underline"}}
+
+                <li
+                  style={{ textDecoration: "underline" }}
                   className={`sub-item ${
                     isSidebarMenuItemClick[7] ? "item-active" : ""
                   }`}
@@ -163,11 +165,12 @@ const Sidebar = () => {
                 >
                   Referring Domains
                 </li>
-                
+
                 <li className="sub-item">Anchors</li>
                 <li className="sub-item">Internal backlinks</li>
-                
-                <li style={{textDecoration: "underline"}}
+
+                <li
+                  style={{ textDecoration: "underline" }}
                   className={`sub-item ${
                     isSidebarMenuItemClick[10] ? "item-active" : ""
                   }`}
@@ -178,13 +181,11 @@ const Sidebar = () => {
                 >
                   Referring IPs
                 </li>
-                
+
                 <li className="sub-item">Referring IPs</li>
-                
+
                 <li className="sub-item">Link intersect</li>
-              
               </ul>
-            
             </li>
 
             <li className="nav-section">
@@ -202,8 +203,8 @@ const Sidebar = () => {
                   expanded["Organic search"] ? "expanded" : ""
                 }`}
               >
-                
-                <li style={{textDecoration: "underline"}}
+                <li
+                  style={{ textDecoration: "underline" }}
                   className={`sub-item ${
                     isSidebarMenuItemClick[12] ? "item-active" : ""
                   }`}
@@ -215,7 +216,8 @@ const Sidebar = () => {
                   Organic keywords
                 </li>
 
-                <li style={{textDecoration: "underline"}}
+                <li
+                  style={{ textDecoration: "underline" }}
                   className={`sub-item ${
                     isSidebarMenuItemClick[13] ? "item-active" : ""
                   }`}
@@ -226,14 +228,12 @@ const Sidebar = () => {
                 >
                   Top Pages
                 </li>
-                
+
                 <li className="sub-item">Top subfolders</li>
                 <li className="sub-item">Top subdomains</li>
                 <li className="sub-item">Organic competitors</li>
                 <li className="sub-item">Content gap</li>
-              
               </ul>
-           
             </li>
 
             <li className="nav-section">
@@ -273,6 +273,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </nav>
+      
       </div>
 
       <Main
@@ -287,8 +288,11 @@ const Sidebar = () => {
         isSeoXpressButtonClick={isSeoXpressButtonClick}
         isReferringIPsButtonClick={isReferringIPsButtonClick}
       />
+    
     </>
-  );
+  
+);
+
 };
 
 export default Sidebar;

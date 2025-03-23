@@ -238,14 +238,14 @@ const ReferringDomains = () => {
 
           <div className="domains-buttons">
             
-            <button className="api-btn">
+            <button className="referring-domains-api-btn">
               <span className="api-icon"></span> API
             </button>
             
-            <div className="export-container" ref={exportDropdownRef}>
+            <div className="referring-domains-export-container" ref={exportDropdownRef}>
               
               <button
-                className="export-button"
+                className="referring-domains-export-button"
                 onClick={() => setShowExportOptions(!showExportOptions)}
               >
                 <svg
@@ -261,7 +261,7 @@ const ReferringDomains = () => {
               </button>
 
               {showExportOptions && (
-                <div className="dropdown-menu export-menu backlinks-dropdown-menu">
+                <div className="dropdown-menu referring-domains-dropdown-menu">
                   {exportOptions.map((option) => (
                     <div
                       key={option}

@@ -186,9 +186,9 @@ const TableOfPages = () => {
               </select>
             </div>
 
-            <button className="api-button">{"{}"} API</button>
+            <button className="table-of-pages-api-button">{"{}"} API</button>
 
-            <div className="export-container" ref={exportDropdownRef}>
+            <div className="table-of-pages-export-container" ref={exportDropdownRef}>
               
               <button
                 className="header-button"
@@ -207,7 +207,7 @@ const TableOfPages = () => {
               </button>
 
               {showExportOptions && (
-                <div className="dropdown-menu export-menu backlinks-dropdown-menu">
+                <div className="dropdown-menu table-of-pages-dropdown-menu">
                   {exportOptions.map((option) => (
                     <div
                       key={option}

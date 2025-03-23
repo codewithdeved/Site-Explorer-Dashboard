@@ -108,6 +108,14 @@
     cursor: pointer;
 }
 
+.top-pages-export-container {
+    position: relative;
+}
+
+.top-pages-dropdown-menu {
+    left: -85px !important;
+}
+
 .dropdown-icon {
     font-size: 8px;
     margin-left: 6px;
@@ -371,9 +379,14 @@ canvas {
         margin: auto;
     }
 
-    .action-control-buttons button {
+    .action-control-buttons button,
+    .top-pages-export-container {
         justify-content: center;
         width: 100%;
+    }
+
+    .top-pages-dropdown-menu {
+        margin-left: auto;
     }
 
     .search-button {

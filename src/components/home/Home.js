@@ -1,19 +1,23 @@
 import React from "react";
 
+//Components
 import Navbar from "../navbar/Navbar";
-
 import Sidebar from "../sidebar/Sidebar";
 
-// import Main from "../main/Main";
-
 const Home = () => {
-  return (
+  
+    return (
+    
     <div>
+      
       <Navbar />
+      
       <Sidebar />
-      {/* <Main /> */}
+    
     </div>
-  );
+  
+);
+
 };
 
 export default Home;

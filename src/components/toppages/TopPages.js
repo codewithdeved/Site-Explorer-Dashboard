@@ -318,7 +318,7 @@ const TopPages = () => {
                 </svg>
               </button>
 
-              <div className="export-container" ref={exportDropdownRef}>
+              <div className="top-pages-export-container" ref={exportDropdownRef}>
               
               <button
                 className="header-button"
@@ -337,7 +337,7 @@ const TopPages = () => {
               </button>
 
               {showExportOptions && (
-                <div className="dropdown-menu export-menu backlinks-dropdown-menu">
+                <div className="dropdown-menu top-pages-dropdown-menu">
                   {exportOptions.map((option) => (
                     <div
                       key={option}

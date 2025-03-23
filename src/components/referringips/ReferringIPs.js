@@ -252,17 +252,13 @@ const ReferringIPs = () => {
               <span className="ref-ips-dropdown-arrow">▼</span>
             </button>
             {linkDropdownOpen && (
-              <ul className="ref-ips-dropdown-menu">
-                <li>
+              <ul className="ref-ips-dropdown-menu referring-ips-dropdown-menu">
                   <a href="#" onClick={() => handleTabChange("oneLink")}>
                     One link per domain
                   </a>
-                </li>
-                <li>
                   <a href="#" onClick={() => handleTabChange("multipleLinks")}>
                     Multiple links per domain
                   </a>
-                </li>
               </ul>
             )}
           </div>
@@ -293,21 +289,15 @@ const ReferringIPs = () => {
             </button>
             {historyDropdownOpen && (
               <ul className="ref-ips-dropdown-menu">
-                <li>
                   <a href="#" onClick={() => handleHistoryChange("last30days")}>
                     Last 30 days
                   </a>
-                </li>
-                <li>
                   <a href="#" onClick={() => handleHistoryChange("last60days")}>
                     Last 60 days
                   </a>
-                </li>
-                <li>
                   <a href="#" onClick={() => handleHistoryChange("last90days")}>
                     Last 90 days
                   </a>
-                </li>
               </ul>
             )}
           </div>

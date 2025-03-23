@@ -278,7 +278,7 @@ const OrganicKeywords = () => {
             <span className="dropdown-icon">▼</span>
           </button>
 
-          <button className="header-button">
+          <button className="header-button header-filter-button">
             <span className="filter-icon">⚙</span>
             <span>Filters</span>
             <span className="dropdown-icon">▼</span>
@@ -295,7 +295,7 @@ const OrganicKeywords = () => {
             <span>{'{}'} API</span>
           </button>
           
-            <div className="export-container" ref={exportDropdownRef}>
+            <div className="organic-keywords-export-container" ref={exportDropdownRef}>
               
               <button
                 className="header-button"
@@ -314,7 +314,7 @@ const OrganicKeywords = () => {
               </button>
 
               {showExportOptions && (
-                <div className="dropdown-menu export-menu backlinks-dropdown-menu">
+                <div className="dropdown-menu organic-keywords-dropdown-menu">
                   {exportOptions.map((option) => (
                     <div
                       key={option}
