@@ -353,7 +353,7 @@ const Navbar = () => {
             </svg>
 
             {openDropdown === "user" && (
-              <ul className="dropdown-menu open">
+              <ul className="dropdown-menu open user-dropdown-menu">
                 <li className="user" style={{ borderBottom: "0" }}>
                   <svg
                     style={{ marginLeft: "-1.25rem", marginRight: "0.25rem" }}
@@ -527,7 +527,7 @@ const Navbar = () => {
             </svg>
 
             {openDropdown === "input" && (
-              <ul className="dropdown-menu open">
+              <ul className="dropdown-menu open input-dropdown-menu">
                 <li>http + https (recommended)</li>
                 <li>http</li>
                 <li style={{ borderBottom: "1px solid hsl(0, 0%, 80%)" }}>

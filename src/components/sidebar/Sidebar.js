@@ -35,6 +35,10 @@ const Sidebar = () => {
     handleSeoXpressButtonClick,
     isReferringIPsButtonClick,
     handleReferringIPsButtonClick,
+    isAdsButtonClick,
+    handleAdsButtonClick,
+    isBestByLinksButtonClick,
+    handleBestByLinksButtonClick
   } = useSidebarFunctions();
 
   return (
@@ -48,7 +52,9 @@ const Sidebar = () => {
       >
         
         <nav className="sidebar">
+          
           <ul className="sidebar-nav">
+            
             <li
               className={`nav-item overview ${
                 isSidebarMenuItemClick[0] ? "overview-active" : ""
@@ -182,8 +188,6 @@ const Sidebar = () => {
                   Referring IPs
                 </li>
 
-                <li className="sub-item">Referring IPs</li>
-
                 <li className="sub-item">Link intersect</li>
               </ul>
             </li>
@@ -251,10 +255,26 @@ const Sidebar = () => {
                   expanded["Paid search"] ? "expanded" : ""
                 }`}
               >
+                
                 <li className="sub-item">Paid keywords</li>
-                <li className="sub-item">Ads</li>
+
+                <li
+                  style={{ textDecoration: "underline" }}
+                  className={`sub-item ${
+                    isSidebarMenuItemClick[19] ? "item-active" : ""
+                  }`}
+                  onClick={() => {
+                    handleAdsButtonClick();
+                    handleSidebarMenuItemClick(19);
+                  }}
+                >
+                  Ads
+                </li>
+                
                 <li className="sub-item">Paid pages</li>
+              
               </ul>
+            
             </li>
 
             <li className="nav-section">
@@ -267,11 +287,28 @@ const Sidebar = () => {
                   {expanded["Pages"] ? "▼" : "▲"}
                 </span>
               </div>
+              
               <ul className={`sub-menu ${expanded["Pages"] ? "expanded" : ""}`}>
-                <li className="sub-item">Best by links</li>
+
+                <li
+                  style={{ textDecoration: "underline" }}
+                  className={`sub-item ${
+                    isSidebarMenuItemClick[21] ? "item-active" : ""
+                  }`}
+                  onClick={() => {
+                    handleBestByLinksButtonClick();
+                    handleSidebarMenuItemClick(21);
+                  }}
+                >
+                  Best by links
+                </li>
+              
               </ul>
+            
             </li>
+          
           </ul>
+        
         </nav>
       
       </div>
@@ -287,6 +324,8 @@ const Sidebar = () => {
         isCalendarButtonClick={isCalendarButtonClick}
         isSeoXpressButtonClick={isSeoXpressButtonClick}
         isReferringIPsButtonClick={isReferringIPsButtonClick}
+        isAdsButtonClick={isAdsButtonClick}
+        isBestByLinksButtonClick={isBestByLinksButtonClick}
       />
     
     </>

@@ -166,16 +166,9 @@ input {
     width: 15.625rem !important;
 }
 
-/* .user-dropdown .dropdown-menu {
-    width: 13.5rem !important;
-}
-
+/*
 .subdomains-dropdown .dropdown-menu {
     width: 12rem !important;
-}
-
-.input-dropdown .dropdown-menu {
-    width: 17rem !important;
 } */
 
 .https-dropdown .dropdown-menu,
@@ -189,9 +182,10 @@ input {
     top: 2.25rem;
 }
 
-.user-dropdown .dropdown-menu {
+.user-dropdown .user-dropdown-menu {
     top: 2.5rem;
     margin-left: -4rem;
+    width: 13rem !important;
 }
 
 .user-dropdown span.username {
@@ -223,6 +217,10 @@ input {
 .user-dropdown .user-icon,
 .input-dropdown {
     display: none !important;
+}
+
+.input-dropdown-menu {
+    width: 17rem !important;
 }
 
 .dropdown-menu li {

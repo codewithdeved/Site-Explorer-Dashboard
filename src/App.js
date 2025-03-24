@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+
+//Component
 import Home from './components/home/Home';
+
+//Loader
 import SiteXPLoader from './sitexploader/Loader';
 
 function App() {
+  
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
@@ -14,18 +19,21 @@ function App() {
   }, []);
   
   return (
+    
     <div className="App">
       {isLoading ? (
-        <div className="loader-container">
           <SiteXPLoader />
-        </div>
       ) : (
-        <div className="home-container">
           <Home />
-        </div>
       )}
     </div>
-  );
+
+    // <div className="App">
+    //   <Home />
+    // </div>
+  
+);
+
 }
 
 export default App;

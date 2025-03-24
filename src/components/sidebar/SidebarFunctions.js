@@ -63,6 +63,8 @@ export const useSidebarFunctions = () => {
     setIsReferringDomainsButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -81,6 +83,8 @@ export const useSidebarFunctions = () => {
     setIsReferringDomainsButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -98,6 +102,8 @@ export const useSidebarFunctions = () => {
     setIsReferringDomainsButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -115,6 +121,8 @@ export const useSidebarFunctions = () => {
     setIsReferringDomainsButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -133,6 +141,8 @@ export const useSidebarFunctions = () => {
     setIsBacklinksButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -150,6 +160,8 @@ export const useSidebarFunctions = () => {
     setIsTopPagesButtonClick(false);
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -167,6 +179,8 @@ export const useSidebarFunctions = () => {
     setIsTopPagesButtonClick(false);
     setIsCalendarButtonClick(false);
     setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -185,6 +199,48 @@ export const useSidebarFunctions = () => {
     setIsTopPagesButtonClick(false);
     setIsCalendarButtonClick(false);
     setIsSeoXpressButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
+
+    if (window.innerWidth <= 768) {
+      setIsSidebarClose(false);
+    }
+  };
+
+  const [isAdsButtonClick, setIsAdsButtonClick] =
+  useState(false);
+
+  const handleAdsButtonClick = () => {
+    setIsAdsButtonClick(true);
+    setIsOverviewButtonClick(false);
+    setIsBacklinksButtonClick(false);
+    setIsReferringDomainsButtonClick(false);
+    setIsOrganicKeywordsButtonClick(false);
+    setIsTopPagesButtonClick(false);
+    setIsCalendarButtonClick(false);
+    setIsSeoXpressButtonClick(false);
+    setIsReferringIPsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
+
+    if (window.innerWidth <= 768) {
+      setIsSidebarClose(false);
+    }
+  };
+
+  const [isBestByLinksButtonClick, setIsBestByLinksButtonClick] =
+  useState(false);
+
+  const handleBestByLinksButtonClick = () => {
+    setIsBestByLinksButtonClick(true);
+    setIsOverviewButtonClick(false);
+    setIsBacklinksButtonClick(false);
+    setIsReferringDomainsButtonClick(false);
+    setIsOrganicKeywordsButtonClick(false);
+    setIsTopPagesButtonClick(false);
+    setIsCalendarButtonClick(false);
+    setIsSeoXpressButtonClick(false);
+    setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -215,6 +271,10 @@ export const useSidebarFunctions = () => {
     handleSeoXpressButtonClick,
     isReferringIPsButtonClick,
     handleReferringIPsButtonClick,
+    isAdsButtonClick,
+    handleAdsButtonClick,
+    isBestByLinksButtonClick,
+    handleBestByLinksButtonClick
   };
 
 };

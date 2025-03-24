@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./calendar.css";
 
+const formatDate = (date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getDate()).padStart(2, "0")}`;
+
 const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 2, 16));
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [tasks, setTasks] = useState({});
   const [newTask, setNewTask] = useState("");
@@ -20,6 +26,7 @@ const Calendar = () => {
     show: false,
     message: "",
   });
+  const [today, setToday] = useState(new Date());
 
   const userName = "User";
 
@@ -32,25 +39,44 @@ const Calendar = () => {
   };
 
   useEffect(() => {
-    const today = new Date(2025, 2, 16);
     const formattedToday = formatDate(today);
-    setTasks({
-      [formattedToday]: [],
-    });
-    // Set the selected date to today on initial load
+    setTasks((prev) => ({
+      ...prev,
+      [formattedToday]: prev[formattedToday] || [],
+    }));
     setSelectedDate(today);
+    setCurrentDate(today);
+
+    const getTimeUntilMidnight = () => {
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0);
+      return midnight.getTime() - now.getTime();
+    };
+
+    const updateToday = () => {
+      const newToday = new Date();
+      setToday(newToday);
+      const formattedNewToday = formatDate(newToday);
+      setTasks((prev) => ({
+        ...prev,
+        [formattedNewToday]: prev[formattedNewToday] || [],
+      }));
+    };
+
+    const timeout = setTimeout(() => {
+      updateToday();
+      const interval = setInterval(updateToday, 24 * 60 * 60 * 1000);
+      return () => clearInterval(interval);
+    }, getTimeUntilMidnight());
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const getDaysInMonth = (year, month) =>
     new Date(year, month + 1, 0).getDate();
 
   const getFirstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
-
-  const formatDate = (date) =>
-    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(date.getDate()).padStart(2, "0")}`;
 
   const getWeekNumber = (date) => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -101,7 +127,6 @@ const Calendar = () => {
     );
 
   const navigateToToday = () => {
-    const today = new Date(2025, 2, 16); // Using the fixed date for the app
     setCurrentDate(today);
     setSelectedDate(today);
   };
@@ -150,9 +175,10 @@ const Calendar = () => {
           { month: "long", day: "numeric", year: "numeric" }
         )}.`,
       });
-      setTimeout(() => {
-        setNotification((prev) => ({ ...prev, show: false }));
-      }, 3000);
+      setTimeout(
+        () => setNotification((prev) => ({ ...prev, show: false })),
+        3000
+      );
     }
 
     setNewTask("");
@@ -166,9 +192,7 @@ const Calendar = () => {
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setTaskFile(URL.createObjectURL(file));
-    }
+    if (file) setTaskFile(URL.createObjectURL(file));
   };
 
   const deleteTask = (date, taskId) => {
@@ -208,24 +232,20 @@ const Calendar = () => {
 
     setTasks((prev) => {
       const updated = { ...prev };
-      // Remove task from original date
       updated[draggedTask.originalDate] = updated[
         draggedTask.originalDate
       ].filter((t) => t.id !== draggedTask.task.id);
 
-      // If no tasks are left for that date, we can clean up
       if (!updated[draggedTask.originalDate].length) {
         delete updated[draggedTask.originalDate];
       }
 
-      // Add task to new date
       updated[targetDate] = [...(updated[targetDate] || []), draggedTask.task];
       return updated;
     });
 
     setDraggedTask(null);
 
-    // Show notification for task moved
     setNotification({
       show: true,
       message: `Task "${
@@ -236,9 +256,10 @@ const Calendar = () => {
         year: "numeric",
       })}.`,
     });
-    setTimeout(() => {
-      setNotification((prev) => ({ ...prev, show: false }));
-    }, 3000);
+    setTimeout(
+      () => setNotification((prev) => ({ ...prev, show: false })),
+      3000
+    );
   };
 
   const openAddTaskModal = (date) => {
@@ -260,7 +281,6 @@ const Calendar = () => {
       .flat();
     const totalTasks = weekTasks.length;
 
-    // Count tasks by category
     const tasksByCategory = {};
     Object.keys(categories).forEach((cat) => {
       tasksByCategory[cat] = weekTasks.filter(
@@ -278,7 +298,6 @@ const Calendar = () => {
     const tasksWithLists = allTasks.filter((task) => task.list?.length).length;
     const tasksWithNotes = allTasks.filter((task) => task.notes).length;
 
-    // Count tasks by category
     const tasksByCategory = {};
     Object.keys(categories).forEach((cat) => {
       tasksByCategory[cat] = allTasks.filter(
@@ -344,7 +363,6 @@ const Calendar = () => {
     </div>
   );
 
-  // Helper function for rendering task lists with bullet points
   const renderTaskList = (taskItems, date) => (
     <ul className="task-list">
       {taskItems.map((task) => (
@@ -356,9 +374,7 @@ const Calendar = () => {
         >
           <div
             className="task-category-indicator"
-            style={{
-              backgroundColor: categories[task.category].color,
-            }}
+            style={{ backgroundColor: categories[task.category].color }}
           />
           <div className="task-content">
             <span className="task-text">{task.text}</span>
@@ -407,7 +423,7 @@ const Calendar = () => {
   const renderNoTasks = () => <p className="no-tasks">No tasks scheduled.</p>;
 
   const renderView = () => {
-    const today = formatDate(new Date(2025, 2, 16));
+    const todayFormatted = formatDate(today);
     switch (viewMode) {
       case "month":
         const daysInMonth = getDaysInMonth(
@@ -434,7 +450,7 @@ const Calendar = () => {
                 if (!date)
                   return <div key={i} className="calendar-day other-month" />;
                 const formattedDate = formatDate(date);
-                const isToday = formattedDate === today;
+                const isToday = formattedDate === todayFormatted;
                 const dayTasks = tasks[formattedDate] || [];
                 return (
                   <div
@@ -485,7 +501,7 @@ const Calendar = () => {
                 "default",
                 { month: "long" }
               )}`}</h3>
-              {weekDays.some((day) => formatDate(day) === today) && (
+              {weekDays.some((day) => formatDate(day) === todayFormatted) && (
                 <span className="today-label">Today</span>
               )}
             </div>
@@ -513,7 +529,7 @@ const Calendar = () => {
             <div className="week-content custom-scrollbar">
               {weekDays.map((date) => {
                 const formattedDate = formatDate(date);
-                const isToday = formattedDate === today;
+                const isToday = formattedDate === todayFormatted;
                 const dayTasks = tasks[formattedDate] || [];
                 return (
                   <div
@@ -548,7 +564,7 @@ const Calendar = () => {
 
       case "day":
         const formattedDate = formatDate(currentDate);
-        const isToday = formattedDate === today;
+        const isToday = formattedDate === todayFormatted;
         const dayTasks = tasks[formattedDate] || [];
         return (
           <div className="day-view">
@@ -754,7 +770,6 @@ const Calendar = () => {
             <p>
               <strong>Tasks with Notes:</strong> {tasksWithNotes}
             </p>
-
             <h4>Tasks by Category</h4>
             <div className="category-summary">
               {Object.entries(tasksByCategory).map(([cat, count]) => (

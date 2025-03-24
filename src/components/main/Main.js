@@ -14,6 +14,8 @@ import ReferringDomains from "../referringdomains/ReferringDomains";
 import Calendar from "../calendar/Calendar";
 import SeoXpress from "../seoxpress/SeoXpress";
 import ReferringIPs from "../referringips/ReferringIPs";
+import Ads from "../ads/Ads";
+import BestByLinks from "../bestbylinks/BestByLinks";
 
 const Main = ({
  
@@ -27,6 +29,8 @@ const Main = ({
   isCalendarButtonClick,
   isSeoXpressButtonClick,
   isReferringIPsButtonClick,
+  isAdsButtonClick,
+  isBestByLinksButtonClick
 
 }) => {
   
@@ -68,6 +72,10 @@ const Main = ({
               "Organic keywords"
             ) : isTopPagesButtonClick && !isOverviewButtonClick ? (
               "Top pages"
+            ) : isAdsButtonClick && !isOverviewButtonClick ? (
+              "Ads"
+            ) : isBestByLinksButtonClick && !isOverviewButtonClick ? (
+              "Best by links"
             ) : (
               <>
                 Overview: <span>ahrefs.com/</span>{" "}
@@ -112,6 +120,10 @@ const Main = ({
         <OrganicKeywords />
       ) : isTopPagesButtonClick ? (
         <TopPages />
+      ) : isAdsButtonClick ? (
+        <Ads />
+      ) : isBestByLinksButtonClick ? (
+        <BestByLinks />
       ) : (
         <>
           <BacklinkProfileDashboard />

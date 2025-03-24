@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
 
-// CSS File
+//CSS File
 import "./loader.css";
 
 const Loader = () => {
-  
+
   const drDataPointsRef = useRef(null);
   const urDataPointsRef = useRef(null);
   const particlesRef = useRef(null);
@@ -13,12 +13,11 @@ const Loader = () => {
 
   const createDataPoints = (container, count) => {
     if (!container) return;
+    container.innerHTML = "";
 
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * 360;
-      const distance =
-        container.clientWidth * 0.3 +
-        Math.random() * (container.clientWidth * 0.1);
+      const distance = container.clientWidth * 0.4;
       const dataPoint = document.createElement("div");
       dataPoint.className = "loader-data-point";
       dataPoint.style.left = `50%`;
@@ -28,24 +27,16 @@ const Loader = () => {
     }
   };
 
-  const createParticles = (container, count) => {
+  const createParticles = (container) => {
     if (!container) return;
+    container.innerHTML = "";
 
-    // Get responsive size based on viewport
-    const getResponsiveSize = () => {
-      const viewportWidth = window.innerWidth;
-      if (viewportWidth <= 480) return 8; // Small devices
-      if (viewportWidth <= 768) return 15; // Medium devices
-      return 30; // Large devices
-    };
-
-    const particleCount = getResponsiveSize();
-
+    const particleCount = 15;
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
       particle.className = "loader-particle";
 
-      const size = Math.random() * 2 + 1;
+      const size = Math.random() * 3 + 1;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
 
@@ -60,7 +51,7 @@ const Loader = () => {
     if (!percentCounterRef.current || !loadingTextRef.current) return;
 
     let count = 0;
-    const duration = 2500; // Match with CSS animation duration
+    const duration = 2500;
     const fps = 60;
     const increment = 100 / ((duration / 1000) * fps);
 
@@ -78,76 +69,32 @@ const Loader = () => {
           loadingTextRef.current.textContent = "Dashboard ready!";
         }
       }
-    }, 1000 / fps); // 60fps for smoother updates
+    }, 1000 / fps);
   };
 
   const handleResize = () => {
-    // Clear existing data points and particles
-    if (drDataPointsRef.current) drDataPointsRef.current.innerHTML = "";
-    if (urDataPointsRef.current) urDataPointsRef.current.innerHTML = "";
-    if (particlesRef.current) particlesRef.current.innerHTML = "";
-
-    // Re-create with appropriate sizing
     createDataPoints(drDataPointsRef.current, 8);
     createDataPoints(urDataPointsRef.current, 8);
-    createParticles(particlesRef.current, 30);
+    createParticles(particlesRef.current);
   };
 
   useEffect(() => {
     createDataPoints(drDataPointsRef.current, 8);
     createDataPoints(urDataPointsRef.current, 8);
-    createParticles(particlesRef.current, 30);
+    createParticles(particlesRef.current);
     updatePercentage();
 
-    // Add resize event listener for responsiveness
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-
-      if (drDataPointsRef.current) drDataPointsRef.current.innerHTML = "";
-      if (urDataPointsRef.current) urDataPointsRef.current.innerHTML = "";
-      if (particlesRef.current) particlesRef.current.innerHTML = "";
     };
   }, []);
 
   return (
     
     <div className="loader-loader-container">
-      <div className="loader-dashboard-preview">
-        <div className="loader-dashboard-grid">
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 2", gridColumn: "span 2" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 1" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 1" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 1" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 1" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 2" }}
-          ></div>
-          <div
-            className="loader-grid-item"
-            style={{ gridRow: "span 1", gridColumn: "span 2" }}
-          ></div>
-          <div className="loader-grid-shine"></div>
-        </div>
-      </div>
-
+      
       <div className="loader-logo-container">
         <div className="loader-logo-glow"></div>
         <div className="loader-logo-text">
@@ -193,6 +140,7 @@ const Loader = () => {
       </div>
 
       <div className="loader-particles-container" ref={particlesRef}></div>
+    
     </div>
   
 );

@@ -1,0 +1,426 @@
+.ads-performance-platform {
+    background-color: #f4f6f9;
+    border-radius: 12px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 4px 8px rgba(18, 25, 97, 0.03),
+        0 8px 16px rgba(18, 25, 97, 0.04),
+        0 16px 24px rgba(18, 25, 97, 0.03);
+    max-width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.ads-platform-header {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e4e8;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.ads-platform-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.ads-platform-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.ads-view-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f1f3f5;
+    border-radius: 30px;
+    padding: 4px;
+    gap: 5px;
+}
+
+.ads-view-navigation button {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    margin: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 100px;
+}
+
+.ads-view-navigation button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.ads-platform-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ads-platform-actions svg {
+    cursor: pointer;
+}
+
+.ads-keywords-intelligence,
+.ads-competitive-intelligence,
+.ads-ab-testing {
+    padding: 20px;
+    background-color: white;
+}
+
+.ads-keywords-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.ads-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.ads-filter-group select {
+    border: none;
+    background: transparent;
+    font-weight: 500;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.ads-performance-summary,
+.ads-keyword-suggestions,
+.ads-bid-optimization {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+}
+
+.ads-performance-summary h3,
+.ads-keyword-suggestions h3,
+.ads-bid-optimization h3 {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ads-performance-summary h3 svg,
+.ads-keyword-suggestions h3 svg,
+.ads-bid-optimization h3 svg {
+    transition: transform 0.3s ease;
+}
+
+.ads-performance-summary h3 svg.ads-open,
+.ads-keyword-suggestions h3 svg.ads-open,
+.ads-bid-optimization h3 svg.ads-open {
+    transform: rotate(180deg);
+}
+
+.ads-keywords-table,
+.ads-market-benchmarks,
+.ads-ab-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.ads-keyword-card,
+.ads-competitor-card,
+.ads-ab-card {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.ads-keyword-card:hover,
+.ads-competitor-card:hover,
+.ads-ab-card:hover {
+    transform: translateY(-3px);
+}
+
+.ads-keyword-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ads-keyword-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.ads-keyword-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.ads-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ads-stat-label {
+    color: #6c757d;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.ads-stat-value {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.85rem;
+}
+
+.ads-competitor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ads-competitor-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.ads-market-share {
+    font-size: 0.85rem;
+}
+
+.ads-competitor-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.ads-metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ads-metric-label {
+    color: #6c757d;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.ads-metric-value {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.85rem;
+}
+
+.ads-settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.ads-settings-modal>div {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.ads-settings-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e4e8;
+    margin-bottom: 10px;
+}
+
+.ads-settings-tabs button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.ads-settings-tabs button.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+}
+
+.ads-settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ads-settings-content label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+}
+
+.ads-settings-content input,
+.ads-settings-content select {
+    margin-top: 4px;
+    padding: 6px;
+    border: 1px solid #e0e4e8;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.ads-settings-modal>div>button {
+    margin-top: 12px;
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.ads-ab-testing h3 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .ads-platform-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+    }
+
+    .ads-platform-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .ads-platform-controls {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ads-view-navigation {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ads-view-navigation button {
+        flex: 1;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        min-width: 0;
+    }
+
+    .ads-platform-actions {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .ads-keywords-intelligence,
+    .ads-competitive-intelligence,
+    .ads-ab-testing {
+        padding: 15px;
+    }
+
+    .ads-keywords-filters {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .ads-keywords-table,
+    .ads-market-benchmarks,
+    .ads-ab-table {
+        grid-template-columns: 1fr;
+    }
+
+    .ads-keyword-card,
+    .ads-competitor-card,
+    .ads-ab-card {
+        padding: 10px;
+    }
+
+    .ads-keyword-header h3,
+    .ads-competitor-header h3 {
+        font-size: 0.9rem;
+    }
+
+    .ads-stat-label,
+    .ads-metric-label {
+        font-size: 0.7rem;
+    }
+
+    .ads-stat-value,
+    .ads-metric-value {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ads-platform-header h1 {
+        font-size: 1rem;
+    }
+
+    .ads-view-navigation button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
+
+    .ads-keywords-filters {
+        font-size: 0.85rem;
+    }
+
+    .ads-performance-summary,
+    .ads-keyword-suggestions,
+    .ads-bid-optimization {
+        padding: 10px;
+    }
+
+    .ads-performance-summary h3,
+    .ads-keyword-suggestions h3,
+    .ads-bid-optimization h3 {
+        font-size: 1rem;
+    }
+}
