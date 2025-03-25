@@ -16,6 +16,7 @@ import SeoXpress from "../seoxpress/SeoXpress";
 import ReferringIPs from "../referringips/ReferringIPs";
 import Ads from "../ads/Ads";
 import BestByLinks from "../bestbylinks/BestByLinks";
+import ChatXP from "../chat/ChatXP";
 
 const Main = ({
  
@@ -30,7 +31,8 @@ const Main = ({
   isSeoXpressButtonClick,
   isReferringIPsButtonClick,
   isAdsButtonClick,
-  isBestByLinksButtonClick
+  isBestByLinksButtonClick,
+  isChatXPButtonClick
 
 }) => {
   
@@ -60,6 +62,8 @@ const Main = ({
           <h2>
             {isReferringIPsButtonClick && !isOverviewButtonClick ? (
               "Referring IPs"
+            ) : isChatXPButtonClick && !isOverviewButtonClick ? (
+              "ChatXP"
             ) : isSeoXpressButtonClick && !isOverviewButtonClick ? (
               "SEO XPress"
             ) : isCalendarButtonClick && !isOverviewButtonClick ? (
@@ -108,6 +112,8 @@ const Main = ({
 
       {isReferringIPsButtonClick ? (
         <ReferringIPs />
+      ) : isChatXPButtonClick ? (
+        <ChatXP />
       ) : isSeoXpressButtonClick ? (
         <SeoXpress />
       ) : isCalendarButtonClick ? (

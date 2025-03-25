@@ -7,6 +7,10 @@ import React, {
 } from "react";
 import Chart from "chart.js/auto";
 import { QRCodeCanvas } from "qrcode.react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { debounce } from "lodash";
+import { motion, AnimatePresence } from "framer-motion";
 import "./bestbylinks.css";
 
 const BestByLinks = React.memo(() => {
@@ -33,7 +37,9 @@ const BestByLinks = React.memo(() => {
   const [showFilters, setShowFilters] = useState(false);
   const [showSort, setShowSort] = useState(false);
   const [isChartVisible, setIsChartVisible] = useState(false);
-  
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [expandedCard, setExpandedCard] = useState(null);
+
   const [data, setData] = useState([
     {
       url: "ahrefs.com/blog/seo-tips",
@@ -132,7 +138,7 @@ const BestByLinks = React.memo(() => {
       trend: [1100, 1200, 1300, 1400],
     },
   ]);
-  
+
   const chartRef = useRef(null);
   const itemsPerPage = 5;
 
@@ -150,6 +156,7 @@ const BestByLinks = React.memo(() => {
           };
         })
       );
+      toast.success("Data refreshed successfully!");
       setIsLoading(false);
     }, 1000);
   }, []);
@@ -158,6 +165,22 @@ const BestByLinks = React.memo(() => {
     () => [...new Set(data.map((item) => item.category))],
     [data]
   );
+
+  const debouncedFilter = debounce((newFilters) => {
+    setFilterCategories(newFilters);
+    toast.success("Filters applied!");
+  }, 300);
+
+  const handleCategoryFilter = useCallback((category) => {
+    setFilterCategories((prev) => {
+      const newFilters = prev.includes(category)
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category];
+      debouncedFilter(newFilters);
+      setCurrentPage(1);
+      return newFilters;
+    });
+  }, []);
 
   const { filteredData, sortedData } = useMemo(() => {
     const filtered =
@@ -238,9 +261,9 @@ const BestByLinks = React.memo(() => {
             label: "Backlinks Trend",
             data: topItem.trend,
             backgroundColor: darkMode
-              ? "rgba(66, 133, 244, 0.7)"
-              : "rgba(66, 133, 244, 0.5)",
-            borderColor: "#4285f4",
+              ? "rgba(79, 70, 229, 0.7)"
+              : "rgba(79, 70, 229, 0.5)",
+            borderColor: "#4F46E5",
             borderWidth: 1,
           },
         ],
@@ -252,13 +275,13 @@ const BestByLinks = React.memo(() => {
           y: {
             beginAtZero: true,
             ticks: {
-              color: darkMode ? "#d1d9e6" : "#1a2233",
+              color: darkMode ? "#F9FAFB" : "#1F2937",
               font: { size: 12 },
             },
           },
           x: {
             ticks: {
-              color: darkMode ? "#d1d9e6" : "#1a2233",
+              color: darkMode ? "#F9FAFB" : "#1F2937",
               font: { size: 12 },
             },
           },
@@ -266,18 +289,28 @@ const BestByLinks = React.memo(() => {
         plugins: {
           legend: {
             labels: {
-              color: darkMode ? "#d1d9e6" : "#1a2233",
+              color: darkMode ? "#F9FAFB" : "#1F2937",
               font: { size: 12 },
             },
           },
           tooltip: {
             enabled: true,
-            backgroundColor: darkMode ? "#2a3447" : "#f5f7fa",
-            titleColor: darkMode ? "#e0e7ff" : "#1a2233",
-            bodyColor: darkMode ? "#e0e7ff" : "#1a2233",
-            borderColor: darkMode ? "#3a4660" : "#d1d9e6",
+            backgroundColor: darkMode ? "#374151" : "#F9FAFB",
+            titleColor: darkMode ? "#F9FAFB" : "#1F2937",
+            bodyColor: darkMode ? "#F9FAFB" : "#1F2937",
+            borderColor: darkMode ? "#4B5563" : "#D1D5DB",
             borderWidth: 1,
+            callbacks: {
+              label: (context) => `Backlinks: ${context.raw}`,
+            },
           },
+        },
+        onClick: (event, elements) => {
+          if (elements.length > 0) {
+            const index = elements[0].index;
+            const value = topItem.trend[index];
+            toast.info(`Backlinks at period ${index - 3}: ${value}`);
+          }
         },
       },
     });
@@ -299,25 +332,17 @@ const BestByLinks = React.memo(() => {
       }
       setCurrentPage(1);
       setShowSort(false);
+      toast.success(`Sorted by ${key}`);
     },
     [sortBy, sortOrder]
   );
-
-  const handleCategoryFilter = useCallback((category) => {
-    setFilterCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((cat) => cat !== category)
-        : [...prev, category]
-    );
-    setCurrentPage(1);
-  }, []);
 
   const exportToCSV = useCallback(() => {
     const selectedColumns = Object.keys(exportColumns).filter(
       (key) => exportColumns[key]
     );
     if (selectedColumns.length === 0) {
-      alert("Please select at least one column to export.");
+      toast.error("Please select at least one column to export.");
       return;
     }
 
@@ -350,6 +375,7 @@ const BestByLinks = React.memo(() => {
     a.download = "best-by-links.csv";
     a.click();
     window.URL.revokeObjectURL(url);
+    toast.success("Exported to CSV successfully!");
   }, [exportColumns, sortedData]);
 
   const calculateGrowthRate = useCallback((trend) => {
@@ -366,10 +392,9 @@ const BestByLinks = React.memo(() => {
       currentPage,
       pinnedUrls,
     };
-    const shareLink = `${window.location.origin}/best-by-links?view=${btoa(
+    return `${window.location.origin}/best-by-links?view=${btoa(
       JSON.stringify(shareData)
     )}`;
-    return shareLink;
   }, [sortBy, sortOrder, filterCategories, currentPage, pinnedUrls]);
 
   const handleShareEmail = useCallback((link) => {
@@ -385,18 +410,21 @@ const BestByLinks = React.memo(() => {
     const socialUrls = {
       twitter: `https://twitter.com/intent/tweet?text=Check%20out%20my%20Best%20by%20Links%20view&url=${encodedLink}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedLink}`,
+      whatsapp: `https://api.whatsapp.com/send?text=Check%20out%20my%20Best%20by%20Links%20view%20${encodedLink}`,
+      slack: `https://slack.com/share?url=${encodedLink}`,
     };
     window.open(socialUrls[platform], "_blank");
   }, []);
 
   const handlePin = useCallback((url) => {
-    setPinnedUrls((prev) =>
-      prev.includes(url) ? prev.filter((u) => u !== url) : [...prev, url]
-    );
-  }, []);
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setPinnedUrls((prev) => {
+      const isPinned = prev.includes(url);
+      const newPinnedUrls = isPinned
+        ? prev.filter((u) => u !== url)
+        : [...prev, url];
+      toast.info(`URL ${isPinned ? "unpinned" : "pinned"}!`);
+      return newPinnedUrls;
+    });
   }, []);
 
   const handleSwipe = useCallback(
@@ -411,6 +439,19 @@ const BestByLinks = React.memo(() => {
     [currentPage, totalPages]
   );
 
+  const toggleCard = useCallback(
+    (index, item) => {
+      if (expandedCard === index) {
+        setExpandedCard(null);
+        setSelectedItem(null);
+      } else {
+        setExpandedCard(index);
+        setSelectedItem(item);
+      }
+    },
+    [expandedCard]
+  );
+
   return (
 
     <section
@@ -419,6 +460,9 @@ const BestByLinks = React.memo(() => {
       }`}
       aria-labelledby="best-by-links-title"
     >
+      
+      <ToastContainer position="top-right" autoClose={2000} />
+      
       <header className="bestlinks-best-by-links-header">
         <h2 id="best-by-links-title">Best by Links</h2>
         <div className="bestlinks-header-actions">
@@ -428,6 +472,7 @@ const BestByLinks = React.memo(() => {
             aria-expanded={showFilters}
             aria-controls="filter-section"
           >
+            <span className="bestlinks-icon">🗂️</span>
             {showFilters ? "Hide Filters" : "Show Filters"}
           </button>
           <button
@@ -436,34 +481,46 @@ const BestByLinks = React.memo(() => {
             aria-expanded={showSort}
             aria-controls="sort-section"
           >
+            <span className="bestlinks-icon">📊</span>
             {showSort ? "Hide Sort" : "Show Sort"}
           </button>
           <button
             onClick={handleRefresh}
             className="bestlinks-refresh-button"
             disabled={isLoading}
+            aria-label="Refresh data"
           >
+            <span className="bestlinks-icon">↻</span>
             {isLoading ? "Refreshing..." : "Refresh Data"}
           </button>
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="bestlinks-dark-mode-toggle"
+            aria-label={
+              darkMode ? "Switch to light mode" : "Switch to dark mode"
+            }
           >
             <span className="bestlinks-toggle-icon">
               {darkMode ? "☀️" : "🌙"}
             </span>
           </button>
-          <button onClick={exportToCSV} className="bestlinks-export-button">
-            Export CSV
+          <button
+            onClick={exportToCSV}
+            className="bestlinks-export-button"
+            aria-label="Export to CSV"
+          >
+            <span className="bestlinks-icon">↓</span>Export CSV
           </button>
           <button
             onClick={() => setShowShareModal(true)}
             className="bestlinks-share-button"
+            aria-label="Share view"
           >
-            Share View
+            <span className="bestlinks-icon">↗</span>Share View
           </button>
         </div>
       </header>
+      
       <div
         id="filter-section"
         className={`bestlinks-filter-section ${
@@ -479,6 +536,7 @@ const BestByLinks = React.memo(() => {
                   type="checkbox"
                   checked={filterCategories.includes(cat)}
                   onChange={() => handleCategoryFilter(cat)}
+                  aria-label={`Filter by ${cat}`}
                 />
                 {cat}
               </label>
@@ -486,6 +544,7 @@ const BestByLinks = React.memo(() => {
           </div>
         </div>
       </div>
+      
       <div
         id="sort-section"
         className={`bestlinks-sort-section ${
@@ -515,69 +574,95 @@ const BestByLinks = React.memo(() => {
           </button>
         </div>
       </div>
-      {showShareModal && (
-        <div className="bestlinks-share-modal">
-          <div className="bestlinks-share-modal-content">
-            <h3>Share Your View</h3>
-            <p>Share this view with your team or clients:</p>
-            <div className="bestlinks-share-preview">
-              <p>
-                <strong>Sort By:</strong> {sortBy}
-              </p>
-              <p>
-                <strong>Order:</strong> {sortOrder}
-              </p>
-              <p>
-                <strong>Categories:</strong>{" "}
-                {filterCategories.length > 0
-                  ? filterCategories.join(", ")
-                  : "All"}
-              </p>
-              <p>
-                <strong>Page:</strong> {currentPage}
-              </p>
-              <p>
-                <strong>Pinned URLs:</strong>{" "}
-                {pinnedUrls.length > 0 ? pinnedUrls.join(", ") : "None"}
-              </p>
-            </div>
-            <div className="bestlinks-share-link">
-              <input type="text" value={shareView()} readOnly />
-              <button
-                onClick={() =>
-                  navigator.clipboard
-                    .writeText(shareView())
-                    .then(() => alert("Link copied to clipboard!"))
-                }
-              >
-                Copy Link
-              </button>
-            </div>
-            <div className="bestlinks-share-options">
-              <button onClick={() => handleShareEmail(shareView())}>
-                Email
-              </button>
-              <button onClick={() => handleShareSocial("twitter", shareView())}>
-                Twitter
-              </button>
-              <button
-                onClick={() => handleShareSocial("linkedin", shareView())}
-              >
-                LinkedIn
-              </button>
-            </div>
-            <div className="bestlinks-share-qr">
-              <QRCodeCanvas value={shareView()} size={128} />
-            </div>
-            <button
-              onClick={() => setShowShareModal(false)}
-              className="bestlinks-close-modal"
+      
+      <AnimatePresence>
+        {showShareModal && (
+          <motion.div
+            className="bestlinks-share-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bestlinks-share-modal-content"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+              <h3>Share Your View</h3>
+              <p>Share this view with your team or clients:</p>
+              <div className="bestlinks-share-preview">
+                <p>
+                  <strong>Sort By:</strong> {sortBy}
+                </p>
+                <p>
+                  <strong>Order:</strong> {sortOrder}
+                </p>
+                <p>
+                  <strong>Categories:</strong>{" "}
+                  {filterCategories.length > 0
+                    ? filterCategories.join(", ")
+                    : "All"}
+                </p>
+                <p>
+                  <strong>Page:</strong> {currentPage}
+                </p>
+                <p>
+                  <strong>Pinned URLs:</strong>{" "}
+                  {pinnedUrls.length > 0 ? pinnedUrls.join(", ") : "None"}
+                </p>
+              </div>
+              <div className="bestlinks-share-link">
+                <input type="text" value={shareView()} readOnly />
+                <button
+                  onClick={() =>
+                    navigator.clipboard
+                      .writeText(shareView())
+                      .then(() => toast.success("Link copied to clipboard!"))
+                  }
+                >
+                  Copy Link
+                </button>
+              </div>
+              <div className="bestlinks-share-options">
+                <button onClick={() => handleShareEmail(shareView())}>
+                  Email
+                </button>
+                <button
+                  onClick={() => handleShareSocial("twitter", shareView())}
+                >
+                  Twitter
+                </button>
+                <button
+                  onClick={() => handleShareSocial("linkedin", shareView())}
+                >
+                  LinkedIn
+                </button>
+                <button
+                  onClick={() => handleShareSocial("whatsapp", shareView())}
+                >
+                  WhatsApp
+                </button>
+                <button onClick={() => handleShareSocial("slack", shareView())}>
+                  Slack
+                </button>
+              </div>
+              <div className="bestlinks-share-qr">
+                <QRCodeCanvas value={shareView()} size={96} />
+              </div>
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="bestlinks-close-modal"
+                aria-label="Close share modal"
+              >
+                Close
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
       <div className="bestlinks-export-columns">
         <h4>Select Columns to Export:</h4>
         <div className="bestlinks-export-columns-list">
@@ -589,12 +674,14 @@ const BestByLinks = React.memo(() => {
                 onChange={() =>
                   setExportColumns((prev) => ({ ...prev, [key]: !prev[key] }))
                 }
+                aria-label={`Export ${key} column`}
               />
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </label>
           ))}
         </div>
       </div>
+      
       <div className="bestlinks-best-by-links-insights">
         <div className="bestlinks-ai-insight">
           <p>
@@ -620,61 +707,51 @@ const BestByLinks = React.memo(() => {
           )}
         </div>
       </div>
+      
       <div className="bestlinks-best-by-links-table-wrapper">
-        <div className="bestlinks-table-view">
-          <table className="bestlinks-best-by-links-table">
-            <thead>
-              <tr>
-                <th scope="col">Pin</th>
-                <th scope="col">URL</th>
-                <th scope="col">Category</th>
-                <th scope="col">Backlinks</th>
-                <th scope="col">Referring Domains</th>
-                <th scope="col">Organic Traffic</th>
-                <th scope="col">Growth Rate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedData.map((item, index) => (
-                <tr key={index}>
-                  <td>
-                    <button
-                      onClick={() => handlePin(item.url)}
-                      className={`bestlinks-pin-button ${
-                        pinnedUrls.includes(item.url) ? "bestlinks-pinned" : ""
-                      }`}
-                    >
-                      📌
-                    </button>
-                  </td>
-                  <td>
-                    <a
-                      href={`https://${item.url}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.url}
-                    </a>
-                  </td>
-                  <td>{item.category}</td>
-                  <td>{item.backlinks.toLocaleString()}</td>
-                  <td>{item.refDomains.toLocaleString()}</td>
-                  <td>{item.traffic.toLocaleString()}</td>
-                  <td>{calculateGrowthRate(item.trend).toFixed(2)}%</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
         <div className="bestlinks-card-view">
           {paginatedData.map((item, index) => (
-            <div key={index} className="bestlinks-data-card">
-              <div className="bestlinks-card-header">
+            <motion.div
+              key={index}
+              className="bestlinks-data-card"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <div
+                className="bestlinks-card-header"
+                onClick={() => toggleCard(index, item)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleCard(index, item);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-expanded={expandedCard === index}
+                aria-label={`Toggle details for ${item.url}`}
+              >
                 <button
-                  onClick={() => handlePin(item.url)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePin(item.url);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handlePin(item.url);
+                    }
+                  }}
                   className={`bestlinks-pin-button ${
                     pinnedUrls.includes(item.url) ? "bestlinks-pinned" : ""
                   }`}
+                  aria-label={
+                    pinnedUrls.includes(item.url)
+                      ? `Unpin ${item.url}`
+                      : `Pin ${item.url}`
+                  }
                 >
                   📌
                 </button>
@@ -682,56 +759,143 @@ const BestByLinks = React.memo(() => {
                   href={`https://${item.url}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.stopPropagation();
+                    }
+                  }}
                 >
                   {item.url}
                 </a>
+                <span>{expandedCard === index ? "▲" : "▼"}</span>
               </div>
-              <div className="bestlinks-card-body">
-                <p>
-                  <strong>Category:</strong> {item.category}
-                </p>
-                <p>
-                  <strong>Backlinks:</strong> {item.backlinks.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Referring Domains:</strong>{" "}
-                  {item.refDomains.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Organic Traffic:</strong>{" "}
-                  {item.traffic.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Growth Rate:</strong>{" "}
-                  {calculateGrowthRate(item.trend).toFixed(2)}%
-                </p>
-              </div>
-            </div>
+              <AnimatePresence>
+                {expandedCard === index && (
+                  <motion.div
+                    className="bestlinks-card-body"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p>
+                      <strong>Category:</strong> {item.category}
+                    </p>
+                    <p>
+                      <strong>Backlinks:</strong>{" "}
+                      {item.backlinks.toLocaleString()}
+                    </p>
+                    <p>
+                      <strong>Referring Domains:</strong>{" "}
+                      {item.refDomains.toLocaleString()}
+                    </p>
+                    <p>
+                      <strong>Organic Traffic:</strong>{" "}
+                      {item.traffic.toLocaleString()}
+                    </p>
+                    <p>
+                      <strong>Growth Rate:</strong>{" "}
+                      {calculateGrowthRate(item.trend).toFixed(2)}%
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
       </div>
+      
       <div className="bestlinks-pagination" onTouchMove={handleSwipe}>
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setCurrentPage((prev) => Math.max(prev - 1, 1));
+            }
+          }}
           disabled={currentPage === 1}
+          aria-label="Previous page"
         >
           Previous
         </button>
-        <span>
+        <span aria-live="polite">
           Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+            }
+          }}
           disabled={currentPage === totalPages}
+          aria-label="Next page"
         >
           Next
         </button>
       </div>
-      <button onClick={scrollToTop} className="bestlinks-back-to-top">
-        ↑
-      </button>
+      
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div
+            className="bestlinks-detail-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bestlinks-detail-modal-content"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              <h3>{selectedItem.url}</h3>
+              <p>
+                <strong>Category:</strong> {selectedItem.category}
+              </p>
+              <p>
+                <strong>Backlinks:</strong>{" "}
+                {selectedItem.backlinks.toLocaleString()}
+              </p>
+              <p>
+                <strong>Referring Domains:</strong>{" "}
+                {selectedItem.refDomains.toLocaleString()}
+              </p>
+              <p>
+                <strong>Organic Traffic:</strong>{" "}
+                {selectedItem.traffic.toLocaleString()}
+              </p>
+              <p>
+                <strong>Growth Rate:</strong>{" "}
+                {calculateGrowthRate(selectedItem.trend).toFixed(2)}%
+              </p>
+              <button
+                onClick={() => {
+                  setSelectedItem(null);
+                  setExpandedCard(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedItem(null);
+                    setExpandedCard(null);
+                  }
+                }}
+                aria-label="Close details modal"
+              >
+                Close
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    
     </section>
   
 );

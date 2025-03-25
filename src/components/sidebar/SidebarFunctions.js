@@ -65,6 +65,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -85,6 +86,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -104,6 +106,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -123,6 +126,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -143,6 +147,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -162,6 +167,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -181,6 +187,7 @@ export const useSidebarFunctions = () => {
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -201,6 +208,7 @@ export const useSidebarFunctions = () => {
     setIsSeoXpressButtonClick(false);
     setIsAdsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -221,6 +229,7 @@ export const useSidebarFunctions = () => {
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
     setIsBestByLinksButtonClick(false);
+    setIsChatXPButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -241,6 +250,28 @@ export const useSidebarFunctions = () => {
     setIsSeoXpressButtonClick(false);
     setIsReferringIPsButtonClick(false);
     setIsAdsButtonClick(false);
+    setIsChatXPButtonClick(false);
+
+    if (window.innerWidth <= 768) {
+      setIsSidebarClose(false);
+    }
+  };
+
+  const [isChatXPButtonClick, setIsChatXPButtonClick] =
+  useState(false);
+
+  const handleChatXPButtonClick = () => {
+    setIsChatXPButtonClick(true);
+    setIsOverviewButtonClick(false);
+    setIsBacklinksButtonClick(false);
+    setIsReferringDomainsButtonClick(false);
+    setIsOrganicKeywordsButtonClick(false);
+    setIsTopPagesButtonClick(false);
+    setIsCalendarButtonClick(false);
+    setIsSeoXpressButtonClick(false);
+    setIsReferringIPsButtonClick(false);
+    setIsAdsButtonClick(false);
+    setIsBestByLinksButtonClick(false);
 
     if (window.innerWidth <= 768) {
       setIsSidebarClose(false);
@@ -274,7 +305,9 @@ export const useSidebarFunctions = () => {
     isAdsButtonClick,
     handleAdsButtonClick,
     isBestByLinksButtonClick,
-    handleBestByLinksButtonClick
+    handleBestByLinksButtonClick,
+    isChatXPButtonClick,
+    handleChatXPButtonClick
   };
 
 };

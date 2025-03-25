@@ -20,17 +20,17 @@ function App() {
   
   return (
     
-    <div className="App">
-      {isLoading ? (
-          <SiteXPLoader />
-      ) : (
-          <Home />
-      )}
-    </div>
-
     // <div className="App">
-    //   <Home />
+    //   {isLoading ? (
+    //       <SiteXPLoader />
+    //   ) : (
+    //       <Home />
+    //   )}
     // </div>
+
+    <div className="App">
+      <Home />
+    </div>
   
 );
 

@@ -57,6 +57,7 @@
     font-weight: 600;
     font-size: 0.9rem;
     min-width: 100px;
+    text-align: center;
 }
 
 .ads-view-navigation button.active {
@@ -72,6 +73,11 @@
 
 .ads-platform-actions svg {
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.ads-platform-actions svg:hover {
+    color: #007bff;
 }
 
 .ads-keywords-intelligence,
@@ -105,6 +111,11 @@
     font-weight: 500;
     color: #495057;
     font-size: 0.9rem;
+}
+
+.ads-show-forecast {
+    display: flex;
+    align-items: center;
 }
 
 .ads-performance-summary,
@@ -249,75 +260,145 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 15px;
 }
 
-.ads-settings-modal>div {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
-    max-height: 80vh;
+.ads-settings-modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
     overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    animation: ads-modal-slide-in 0.3s ease-out;
+}
+
+.ads-settings-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.ads-settings-modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2a44;
+}
+
+.ads-settings-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.ads-settings-modal-close:hover {
+    color: #ef4444;
 }
 
 .ads-settings-tabs {
     display: flex;
-    border-bottom: 1px solid #e0e4e8;
-    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 25px;
+    background: #f9fafb;
 }
 
-.ads-settings-tabs button {
+.ads-settings-tab {
     flex: 1;
-    padding: 8px;
+    padding: 12px 0;
     border: none;
     background: none;
     cursor: pointer;
     font-weight: 600;
-    color: #6c757d;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    color: #6b7280;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.ads-settings-tabs button.active {
+.ads-settings-tab:hover {
+    color: #1f2a44;
+    background: #e5e7eb;
+}
+
+.ads-settings-tab.active {
     color: #007bff;
     border-bottom: 2px solid #007bff;
 }
 
 .ads-settings-content {
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
 }
 
-.ads-settings-content label {
+.ads-settings-field {
     display: flex;
     flex-direction: column;
-    font-size: 0.85rem;
+    gap: 8px;
 }
 
-.ads-settings-content input,
-.ads-settings-content select {
-    margin-top: 4px;
-    padding: 6px;
-    border: 1px solid #e0e4e8;
-    border-radius: 4px;
+.ads-settings-field label {
     font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
 }
 
-.ads-settings-modal>div>button {
-    margin-top: 12px;
-    padding: 8px;
+.ads-settings-field input,
+.ads-settings-field select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1f2a44;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ads-settings-field input:focus,
+.ads-settings-field select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.ads-settings-modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ads-settings-modal-footer button {
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    width: 100%;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.ads-settings-modal-footer button:hover {
+    background-color: #0056b3;
 }
 
 .ads-ab-testing h3 {
@@ -325,38 +406,52 @@
     font-size: 1.1rem;
 }
 
+@keyframes ads-modal-slide-in {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 @media (max-width: 768px) {
     .ads-platform-header {
         flex-direction: column;
         align-items: flex-start;
         padding: 10px 15px;
+        gap: 15px;
     }
 
     .ads-platform-header h1 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 
     .ads-platform-controls {
         width: 100%;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
         gap: 10px;
     }
 
     .ads-view-navigation {
         width: 100%;
         justify-content: space-between;
+        border-radius: 20px;
     }
 
     .ads-view-navigation button {
         flex: 1;
-        padding: 6px 10px;
+        padding: 8px 10px;
         font-size: 0.85rem;
         min-width: 0;
     }
 
     .ads-platform-actions {
-        width: 100%;
-        justify-content: space-around;
+        gap: 20px;
     }
 
     .ads-keywords-intelligence,
@@ -368,6 +463,16 @@
     .ads-keywords-filters {
         flex-direction: column;
         gap: 8px;
+        align-items: flex-start;
+    }
+
+    .ads-filter-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ads-filter-group select {
+        flex: 1;
     }
 
     .ads-keywords-table,
@@ -379,12 +484,12 @@
     .ads-keyword-card,
     .ads-competitor-card,
     .ads-ab-card {
-        padding: 10px;
+        padding: 12px;
     }
 
     .ads-keyword-header h3,
     .ads-competitor-header h3 {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .ads-stat-label,
@@ -396,16 +501,71 @@
     .ads-metric-value {
         font-size: 0.8rem;
     }
+
+    .ads-settings-modal {
+        padding: 10px;
+    }
+
+    .ads-settings-modal-content {
+        max-width: 100%;
+        max-height: 85vh;
+    }
+
+    .ads-settings-modal-header {
+        padding: 15px 20px;
+    }
+
+    .ads-settings-modal-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .ads-settings-tabs {
+        padding: 0 20px;
+    }
+
+    .ads-settings-tab {
+        font-size: 0.85rem;
+        padding: 10px 0;
+    }
+
+    .ads-settings-content {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .ads-settings-field label {
+        font-size: 0.85rem;
+    }
+
+    .ads-settings-field input,
+    .ads-settings-field select {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .ads-settings-modal-footer {
+        padding: 15px 20px;
+    }
+
+    .ads-settings-modal-footer button {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 480px) {
     .ads-platform-header h1 {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .ads-view-navigation button {
-        padding: 5px 8px;
+        padding: 6px 8px;
         font-size: 0.75rem;
+    }
+
+    .ads-platform-actions svg {
+        width: 20px;
+        height: 20px;
     }
 
     .ads-keywords-filters {
@@ -422,5 +582,42 @@
     .ads-keyword-suggestions h3,
     .ads-bid-optimization h3 {
         font-size: 1rem;
+    }
+
+    .ads-settings-modal-header {
+        padding: 12px 15px;
+    }
+
+    .ads-settings-modal-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .ads-settings-tab {
+        font-size: 0.8rem;
+        padding: 8px 0;
+    }
+
+    .ads-settings-content {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .ads-settings-field label {
+        font-size: 0.8rem;
+    }
+
+    .ads-settings-field input,
+    .ads-settings-field select {
+        padding: 7px 9px;
+        font-size: 0.8rem;
+    }
+
+    .ads-settings-modal-footer {
+        padding: 12px 15px;
+    }
+
+    .ads-settings-modal-footer button {
+        padding: 7px 14px;
+        font-size: 0.8rem;
     }
 }

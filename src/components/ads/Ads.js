@@ -242,171 +242,209 @@ const AdsPerformancePlatform = () => {
 
   const renderSettingsModal = () => (
     <div className="ads-settings-modal">
-      <div className="ads-settings-tabs">
-        {["Thresholds", "Display Options", "Advanced Analytics"].map((tab) => (
+      <div className="ads-settings-modal-content">
+        <div className="ads-settings-modal-header">
+          <h2>Settings</h2>
           <button
-            key={tab}
-            className={
-              settingsTab === tab.toLowerCase().replace(" ", "") ? "active" : ""
-            }
-            onClick={() => setSettingsTab(tab.toLowerCase().replace(" ", ""))}
+            className="ads-settings-modal-close"
+            onClick={() => setIsSettingsOpen(false)}
           >
-            {tab}
+            ×
           </button>
-        ))}
-      </div>
-      <div className="ads-settings-content">
-        {settingsTab === "thresholds" && (
-          <>
-            <label title="Threshold for triggering bid adjustments">
-              CTR Threshold (%):{" "}
-              <input
-                type="number"
-                step="0.1"
-                min="0"
-                value={settings.thresholds.ctr}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    thresholds: {
-                      ...p.thresholds,
-                      ctr: Number(e.target.value),
-                    },
-                  }))
-                }
-              />
-            </label>
-            <label title="Maximum acceptable cost per click">
-              CPC Threshold ({settings.display.currency}):{" "}
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={settings.thresholds.cpc}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    thresholds: {
-                      ...p.thresholds,
-                      cpc: Number(e.target.value),
-                    },
-                  }))
-                }
-              />
-            </label>
-            <label title="Budget cap for total spend">
-              Spend Threshold ({settings.display.currency}):{" "}
-              <input
-                type="number"
-                min="0"
-                value={settings.thresholds.spend}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    thresholds: {
-                      ...p.thresholds,
-                      spend: Number(e.target.value),
-                    },
-                  }))
-                }
-              />
-            </label>
-          </>
-        )}
-        {settingsTab === "displayoptions" && (
-          <>
-            <label title="Currency for monetary values">
-              Currency:{" "}
-              <select
-                value={settings.display.currency}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    display: { ...p.display, currency: e.target.value },
-                  }))
+        </div>
+        <div className="ads-settings-tabs">
+          {["Thresholds", "Display Options", "Advanced Analytics"].map(
+            (tab) => (
+              <button
+                key={tab}
+                className={`ads-settings-tab ${
+                  settingsTab === tab.toLowerCase().replace(" ", "")
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setSettingsTab(tab.toLowerCase().replace(" ", ""))
                 }
               >
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-              </select>
-            </label>
-            <label title="Number of decimal places for display">
-              Decimals:{" "}
-              <input
-                type="number"
-                min="0"
-                max="4"
-                value={settings.display.decimals}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    display: { ...p.display, decimals: Number(e.target.value) },
-                  }))
-                }
-              />
-            </label>
-            <label title="Chart color scheme">
-              Chart Theme:{" "}
-              <select
-                value={settings.display.chartTheme}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    display: { ...p.display, chartTheme: e.target.value },
-                  }))
-                }
-              >
-                <option value="default">Default</option>
-                <option value="vibrant">Vibrant</option>
-                <option value="muted">Muted</option>
-              </select>
-            </label>
-          </>
-        )}
-        {settingsTab === "advancedanalytics" && (
-          <>
-            <label title="Number of months to forecast">
-              Forecast Horizon (months):{" "}
-              <input
-                type="number"
-                min="1"
-                max="6"
-                value={settings.analytics.forecastHorizon}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    analytics: {
-                      ...p.analytics,
-                      forecastHorizon: Number(e.target.value),
-                    },
-                  }))
-                }
-              />
-            </label>
-            <label title="Confidence level for predictions (0-1)">
-              Confidence Level:{" "}
-              <input
-                type="number"
-                step="0.1"
-                min="0"
-                max="1"
-                value={settings.analytics.confidenceLevel}
-                onChange={(e) =>
-                  setSettings((p) => ({
-                    ...p,
-                    analytics: {
-                      ...p.analytics,
-                      confidenceLevel: Number(e.target.value),
-                    },
-                  }))
-                }
-              />
-            </label>
-          </>
-        )}
+                {tab}
+              </button>
+            )
+          )}
+        </div>
+        <div className="ads-settings-content">
+          {settingsTab === "thresholds" && (
+            <>
+              <div className="ads-settings-field">
+                <label title="Threshold for triggering bid adjustments">
+                  CTR Threshold (%):
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={settings.thresholds.ctr}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        thresholds: {
+                          ...p.thresholds,
+                          ctr: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+              <div className="ads-settings-field">
+                <label title="Maximum acceptable cost per click">
+                  CPC Threshold ({settings.display.currency}):
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={settings.thresholds.cpc}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        thresholds: {
+                          ...p.thresholds,
+                          cpc: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+              <div className="ads-settings-field">
+                <label title="Budget cap for total spend">
+                  Spend Threshold ({settings.display.currency}):
+                  <input
+                    type="number"
+                    min="0"
+                    value={settings.thresholds.spend}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        thresholds: {
+                          ...p.thresholds,
+                          spend: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+            </>
+          )}
+          {settingsTab === "displayoptions" && (
+            <>
+              <div className="ads-settings-field">
+                <label title="Currency for monetary values">
+                  Currency:
+                  <select
+                    value={settings.display.currency}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        display: { ...p.display, currency: e.target.value },
+                      }))
+                    }
+                  >
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                  </select>
+                </label>
+              </div>
+              <div className="ads-settings-field">
+                <label title="Number of decimal places for display">
+                  Decimals:
+                  <input
+                    type="number"
+                    min="0"
+                    max="4"
+                    value={settings.display.decimals}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        display: {
+                          ...p.display,
+                          decimals: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+              <div className="ads-settings-field">
+                <label title="Chart color scheme">
+                  Chart Theme:
+                  <select
+                    value={settings.display.chartTheme}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        display: { ...p.display, chartTheme: e.target.value },
+                      }))
+                    }
+                  >
+                    <option value="default">Default</option>
+                    <option value="vibrant">Vibrant</option>
+                    <option value="muted">Muted</option>
+                  </select>
+                </label>
+              </div>
+            </>
+          )}
+          {settingsTab === "advancedanalytics" && (
+            <>
+              <div className="ads-settings-field">
+                <label title="Number of months to forecast">
+                  Forecast Horizon (months):
+                  <input
+                    type="number"
+                    min="1"
+                    max="6"
+                    value={settings.analytics.forecastHorizon}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        analytics: {
+                          ...p.analytics,
+                          forecastHorizon: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+              <div className="ads-settings-field">
+                <label title="Confidence level for predictions (0-1)">
+                  Confidence Level:
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                    value={settings.analytics.confidenceLevel}
+                    onChange={(e) =>
+                      setSettings((p) => ({
+                        ...p,
+                        analytics: {
+                          ...p.analytics,
+                          confidenceLevel: Number(e.target.value),
+                        },
+                      }))
+                    }
+                  />
+                </label>
+              </div>
+            </>
+          )}
+        </div>
+        <div className="ads-settings-modal-footer">
+          <button onClick={() => setIsSettingsOpen(false)}>Save & Close</button>
+        </div>
       </div>
-      <button onClick={() => setIsSettingsOpen(false)}>Save & Close</button>
     </div>
   );
 
@@ -453,7 +491,7 @@ const AdsPerformancePlatform = () => {
               <option value="spend">Ad Spend</option>
             </select>
           </div>
-          <label>
+          <label className="ads-show-forecast">
             <input
               type="checkbox"
               checked={showForecast}
@@ -700,8 +738,9 @@ const AdsPerformancePlatform = () => {
   };
 
   return (
-
+  
     <div className="ads-performance-platform">
+      
       <div className="ads-platform-header">
         <h1>Ads Intelligence Platform</h1>
         <div className="ads-platform-controls">
@@ -724,15 +763,18 @@ const AdsPerformancePlatform = () => {
           </div>
         </div>
       </div>
+      
       <div className="ads-platform-content">
         {activeView === "keywords" && renderKeywordsView()}
         {activeView === "competitiveinsights" &&
           renderCompetitiveInsightsView()}
         {activeView === "abtesting" && renderABTestingView()}
       </div>
+      
       {isSettingsOpen && renderSettingsModal()}
+    
     </div>
-
+  
 );
 
 };
