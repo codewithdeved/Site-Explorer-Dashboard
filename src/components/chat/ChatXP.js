@@ -1,4 +1,17 @@
-// import React, { useState, useEffect, useRef } from "react";
+import React from 'react'
+
+const ChatXP = () => {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default ChatXP
+
+
+// import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 // import { motion, AnimatePresence } from "framer-motion";
 // import {
 //   Send,
@@ -17,60 +30,143 @@
 //   Moon,
 //   FileText,
 //   Smile,
+//   MoreVertical,
+//   Settings,
+//   User,
+//   Check,
+//   LogOut,
+//   Camera,
+//   Save,
+//   MessageSquare,
 // } from "lucide-react";
-// import { jsPDF } from "jspdf";
+// import jsPDF from "jspdf";
+// import { debounce } from "lodash";
+// import Webcam from "react-webcam";
+// import ReactCrop from "react-image-crop";
+// import "react-image-crop/dist/ReactCrop.css";
+// import Confetti from "react-confetti";
 // import "./chatxp.css";
 
-// const ChatXP = ({ onClose }) => {
+// // Lazy-load Webcam component
+// const LazyWebcam = React.lazy(() => import("react-webcam"));
+
+// // Main ChatXP Component
+// const ChatXP = () => {
+//   // State Management
 //   const [messages, setMessages] = useState([]);
 //   const [input, setInput] = useState("");
 //   const [isTyping, setIsTyping] = useState(false);
 //   const [isUserTyping, setIsUserTyping] = useState(false);
-//   const [isListening, setIsListening] = useState(false);
-//   const [conversationContext, setConversationContext] = useState([]);
-//   const [activeTab, setActiveTab] = useState("Options");
-//   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+//   const [isDarkMode, setIsDarkMode] = useState(false);
+//   const [showSettings, setShowSettings] = useState(false);
+//   const [settingsTab, setSettingsTab] = useState("Appearance");
+//   const [activeTab, setActiveTab] = useState("ChatXP");
 //   const [messageHistory, setMessageHistory] = useState([]);
 //   const [currentConversationId, setCurrentConversationId] = useState(null);
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [isDarkMode, setIsDarkMode] = useState(false);
+//   const [conversationContext, setConversationContext] = useState([]);
 //   const [suggestions, setSuggestions] = useState([]);
+//   const [isListening, setIsListening] = useState(false);
 //   const [showEmojiPicker, setShowEmojiPicker] = useState(null);
-//   const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
+//   const [copiedMessage, setCopiedMessage] = useState(false);
 //   const [copiedConversation, setCopiedConversation] = useState(false);
 //   const [downloading, setDownloading] = useState(false);
-//   const chatContainerRef = useRef(null);
+//   const [showMoreMenu, setShowMoreMenu] = useState(false);
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [showUserDropdown, setShowUserDropdown] = useState(false);
+//   const [showClearChatModal, setShowClearChatModal] = useState(false);
+//   const [userMood, setUserMood] = useState("neutral");
+//   const [showWebcamModal, setShowWebcamModal] = useState(false);
+//   const [capturedImage, setCapturedImage] = useState(null);
+//   const [crop, setCrop] = useState({ unit: "%", width: 50, aspect: 1 });
+//   const [completedCrop, setCompletedCrop] = useState(null);
+//   const [showConfetti, setShowConfetti] = useState(false);
+//   const [webcamError, setWebcamError] = useState(null);
+//   const [brightness, setBrightness] = useState(100);
+//   const [savedChats, setSavedChats] = useState([]);
+//   const [showSavedChatsModal, setShowSavedChatsModal] = useState(false);
+//   const [savedChatsSearch, setSavedChatsSearch] = useState("");
+//   const [isChatbotOpen, setIsChatbotOpen] = useState(false); // For 768px toggle
+
+//   // Refs
+//   const messagesEndRef = useRef(null);
+//   const webcamRef = useRef(null);
+//   const canvasRef = useRef(null);
 //   const recognitionRef = useRef(null);
+//   const moreMenuRef = useRef(null);
+//   const userMenuRef = useRef(null);
+
+//   // Constants
+//   const userName = "Tayyab";
+//   const moodOptions = [
+//     { name: "Happy", emoji: "😊", value: "happy" },
+//     { name: "Curious", emoji: "🤔", value: "curious" },
+//     { name: "Excited", emoji: "🎉", value: "excited" },
+//   ];
+//   const options = useMemo(
+//     () => [
+//       { name: "Referring Domains", query: "Tell me about the Referring Domains component", icon: <Send size={16} /> },
+//       { name: "Referring IPs", query: "Tell me about the Referring IPs component", icon: <Send size={16} /> },
+//       { name: "Organic Keywords", query: "Tell me about the Organic Keywords component", icon: <Send size={16} /> },
+//       { name: "Top Pages", query: "Tell me about the Top Pages component", icon: <Send size={16} /> },
+//       { name: "Backlink Profile", query: "Tell me about the Backlink Profile Dashboard", icon: <Send size={16} /> },
+//       { name: "Traffic & Domains", query: "Tell me about the Traffic and Domains Dashboard", icon: <Send size={16} /> },
+//       { name: "Traffic Chart", query: "Tell me about the Traffic Chart component", icon: <Send size={16} /> },
+//       { name: "Ads Performance", query: "Tell me about the Ads Performance Platform", icon: <Send size={16} /> },
+//       { name: "Best by Links", query: "Tell me about the BestByLinks component", icon: <Send size={16} /> },
+//       { name: "SEO Audit", query: "Tell me about the SEO Audit tool", icon: <Send size={16} /> },
+//       { name: "Competitor Analysis", query: "Tell me about the Competitor Analysis feature", icon: <Send size={16} /> },
+//       { name: "Keyword Research", query: "Tell me about the Keyword Research tool", icon: <Send size={16} /> },
+//     ],
+//     []
+//   );
+
+//   // Effects
+//   useEffect(() => {
+//     document.body.className = isDarkMode ? "dark-mode" : "";
+//   }, [isDarkMode]);
 
 //   useEffect(() => {
-//     if (chatContainerRef.current) {
-//       chatContainerRef.current.scrollTop =
-//         chatContainerRef.current.scrollHeight;
-//     }
+//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 //   }, [messages]);
 
+//   // Close Dropdowns on Outside Click
 //   useEffect(() => {
-//     if (messages.length === 0) {
-//       const welcomeMessage = {
-//         sender: "bot",
-//         text: "Hello! How can I assist you today?",
-//         timestamp: new Date().toLocaleTimeString([], {
-//           hour: "2-digit",
-//           minute: "2-digit",
-//         }),
-//         feedback: null,
-//         pinned: false,
-//         reactions: [],
-//       };
-//       setMessages([welcomeMessage]);
-//       setConversationContext([welcomeMessage.text]);
-//     }
+//     const handleClickOutside = (event) => {
+//       if (moreMenuRef.current && !moreMenuRef.current.contains(event.target)) {
+//         setShowMoreMenu(false);
+//       }
+//       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+//         setShowUserDropdown(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
 //   }, []);
 
+//   // Debounced Suggestions
+//   const updateSuggestions = useCallback(
+//     debounce((inputValue) => {
+//       if (isUserTyping && inputValue.trim()) {
+//         const relatedSuggestions = options
+//           .filter((option) => option.query.toLowerCase().includes(inputValue.toLowerCase()))
+//           .map((option) => option.query);
+//         setSuggestions(relatedSuggestions);
+//       } else {
+//         setSuggestions([]);
+//       }
+//     }, 300),
+//     [isUserTyping, options]
+//   );
+
+//   useEffect(() => {
+//     updateSuggestions(input);
+//     return () => updateSuggestions.cancel();
+//   }, [input, updateSuggestions]);
+
+//   // Voice Recognition Setup
 //   useEffect(() => {
 //     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-//       const SpeechRecognition =
-//         window.SpeechRecognition || window.webkitSpeechRecognition;
+//       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 //       recognitionRef.current = new SpeechRecognition();
 //       recognitionRef.current.continuous = false;
 //       recognitionRef.current.interimResults = false;
@@ -84,1074 +180,1120 @@
 //       };
 
 //       recognitionRef.current.onerror = (event) => {
+//         console.error("Speech recognition error:", event.error);
 //         setIsListening(false);
+//         let errorMessage = "Voice recognition failed. Please try again or check your microphone permissions.";
+//         if (event.error === "no-speech") {
+//           errorMessage = "No speech detected. Please speak clearly and try again.";
+//         } else if (event.error === "not-allowed") {
+//           errorMessage = "Microphone access denied. Please allow microphone permissions in your browser settings.";
+//         } else if (event.error === "network") {
+//           errorMessage = "Network error. Please check your internet connection and try again.";
+//         }
+//         alert(errorMessage);
+//       };
+
+//       recognitionRef.current.onend = () => {
+//         setIsListening(false);
+//       };
+//     } else {
+//       console.warn("Speech Recognition API not supported in this browser.");
+//       alert("Voice recognition is not supported in this browser. Please use a modern browser like Chrome or Edge.");
+//     }
+
+//     return () => {
+//       if (recognitionRef.current) {
+//         recognitionRef.current.stop();
+//       }
+//     };
+//   }, []);
+
+//   // Load Saved Chats from Local Storage
+//   useEffect(() => {
+//     const saved = localStorage.getItem("savedChats");
+//     if (saved) {
+//       setSavedChats(JSON.parse(saved));
+//     }
+//   }, []);
+
+//   // Check Webcam Permissions on Mount
+//   useEffect(() => {
+//     const checkWebcamPermissions = async () => {
+//       try {
+//         const permissionStatus = await navigator.permissions.query({ name: "camera" });
+//         if (permissionStatus.state === "denied") {
+//           setWebcamError("Camera access denied. Please allow camera permissions in your browser settings.");
+//         }
+//       } catch (error) {
+//         console.error("Error checking webcam permissions:", error);
+//         setWebcamError("Unable to check camera permissions. Please ensure your browser supports this feature.");
+//       }
+//     };
+//     checkWebcamPermissions();
+//   }, []);
+
+//   // Helper Functions
+//   const extractKeyPhrase = useCallback((text) => {
+//     const words = text.split(" ");
+//     return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : text;
+//   }, []);
+
+//   const generateResponse = useCallback((query) => {
+//     let baseResponse = "";
+//     if (query.toLowerCase().includes("referring domains")) {
+//       baseResponse = "The Referring Domains component shows the number of unique domains linking to your site.";
+//     } else if (query.toLowerCase().includes("referring ips")) {
+//       baseResponse = "The Referring IPs component lists the IP addresses that are linking to your site.";
+//     } else if (query.toLowerCase().includes("organic keywords")) {
+//       baseResponse = "The Organic Keywords component displays the keywords driving traffic to your site.";
+//     } else if (query.toLowerCase().includes("top pages")) {
+//       baseResponse = "The Top Pages component highlights the pages on your site with the most backlinks.";
+//     } else if (query.toLowerCase().includes("backlink profile")) {
+//       baseResponse = "The Backlink Profile Dashboard provides an overview of all backlinks to your site.";
+//     } else if (query.toLowerCase().includes("traffic and domains")) {
+//       baseResponse = "The Traffic and Domains Dashboard shows traffic sources and referring domains.";
+//     } else if (query.toLowerCase().includes("traffic chart")) {
+//       baseResponse = "The Traffic Chart component visualizes your site's traffic trends over time.";
+//     } else if (query.toLowerCase().includes("ads performance")) {
+//       baseResponse = "The Ads Performance Platform tracks the performance of your advertising campaigns.";
+//     } else if (query.toLowerCase().includes("bestbylinks")) {
+//       baseResponse = "The BestByLinks component identifies top pages by the number of backlinks.";
+//     } else if (query.toLowerCase().includes("seo audit")) {
+//       baseResponse = "The SEO Audit tool analyzes your site for SEO issues and provides actionable recommendations.";
+//     } else if (query.toLowerCase().includes("competitor analysis")) {
+//       baseResponse = "The Competitor Analysis feature helps you compare your site's performance with competitors.";
+//     } else if (query.toLowerCase().includes("keyword research")) {
+//       baseResponse = "The Keyword Research tool helps you find high-potential keywords for your SEO strategy.";
+//     } else {
+//       baseResponse = "I'm not sure about that. Can you provide more details?";
+//     }
+
+//     if (userMood === "happy") {
+//       return `Great to hear you're feeling happy! 😊 Here's your answer: ${baseResponse}`;
+//     } else if (userMood === "curious") {
+//       return `I love your curiosity! 🤔 Let's dive in: ${baseResponse}`;
+//     } else if (userMood === "excited") {
+//       return `Wow, you're excited! 🎉 Here's something to keep the energy up: ${baseResponse}`;
+//     }
+//     return baseResponse;
+//   }, [userMood]);
+
+//   const handleBotResponse = useCallback(async (query) => {
+//     try {
+//       setIsTyping(true);
+//       await new Promise((resolve) => setTimeout(resolve, 1000));
+//       const botMessage = {
+//         sender: "bot",
+//         text: generateResponse(query),
+//         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+//         pinned: false,
+//         reactions: [],
+//       };
+//       setMessages((prev) => [...prev, botMessage]);
+//       setConversationContext((prev) => [...prev, botMessage.text]);
+//       if (currentConversationId) {
+//         setMessageHistory((prev) =>
+//           prev.map((conv) =>
+//             conv.id === currentConversationId
+//               ? { ...conv, messages: [...conv.messages, botMessage] }
+//               : conv
+//           )
+//         );
+//       }
+//     } catch (error) {
+//       console.error("Error generating bot response:", error);
+//       setMessages((prev) => [
+//         ...prev,
+//         {
+//           sender: "bot",
+//           text: "Sorry, I encountered an error. Please try again.",
+//           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+//           pinned: false,
+//           reactions: [],
+//         },
+//       ]);
+//     } finally {
+//       setIsTyping(false);
+//     }
+//   }, [currentConversationId, generateResponse]);
+
+//   const handleSubmit = useCallback(
+//     async (e) => {
+//       if (e) e.preventDefault();
+//       if (!input.trim() || isSubmitting) return;
+//       setIsSubmitting(true);
+//       try {
+//         const userMessage = {
+//           sender: "user",
+//           text: input,
+//           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+//           pinned: false,
+//           reactions: [],
+//         };
+//         setMessages((prev) => [...prev, userMessage]);
+//         setConversationContext((prev) => [...prev, input]);
+//         const conversationTitle = extractKeyPhrase(input);
+//         if (currentConversationId) {
+//           setMessageHistory((prev) =>
+//             prev.map((conv) =>
+//               conv.id === currentConversationId
+//                 ? { ...conv, messages: [...conv.messages, userMessage] }
+//                 : conv
+//             )
+//           );
+//         } else {
+//           const newConversation = {
+//             id: Date.now(),
+//             title: conversationTitle,
+//             date: new Date().toLocaleDateString(),
+//             messages: [userMessage],
+//           };
+//           setMessageHistory((prev) => [...prev, newConversation]);
+//           setCurrentConversationId(newConversation.id);
+//         }
+//         await handleBotResponse(input);
+//       } catch (error) {
+//         console.error("Error handling submit:", error);
 //         setMessages((prev) => [
 //           ...prev,
 //           {
 //             sender: "bot",
-//             text: "Oops, I couldn’t catch that! Could you try speaking again or typing your query?",
-//             timestamp: new Date().toLocaleTimeString([], {
-//               hour: "2-digit",
-//               minute: "2-digit",
-//             }),
-//             feedback: null,
+//             text: "An error occurred while processing your request. Please try again.",
+//             timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
 //             pinned: false,
 //             reactions: [],
 //           },
 //         ]);
-//       };
+//       } finally {
+//         setInput("");
+//         setIsUserTyping(false);
+//         setSuggestions([]);
+//         setIsSubmitting(false);
+//       }
+//     },
+//     [input, isSubmitting, currentConversationId, extractKeyPhrase, handleBotResponse]
+//   );
 
-//       recognitionRef.current.onend = () => setIsListening(false);
-//     }
-//   }, []);
+//   const handleTabClick = useCallback(
+//     async (tab, query) => {
+//       setActiveTab(tab);
+//       if (query && !isSubmitting) {
+//         setInput(query);
+//         await handleSubmit();
+//       }
+//       if (tab === "Clear Chat") {
+//         setMessages([]);
+//         setConversationContext([]);
+//         setCurrentConversationId(null);
+//         setMessageHistory([]);
+//       }
+//     },
+//     [isSubmitting, handleSubmit]
+//   );
 
-//   useEffect(() => {
-//     if (input.trim()) {
-//       const filteredSuggestions = messageHistory
-//         .flatMap((conv) => conv.messages)
-//         .filter(
-//           (msg) =>
-//             msg.sender === "user" &&
-//             msg.text.toLowerCase().includes(input.toLowerCase())
-//         )
-//         .map((msg) => msg.text)
-//         .slice(0, 3);
-//       setSuggestions(filteredSuggestions);
-//     } else {
-//       setSuggestions([]);
-//     }
-//   }, [input, messageHistory]);
-
-//   const handleVoiceInput = () => {
+//   const handleVoiceInput = useCallback(() => {
 //     if (isListening) {
 //       recognitionRef.current.stop();
 //       setIsListening(false);
-//     } else if (recognitionRef.current) {
-//       setIsListening(true);
-//       recognitionRef.current.start();
 //     } else {
-//       setMessages((prev) => [
-//         ...prev,
-//         {
-//           sender: "bot",
-//           text: "Sorry, voice input isn’t supported on this browser. Try typing your query instead!",
-//           timestamp: new Date().toLocaleTimeString([], {
-//             hour: "2-digit",
-//             minute: "2-digit",
-//           }),
-//           feedback: null,
-//           pinned: false,
-//           reactions: [],
-//         },
-//       ]);
+//       try {
+//         navigator.mediaDevices
+//           .getUserMedia({ audio: true })
+//           .then(() => {
+//             recognitionRef.current.start();
+//             setIsListening(true);
+//           })
+//           .catch((error) => {
+//             console.error("Microphone permission error:", error);
+//             let errorMessage = "Microphone access denied. Please allow microphone permissions in your browser settings.";
+//             if (error.name === "NotAllowedError") {
+//               errorMessage = "Microphone access was denied. Please enable it in your browser settings.";
+//             } else if (error.name === "NotFoundError") {
+//               errorMessage = "No microphone found. Please connect a microphone and try again.";
+//             }
+//             alert(errorMessage);
+//             setIsListening(false);
+//           });
+//       } catch (error) {
+//         console.error("Error starting voice recognition:", error);
+//         alert("Failed to start voice recognition. Please check your microphone permissions.");
+//         setIsListening(false);
+//       }
 //     }
-//   };
+//   }, [isListening]);
 
-//   const handleTabClick = (tab, query) => {
-//     setActiveTab(tab);
-//     if (tab === "Saved Chats") {
-//       setMessages([]);
-//       setConversationContext([]);
-//     } else if (tab === "Clear Chat") {
-//       setMessages([
-//         {
-//           sender: "bot",
-//           text: "Hello! How can I assist you today?",
-//           timestamp: new Date().toLocaleTimeString([], {
-//             hour: "2-digit",
-//             minute: "2-digit",
-//           }),
-//           feedback: null,
-//           pinned: false,
-//           reactions: [],
-//         },
-//       ]);
-//       setConversationContext(["Hello! How can I assist you today?"]);
-//       setCurrentConversationId(null);
-//     } else if (tab !== "Options") {
-//       setMessages((prev) => [
-//         ...prev,
-//         {
-//           sender: "user",
-//           text: query,
-//           timestamp: new Date().toLocaleTimeString([], {
-//             hour: "2-digit",
-//             minute: "2-digit",
-//           }),
-//           pinned: false,
-//           reactions: [],
-//         },
-//       ]);
-//       setConversationContext((prev) => [...prev, query]);
-//       handleBotResponse(query);
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!input.trim()) return;
-
-//     const userMessage = {
-//       sender: "user",
-//       text: input,
-//       timestamp: new Date().toLocaleTimeString([], {
-//         hour: "2-digit",
-//         minute: "2-digit",
-//       }),
-//       pinned: false,
-//       reactions: [],
-//     };
-//     setMessages((prev) => [...prev, userMessage]);
-//     setConversationContext((prev) => [...prev, input]);
-
-//     if (currentConversationId) {
-//       setMessageHistory((prev) =>
-//         prev.map((conv) =>
-//           conv.id === currentConversationId
-//             ? { ...conv, messages: [...conv.messages, userMessage] }
-//             : conv
-//         )
-//       );
-//     } else {
-//       const newConversation = {
-//         id: Date.now(),
-//         messages: [userMessage],
-//       };
-//       setMessageHistory((prev) => [...prev, newConversation]);
-//       setCurrentConversationId(newConversation.id);
-//     }
-
-//     handleBotResponse(input);
-//     setInput("");
-//     setIsUserTyping(false);
-//     setSuggestions([]);
-//   };
-
-//   const simulateTyping = () => {
-//     setIsTyping(true);
-//     return new Promise((resolve) => setTimeout(resolve, 800));
-//   };
-
-//   const handleBotResponse = async (query) => {
-//     await simulateTyping();
-//     const responseText = generateResponse(query.toLowerCase());
-//     const response = {
-//       sender: "bot",
-//       text: responseText,
-//       timestamp: new Date().toLocaleTimeString([], {
-//         hour: "2-digit",
-//         minute: "2-digit",
-//       }),
-//       feedback: null,
-//       quickReplies: query.includes("component")
-//         ? ["Tell me more", "Export this data"]
-//         : [],
-//       links: query.includes("top pages")
-//         ? [
-//             {
-//               url: "https://ahrefs.com/backlink-checker",
-//               text: "Visit Backlink Checker",
-//             },
-//           ]
-//         : [],
-//       pinned: false,
-//       reactions: [],
-//     };
-//     setMessages((prev) => [...prev, response]);
-//     setConversationContext((prev) => [...prev, responseText]);
-
-//     if (currentConversationId) {
-//       setMessageHistory((prev) =>
-//         prev.map((conv) =>
-//           conv.id === currentConversationId
-//             ? { ...conv, messages: [...conv.messages, response] }
-//             : conv
-//         )
-//       );
-//     } else {
-//       const newConversation = {
-//         id: Date.now(),
-//         messages: [response],
-//       };
-//       setMessageHistory((prev) => [...prev, newConversation]);
-//       setCurrentConversationId(newConversation.id);
-//     }
-
-//     setIsTyping(false);
-//   };
-
-//   const handleQuickReply = (reply) => {
-//     setMessages((prev) => [
-//       ...prev,
-//       {
-//         sender: "user",
-//         text: reply,
-//         timestamp: new Date().toLocaleTimeString([], {
-//           hour: "2-digit",
-//           minute: "2-digit",
-//         }),
-//         pinned: false,
-//         reactions: [],
-//       },
-//     ]);
-//     setConversationContext((prev) => [...prev, reply]);
-//     handleBotResponse(reply);
-//   };
-
-//   const handleFeedback = (index, feedback) => {
-//     setMessages((prev) =>
-//       prev.map((msg, i) => (i === index ? { ...msg, feedback } : msg))
-//     );
-//   };
-
-//   const handleShareConversation = () => {
-//     const conversationText = messages
-//       .map(
-//         (msg) =>
-//           `${msg.timestamp} ${msg.sender === "user" ? "You" : "ChatXP"}: ${
-//             msg.text
-//           }`
-//       )
-//       .join("\n");
-//     navigator.clipboard
-//       .writeText(conversationText)
-//       .then(() => {
-//         setCopiedConversation(true);
-//         setTimeout(() => setCopiedConversation(false), 2000);
-//       })
-//       .catch(() => {
-//         alert("Failed to copy conversation. Please try again.");
-//       });
-//   };
-
-//   const handleExportPDF = () => {
-//     setDownloading(true);
-//     try {
-//       const doc = new jsPDF();
-//       let yOffset = 10;
-//       doc.setFontSize(12);
-//       doc.text("ChatXP Conversation", 10, yOffset);
-//       yOffset += 10;
-
-//       messages.forEach((msg) => {
-//         const sender = msg.sender === "user" ? "You" : "ChatXP";
-//         const text = `${msg.timestamp} ${sender}: ${msg.text}`;
-//         const splitText = doc.splitTextToSize(text, 180);
-//         doc.text(splitText, 10, yOffset);
-//         yOffset += splitText.length * 7 + 5;
-//       });
-
-//       doc.save("ChatXP_Conversation.pdf");
-//     } catch (error) {
-//       alert("Failed to export PDF. Please try again.");
-//     } finally {
-//       setDownloading(false);
-//     }
-//   };
-
-//   const handleLoadConversation = (conversation) => {
-//     setMessages(conversation.messages);
-//     setConversationContext(conversation.messages.map((msg) => msg.text));
-//     setCurrentConversationId(conversation.id);
-//     setActiveTab("Options");
-//   };
-
-//   const handleCopyMessage = (index, text) => {
-//     navigator.clipboard
-//       .writeText(text)
-//       .then(() => {
-//         setCopiedMessageIndex(index);
-//         setTimeout(() => setCopiedMessageIndex(null), 2000);
-//       })
-//       .catch(() => {
-//         alert("Failed to copy message. Please try again.");
-//       });
-//   };
-
-//   const handlePinMessage = (index) => {
-//     setMessages((prev) =>
-//       prev.map((msg, i) => ({
-//         ...msg,
-//         pinned: i === index ? !msg.pinned : msg.pinned,
-//       }))
-//     );
-//   };
-
-//   const handleAddReaction = (index, emoji) => {
+//   const handlePinMessage = useCallback((index) => {
 //     setMessages((prev) =>
 //       prev.map((msg, i) =>
-//         i === index ? { ...msg, reactions: [...msg.reactions, emoji] } : msg
+//         i === index ? { ...msg, pinned: !msg.pinned } : msg
 //       )
 //     );
-//     setShowEmojiPicker(null);
-//   };
-
-//   const toggleDarkMode = () => {
-//     setIsDarkMode((prev) => !prev);
-//   };
-
-//   const generateResponse = (query) => {
-//     const lastBotMessage =
-//       conversationContext[conversationContext.length - 1] || "";
-//     const lastUserMessage =
-//       conversationContext[conversationContext.length - 2] || "";
-
-//     if (
-//       query.includes("more") &&
-//       lastBotMessage.includes("Want to know more")
-//     ) {
-//       if (lastUserMessage.includes("referring domains")) {
-//         return "Let’s dive deeper into Referring Domains! You can sort the table by DR to find high-authority domains—'example.com' with a DR of 92 is a great start. Or, expand a row to see anchor text details. There’s also a search feature to find specific domains or anchors. What else would you like to know about it?";
-//       }
-//       if (lastUserMessage.includes("organic keywords")) {
-//         return "More on Organic Keywords? Sure thing! The KD badge is color-coded to show difficulty—green means it’s easier to rank, like 'seo basics' with a KD of 10. You can also check historical data by picking a date, or export the list to analyze in Excel. Want to explore a specific keyword or feature?";
-//       }
-//       if (lastUserMessage.includes("top pages")) {
-//         return "Let’s explore Top Pages further! The line chart shows traffic trends over time, like 'https://ahrefs.com/backlink-checker' peaking at 218,643 visits. You can switch tabs to 'Avg. organic traffic' for a different view, or use the period selector (e.g., 6M, 1Y) to zoom in. Want to compare specific dates or check a page’s details?";
-//       }
-//       if (lastUserMessage.includes("traffic chart")) {
-//         return "Diving deeper into the Traffic Chart! You can hover over the line chart to see exact traffic numbers for any month—like 1.5M in Jan 2022. The filter options let you compare traffic from specific regions, like the US vs. UK, or even add competitor data for a side-by-side view. Want to explore a specific metric or time range?";
-//       }
-//     }
-
-//     if (
-//       query.includes("hi") ||
-//       query.includes("hello") ||
-//       query.includes("hey")
-//     ) {
-//       return "Hello! How can I assist you today?";
-//     }
-
-//     if (query.includes("how are you")) {
-//       return "I’m doing great, thanks for asking! I’m a digital assistant, so I’m always ready to help. How about you—how’s your day going?";
-//     }
-
-//     if (query.includes("sad") || query.includes("down")) {
-//       return "I’m really sorry you’re feeling down! Let’s brighten your day—how about we check out the Top Pages component to see what’s driving traffic? Or, I can tell you a joke to make you smile—just say the word!";
-//     }
-
-//     if (query.includes("happy") || query.includes("great")) {
-//       return "I love hearing that you’re happy! Let’s keep the good vibes going. Want to dive into the Ads Performance Platform to see how your campaigns are doing?";
-//     }
-
-//     if (query.includes("tired") || query.includes("exhausted")) {
-//       return "I get that—long days can be exhausting! Let’s take it easy. How about we look at the Traffic Chart? It’s got a nice visual of organic traffic trends from Nov 2021 to Aug 2023.";
-//     }
-
-//     if (query.includes("angry") || query.includes("frustrated")) {
-//       return "I’m sorry to hear you’re feeling frustrated! Let’s take a breather. How about we explore the Backlink Profile Dashboard? It shows your DR (91) and UR (54)—a nice overview to refocus.";
-//     }
-
-//     if (
-//       query.includes("referring domains") ||
-//       query.includes("referringdomains")
-//     ) {
-//       return "The Referring Domains component is a goldmine for backlink analysis! It shows you a table of domains linking to your site, with details like Domain Rating (DR), dofollow links, linked pages, and when they were first seen. You can expand rows for more details, sort the table, and even export the data. For example, 'example.com' has a DR of 92 and 1,234 dofollow links! Want to know more about a specific domain or feature?";
-//     }
-
-//     if (query.includes("referring ips") || query.includes("referringips")) {
-//       return "The Referring IPs component gives you a detailed look at IP addresses linking to your site. It includes metrics like DR, UR, domain traffic, referring domains, and more. You can sort by any column, filter by tabs like 'All,' 'New,' or 'Lost,' and search for specific IPs or anchor text. For example, the IP '157.240.22.35' in the data has a DR of 96 and 8.4M domain traffic! Want to dive deeper into a specific IP or feature?";
-//     }
-
-//     if (
-//       query.includes("organic keywords") ||
-//       query.includes("organickeywords")
-//     ) {
-//       return "The Organic Keywords component is perfect for SEO enthusiasts! It lists keywords with metrics like search volume, keyword difficulty (KD), CPC, traffic, and position. You can pick a date to see historical data, and export the list in formats like CSV or Excel. For instance, the keyword 'ahrefs' has a volume of 45K and ranks at position 1. The KD is color-coded—green for easy, red for tough. Want to know more about a specific keyword or feature?";
-//     }
-
-//     if (query.includes("top pages") || query.includes("toppages")) {
-//       return "The Top Pages component is a dashboard for tracking your best-performing pages. It includes a line chart showing traffic trends over time (e.g., 'https://ahrefs.com/backlink-checker' has 218,643 visits), with tabs like 'Performance' and 'Compare pages.' The TableOfPages subcomponent lets you compare traffic between two dates—like 29 Aug 2023 vs. 28 Feb 2023. You can also export the data! Want to know more about a specific page or the chart?";
-//     }
-
-//     if (
-//       query.includes("backlink profile") ||
-//       query.includes("backlinkprofiledashboard")
-//     ) {
-//       return "The Backlink Profile Dashboard gives you a snapshot of your site’s backlink health. It shows your Domain Rating (DR: 91), URL Rating (UR: 54), total backlinks (4.4M), and referring domains (83.6K). It also covers organic search (230K keywords, 2.6M traffic) and paid search (24 keywords, 104 traffic). The donut charts for DR and UR are a nice touch! Want to dive into a specific metric or section?";
-//     }
-
-//     if (
-//       query.includes("general backlink organic buttons") ||
-//       query.includes("generalbacklinkorganicbuttons")
-//     ) {
-//       return "The GeneralBacklinkOrganicButtons component is a simple tab navigation system with three buttons: 'General,' 'Backlink profile,' and 'Organic search.' Only one tab can be active at a time, and it defaults to 'General.' It’s a great way to switch between different views on the dashboard. Want to know how it integrates with other components?";
-//     }
-
-//     if (
-//       query.includes("traffic and domains") ||
-//       query.includes("trafficanddomainsdashboard")
-//     ) {
-//       return "The TrafficAndDomainsDashboard component breaks down traffic by location and referring domains. For example, the US drives 764.7K traffic (29.8% share), while followed domains make up 80.4% of referring domains (67,217). It includes a table for traffic by location and another for referring domains, with options to compare the top 5 on a chart. Want to explore a specific location or metric?";
-//     }
-
-//     if (query.includes("traffic chart") || query.includes("trafficchart")) {
-//       return "The Traffic Chart component visualizes organic traffic trends over time using an SVG line chart. It shows traffic from Nov 2021 (1.3M) to Aug 2023 (2.6M). You can toggle metrics like Referring Domains or Avg. Organic Traffic, and filter by competitors, locations, or time durations (e.g., 2Y). It also integrates the TrafficAndDomainsDashboard at the bottom. Want to know more about the chart or a specific metric?";
-//     }
-
-//     if (
-//       query.includes("ads performance") ||
-//       query.includes("adsperformanceplatform")
-//     ) {
-//       return "The Ads Performance Platform is a powerhouse for ad analysis! It has three views: Keywords, Competitive Insights, and A/B Testing. You can see metrics like CTR (e.g., 5.15% for 'enterprise seo platform'), forecast trends, and get bid optimization suggestions. It uses recharts for visualizations and supports exporting data as CSV. Want to explore a specific view or feature, like keyword suggestions?";
-//     }
-
-//     if (query.includes("best by links") || query.includes("bestbylinks")) {
-//       return "The BestByLinks component ranks pages by backlinks, with features like sorting, filtering, and pinning. For example, 'ahrefs.com/blog/seo-tips' has 15,000 backlinks and 450,000 traffic. It includes a bar chart for trends, a share modal with QR code, and AI insights suggesting link-building strategies. You can export data to CSV and toggle dark mode. Want to dive into a specific page or feature?";
-//     }
-
-//     if (
-//       query.includes("fun fact") ||
-//       query.includes("tell me something interesting")
-//     ) {
-//       return "Here’s a fun fact: Did you know that the term 'SEO' was first coined in 1997 by a company called Multimedia Marketing Group? It’s come a long way since then! Speaking of SEO, want to check out the Organic Keywords component or maybe the Backlink Profile Dashboard for some real data?";
-//     }
-
-//     if (query.includes("joke")) {
-//       return "Here’s a little SEO joke for you: Why did the keyword go to therapy? It had an identity crisis after ranking for the wrong intent! Want to see some real keyword data? I can pull up the Organic Keywords or Ads Performance Platform for you!";
-//     }
-
-//     if (query.includes("surprise me")) {
-//       return (
-//         "Let’s have some fun! Here’s a quick tip: the top page in BestByLinks, 'ahrefs.com/blog/seo-tips,' has a growth rate of " +
-//         (((15000 - 12000) / 12000) * 100).toFixed(2) +
-//         "%. Pretty impressive, right? Want to explore that component more?"
+//     if (currentConversationId) {
+//       setMessageHistory((prev) =>
+//         prev.map((conv) =>
+//           conv.id === currentConversationId
+//             ? {
+//                 ...conv,
+//                 messages: conv.messages.map((msg, i) =>
+//                   i === index ? { ...msg, pinned: !msg.pinned } : msg
+//                 ),
+//               }
+//             : conv
+//         )
 //       );
 //     }
+//   }, [currentConversationId]);
 
-//     return "Hmm, I’m not quite sure what you’re asking, but I’m happy to help! Could you rephrase your query, or would you like to explore one of the Site.XP Dashboard components? I can tell you about Referring Domains, Organic Keywords, Top Pages, or even the Ads Performance Platform. Or, if you’re in the mood for fun, I can tell a joke or share a fun fact! What’s on your mind?";
-//   };
+//   const handleAddReaction = useCallback((index, emoji) => {
+//     setMessages((prev) =>
+//       prev.map((msg, i) =>
+//         i === index
+//           ? {
+//               ...msg,
+//               reactions: msg.reactions.includes(emoji)
+//                 ? msg.reactions.filter((r) => r !== emoji)
+//                 : [...msg.reactions, emoji],
+//             }
+//           : msg
+//       )
+//     );
+//     if (currentConversationId) {
+//       setMessageHistory((prev) =>
+//         prev.map((conv) =>
+//           conv.id === currentConversationId
+//             ? {
+//                 ...conv,
+//                 messages: conv.messages.map((msg, i) =>
+//                   i === index
+//                     ? {
+//                         ...msg,
+//                         reactions: msg.reactions.includes(emoji)
+//                           ? msg.reactions.filter((r) => r !== emoji)
+//                           : [...msg.reactions, emoji],
+//                       }
+//                     : msg
+//                 ),
+//               }
+//             : conv
+//         )
+//       );
+//     }
+//   }, [currentConversationId]);
 
-//   const options = [
-//     {
-//       name: "Referring Domains",
-//       query: "Tell me about the Referring Domains component",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Referring IPs",
-//       query: "Tell me about the Referring IPs component",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Organic Keywords",
-//       query: "Tell me about the Organic Keywords component",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Top Pages",
-//       query: "Tell me about the Top Pages component",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Backlink Profile",
-//       query: "Tell me about the Backlink Profile Dashboard",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Traffic & Domains",
-//       query: "Tell me about the Traffic and Domains Dashboard",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Traffic Chart",
-//       query: "Tell me about the Traffic Chart component",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Ads Performance",
-//       query: "Tell me about the Ads Performance Platform",
-//       icon: <Send size={16} />,
-//     },
-//     {
-//       name: "Best by Links",
-//       query: "Tell me about the BestByLinks component",
-//       icon: <Send size={16} />,
-//     },
-//     { name: "Clear Chat", query: "", icon: <Trash2 size={16} /> },
-//   ];
+//   const handleCopyMessage = useCallback((text) => {
+//     navigator.clipboard.writeText(text);
+//     setCopiedMessage(true);
+//     setTimeout(() => setCopiedMessage(false), 2000);
+//   }, []);
 
-//   const pinnedMessages = messages.filter((msg) => msg.pinned);
-//   const unpinnedMessages = messages.filter((msg) => !msg.pinned);
+//   const handleShareConversation = useCallback(() => {
+//     const conversationText = messages
+//       .map((msg) => `${msg.sender === "user" ? "You" : "ChatXP"}: ${msg.text}`)
+//       .join("\n");
+//     navigator.clipboard.writeText(conversationText);
+//     setCopiedConversation(true);
+//     setShowConfetti(true);
+//     setTimeout(() => {
+//       setCopiedConversation(false);
+//       setShowConfetti(false);
+//     }, 3000);
+//   }, [messages]);
 
-//   const filteredChats = messageHistory.filter((conv) =>
-//     conv.messages.some((msg) =>
-//       msg.text.toLowerCase().includes(searchQuery.toLowerCase())
-//     )
-//   );
+//   const handleExportPDF = useCallback(() => {
+//     setDownloading(true);
+//     const doc = new jsPDF();
+//     let yOffset = 10;
+//     messages.forEach((msg, index) => {
+//       const text = `${msg.sender === "user" ? "You" : "ChatXP"} (${msg.timestamp}): ${msg.text}`;
+//       const splitText = doc.splitTextToSize(text, 180);
+//       doc.text(splitText, 10, yOffset);
+//       yOffset += splitText.length * 10;
+//       if (yOffset > 280) {
+//         doc.addPage();
+//         yOffset = 10;
+//       }
+//     });
+//     doc.save("conversation.pdf");
+//     setDownloading(false);
+//   }, [messages]);
 
+//   const captureImage = useCallback(() => {
+//     try {
+//       const imageSrc = webcamRef.current?.getScreenshot();
+//       if (imageSrc) {
+//         setCapturedImage(imageSrc);
+//         setWebcamError(null);
+//       } else {
+//         setWebcamError("Failed to capture image. Please try again.");
+//       }
+//     } catch (error) {
+//       console.error("Error capturing image:", error);
+//       setWebcamError("An error occurred while capturing the image. Please ensure your camera is working.");
+//     }
+//   }, []);
+
+//   const getCroppedImage = useCallback(() => {
+//     const canvas = canvasRef.current;
+//     const image = new Image();
+//     image.src = capturedImage;
+//     const scaleX = image.naturalWidth / image.width;
+//     const scaleY = image.naturalHeight / image.height;
+//     canvas.width = completedCrop.width * scaleX;
+//     canvas.height = completedCrop.height * scaleY;
+//     const ctx = canvas.getContext("2d");
+
+//     ctx.filter = `brightness(${brightness}%)`;
+//     ctx.drawImage(
+//       image,
+//       completedCrop.x * scaleX,
+//       completedCrop.y * scaleY,
+//       completedCrop.width * scaleX,
+//       completedCrop.height * scaleY,
+//       0,
+//       0,
+//       completedCrop.width * scaleX,
+//       completedCrop.height * scaleY
+//     );
+//     return canvas.toDataURL("image/jpeg");
+//   }, [capturedImage, completedCrop, brightness]);
+
+//   const saveImage = useCallback(() => {
+//     try {
+//       const croppedImage = getCroppedImage();
+//       const link = document.createElement("a");
+//       link.download = `ChatXP-Selfie-${new Date().toISOString()}.jpg`;
+//       link.href = croppedImage;
+//       link.click();
+//       setShowWebcamModal(false);
+//       setCapturedImage(null);
+//       setBrightness(100);
+//     } catch (error) {
+//       console.error("Error saving image:", error);
+//       alert("Failed to save the image. Please ensure your browser supports file downloads and try again.");
+//     }
+//   }, [getCroppedImage]);
+
+//   const handleSaveChat = useCallback(() => {
+//     if (messages.length === 0) {
+//       alert("No messages to save.");
+//       return;
+//     }
+//     const chatTitle = prompt("Enter a title for this chat:");
+//     if (chatTitle) {
+//       const savedChat = {
+//         id: Date.now(),
+//         title: chatTitle,
+//         messages: messages,
+//         date: new Date().toLocaleDateString(),
+//       };
+//       const updatedSavedChats = [...savedChats, savedChat];
+//       setSavedChats(updatedSavedChats);
+//       localStorage.setItem("savedChats", JSON.stringify(updatedSavedChats));
+//       alert("Chat saved successfully!");
+//     }
+//   }, [messages, savedChats]);
+
+//   const handleLoadChat = useCallback((chat) => {
+//     setMessages(chat.messages);
+//     setCurrentConversationId(chat.id);
+//     setShowSavedChatsModal(false);
+//   }, []);
+
+//   const handleDeleteChat = useCallback((chatId) => {
+//     const updatedSavedChats = savedChats.filter((chat) => chat.id !== chatId);
+//     setSavedChats(updatedSavedChats);
+//     localStorage.setItem("savedChats", JSON.stringify(updatedSavedChats));
+//     if (currentConversationId === chatId) {
+//       setMessages([]);
+//       setCurrentConversationId(null);
+//     }
+//   }, [savedChats, currentConversationId]);
+
+//   const filteredSavedChats = useMemo(() => {
+//     return savedChats.filter((chat) =>
+//       chat.title.toLowerCase().includes(savedChatsSearch.toLowerCase())
+//     );
+//   }, [savedChats, savedChatsSearch]);
+
+//   // Render
 //   return (
 //     <div className={`chatxp-container ${isDarkMode ? "dark-mode" : ""}`}>
-//       <motion.div
-//         className="chatxp-window"
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.4, ease: "easeOut" }}
+//       {/* Chat Toggle Button for 768px */}
+//       <motion.button
+//         className="chatxp-toggle-button"
+//         onClick={() => setIsChatbotOpen(!isChatbotOpen)}
+//         whileHover={{ scale: 1.1 }}
+//         whileTap={{ scale: 0.9 }}
+//         aria-label={isChatbotOpen ? "Close chatbot" : "Open chatbot"}
 //       >
-//         <div className="chatxp-header">
-//           <button
-//             className="chatxp-menu-button"
-//             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-//             aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+//         <MessageSquare size={24} />
+//       </motion.button>
+
+//       {/* Main Chatbot Content */}
+//       <div className={`chatxp-content ${isChatbotOpen ? "open" : ""}`}>
+//         {/* Sidebar */}
+//         <aside className="chatxp-sidebar">
+//           <motion.button
+//             className="chatxp-new-chat"
+//             onClick={() => handleTabClick("ChatXP", "")}
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.95 }}
 //           >
-//             {isSidebarOpen ? (
-//               <ChevronLeft size={20} />
-//             ) : (
-//               <ChevronRight size={20} />
-//             )}
-//           </button>
-//           <div className="chatxp-header-actions">
-//             <motion.button
-//               onClick={toggleDarkMode}
-//               whileHover={{ scale: 1.1 }}
-//               whileTap={{ scale: 0.9 }}
-//               className="chatxp-dark-mode-button"
-//               aria-label="Toggle dark mode"
+//             New Chat
+//           </motion.button>
+//           <motion.button
+//             className="chatxp-saved-chats"
+//             onClick={() => setShowSavedChatsModal(true)}
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.95 }}
+//           >
+//             Saved Chats
+//           </motion.button>
+//           {options.map((option, index) => (
+//             <motion.div
+//               key={index}
+//               className={`chatxp-tab ${activeTab === option.name ? "active" : ""}`}
+//               onClick={() => handleTabClick(option.name, option.query)}
+//               whileHover={{ x: 5 }}
 //             >
-//               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-//             </motion.button>
-//             <motion.button
-//               onClick={handleShareConversation}
-//               whileHover={{ scale: 1.1 }}
-//               whileTap={{ scale: 0.9 }}
-//               className="chatxp-share-button"
-//               aria-label="Share conversation"
-//             >
-//               {copiedConversation ? (
-//                 <span className="chatxp-tooltip">Copied!</span>
+//               {option.icon}
+//               {option.name}
+//             </motion.div>
+//           ))}
+//         </aside>
+
+//         {/* Main Chat Area */}
+//         <div className="chatxp-main">
+//           <header className="chatxp-header">
+//             <h1>ChatXP</h1>
+//             <div className="chatxp-header-actions">
+//               <motion.button
+//                 onClick={() => setShowWebcamModal(true)}
+//                 whileHover={{ scale: 1.1 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 className="chatxp-webcam-button"
+//                 aria-label="Take a selfie"
+//               >
+//                 <Camera size={20} />
+//               </motion.button>
+//               <motion.button
+//                 onClick={() => setShowSettings(true)}
+//                 whileHover={{ scale: 1.1 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 className="chatxp-settings-button"
+//                 aria-label="Open settings"
+//               >
+//                 <Settings size={20} />
+//               </motion.button>
+//               <div className="chatxp-user-menu" ref={userMenuRef}>
+//                 <motion.button
+//                   onClick={() => setShowUserDropdown(!showUserDropdown)}
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="chatxp-user-button"
+//                   aria-label="User profile"
+//                 >
+//                   <User size={20} />
+//                 </motion.button>
+//                 <AnimatePresence>
+//                   {showUserDropdown && (
+//                     <motion.div
+//                       className="chatxp-user-dropdown"
+//                       initial={{ opacity: 0, y: -10 }}
+//                       animate={{ opacity: 1, y: 0 }}
+//                       exit={{ opacity: 0, y: -10 }}
+//                       transition={{ duration: 0.2 }}
+//                     >
+//                       <button onClick={() => setShowUserDropdown(false)}>
+//                         <User size={16} /> Profile
+//                       </button>
+//                       <button onClick={() => setShowSettings(true)}>
+//                         <Settings size={16} /> Settings
+//                       </button>
+//                       <button onClick={() => setShowUserDropdown(false)}>
+//                         <LogOut size={16} /> Logout
+//                       </button>
+//                     </motion.div>
+//                   )}
+//                 </AnimatePresence>
+//               </div>
+//               <div className="chatxp-more-menu" ref={moreMenuRef}>
+//                 {showConfetti && <Confetti />}
+//                 <motion.button
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="chatxp-more-button"
+//                   aria-label="More options"
+//                   onClick={() => setShowMoreMenu(!showMoreMenu)}
+//                 >
+//                   <MoreVertical size={20} />
+//                 </motion.button>
+//                 <AnimatePresence>
+//                   {showMoreMenu && (
+//                     <motion.div
+//                       className="chatxp-more-menu-dropdown"
+//                       initial={{ opacity: 0, y: -10 }}
+//                       animate={{ opacity: 1, y: 0 }}
+//                       exit={{ opacity: 0, y: -10 }}
+//                       transition={{ duration: 0.2 }}
+//                     >
+//                       <button onClick={handleShareConversation}>
+//                         <Download size={16} /> Share Conversation
+//                       </button>
+//                       <button onClick={handleExportPDF} disabled={downloading}>
+//                         <FileText size={16} /> {downloading ? "Exporting..." : "Export as PDF"}
+//                       </button>
+//                       <button onClick={handleSaveChat}>
+//                         <Save size={16} /> Save Chat
+//                       </button>
+//                     </motion.div>
+//                   )}
+//                 </AnimatePresence>
+//               </div>
+//             </div>
+//           </header>
+
+//           {/* Chat Messages */}
+//           {messages.length === 0 ? (
+//             <div className="chatxp-welcome-screen">
+//               <motion.h2
+//                 className="chatxp-welcome-greeting"
+//                 initial={{ opacity: 0, y: -20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ duration: 0.5 }}
+//               >
+//                 Good evening, {userName}.<br />How can I help you today?
+//               </motion.h2>
+//               <motion.div
+//                 className="chatxp-quick-suggestions"
+//                 initial={{ opacity: 0 }}
+//                 animate={{ opacity: 1 }}
+//                 transition={{ delay: 0.3, duration: 0.5 }}
+//               >
+//                 {options.slice(0, 3).map((option, index) => (
+//                   <motion.button
+//                     key={index}
+//                     onClick={() => {
+//                       setInput(option.query);
+//                       handleSubmit();
+//                     }}
+//                     whileHover={{ scale: 1.05 }}
+//                     whileTap={{ scale: 0.95 }}
+//                     className="chatxp-suggestion-button"
+//                   >
+//                     {option.name}
+//                   </motion.button>
+//                 ))}
+//               </motion.div>
+//               <div className="chatxp-mood-selector">
+//                 <span>How are you feeling?</span>
+//                 {moodOptions.map((mood) => (
+//                   <motion.button
+//                     key={mood.value}
+//                     onClick={() => setUserMood(mood.value)}
+//                     className={userMood === mood.value ? "active" : ""}
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                   >
+//                     {mood.emoji} {mood.name}
+//                   </motion.button>
+//                 ))}
+//               </div>
+//               <form onSubmit={handleSubmit} className="chatxp-welcome-input-form">
+//   <div className="chatxp-welcome-input-wrapper">
+//     <input
+//       type="text"
+//       value={input}
+//       onChange={(e) => {
+//         setInput(e.target.value);
+//         setIsUserTyping(true);
+//       }}
+//       onBlur={() => setIsUserTyping(false)}
+//       placeholder="What do you want to know?"
+//       aria-label="Chat input"
+//       className="chatxp-input-minimal chatxp-input-welcome"
+//     />
+//     {suggestions.length > 0 && (
+//       <div className="chatxp-suggestions">
+//         {suggestions.map((suggestion, i) => (
+//           <div
+//             key={i}
+//             className="chatxp-suggestion"
+//             onClick={() => {
+//               setInput(suggestion);
+//               setSuggestions([]);
+//               handleSubmit();
+//             }}
+//             tabIndex={0}
+//             role="button"
+//             aria-label={`Select suggestion: ${suggestion}`}
+//             onKeyPress={(e) =>
+//               e.key === "Enter" && (setInput(suggestion), setSuggestions([]), handleSubmit())
+//             }
+//           >
+//             {suggestion}
+//           </div>
+//         ))}
+//       </div>
+//     )}
+//     <motion.button
+//       type="button"
+//       onClick={handleVoiceInput}
+//       whileHover={{ scale: 1.1 }}
+//       whileTap={{ scale: 0.9 }}
+//       className={`chatxp-voice-button ${isListening ? "chatxp-voice-active" : ""}`}
+//       aria-label={isListening ? "Stop voice input" : "Start voice input"}
+//       title={isListening ? "Stop voice input" : "Start voice input"}
+//     >
+//       <Mic size={20} />
+//     </motion.button>
+//     <motion.button
+//       type="submit"
+//       whileHover={{ scale: 1.1 }}
+//       whileTap={{ scale: 0.9 }}
+//       disabled={isTyping || isSubmitting}
+//       aria-label="Send message"
+//       className="chatxp-submit-button"
+//     >
+//       <Send size={20} />
+//     </motion.button>
+//   </div>
+// </form>
+//             </div>
+//           ) : (
+//             <>
+//               <div className="chatxp-messages">
+//                 {messages.map((msg, index) => (
+//                   <motion.div
+//                     key={index}
+//                     className={`chatxp-message ${msg.sender} ${msg.pinned ? "pinned" : ""}`}
+//                     initial={{ opacity: 0, y: 20 }}
+//                     animate={{ opacity: 1, y: 0 }}
+//                     transition={{ duration: 0.3 }}
+//                   >
+//                     <div className="chatxp-message-header">
+//                       <span className="chatxp-message-sender">
+//                         {msg.sender === "user" ? "You" : "ChatXP"}
+//                       </span>
+//                       <span className="chatxp-message-timestamp">{msg.timestamp}</span>
+//                     </div>
+//                     <div className="chatxp-message-content">
+//                       <p>{msg.text}</p>
+//                       {msg.reactions.length > 0 && (
+//                         <div className="chatxp-message-reactions">
+//                           {msg.reactions.map((reaction, i) => (
+//                             <span key={i}>{reaction}</span>
+//                           ))}
+//                         </div>
+//                       )}
+//                     </div>
+//                     <div className="chatxp-message-actions">
+//                       <motion.button
+//                         onClick={() => handlePinMessage(index)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         aria-label={msg.pinned ? "Unpin message" : "Pin message"}
+//                       >
+//                         <Pin size={16} />
+//                       </motion.button>
+//                       <motion.button
+//                         onClick={() => handleCopyMessage(msg.text)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         aria-label="Copy message"
+//                       >
+//                         {copiedMessage ? <Check size={16} /> : <Copy size={16} />}
+//                       </motion.button>
+//                       <motion.button
+//                         onClick={() => setShowEmojiPicker(index)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         className="chatxp-emoji-toggle"
+//                         aria-label="Add reaction"
+//                         title="Add a reaction"
+//                       >
+//                         <motion.span
+//                           whileHover={{ rotate: 15 }}
+//                           transition={{ duration: 0.2 }}
+//                         >
+//                           <Smile size={16} />
+//                         </motion.span>
+//                         <span className="chatxp-emoji-tooltip">React</span>
+//                       </motion.button>
+//                       {showEmojiPicker === index && (
+//                         <div className="chatxp-emoji-picker">
+//                           {["😊", "😂", "👍", "❤️", "🤔"].map((emoji) => (
+//                             <motion.button
+//                               key={emoji}
+//                               onClick={() => {
+//                                 handleAddReaction(index, emoji);
+//                                 setShowEmojiPicker(null);
+//                               }}
+//                               whileHover={{ scale: 1.2 }}
+//                               whileTap={{ scale: 0.9 }}
+//                               aria-label={`Add ${emoji} reaction`}
+//                             >
+//                               {emoji}
+//                             </motion.button>
+//                           ))}
+//                         </div>
+//                       )}
+//                     </div>
+//                   </motion.div>
+//                 ))}
+//                 {isTyping && (
+//                   <motion.div
+//                     className="chatxp-message bot typing"
+//                     initial={{ opacity: 0 }}
+//                     animate={{ opacity: 1 }}
+//                   >
+//                     <div className="chatxp-message-content">
+//                       <div className="chatxp-typing-indicator">
+//                         <span></span>
+//                         <span></span>
+//                         <span></span>
+//                       </div>
+//                     </div>
+//                   </motion.div>
+//                 )}
+//                 <div ref={messagesEndRef} />
+//               </div>
+//               <div className="chatxp-mood-selector">
+//                 <span>How are you feeling?</span>
+//                 {moodOptions.map((mood) => (
+//                   <motion.button
+//                     key={mood.value}
+//                     onClick={() => setUserMood(mood.value)}
+//                     className={userMood === mood.value ? "active" : ""}
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                   >
+//                     {mood.emoji} {mood.name}
+//                   </motion.button>
+//                 ))}
+//               </div>
+//               <form onSubmit={handleSubmit} className="chatxp-input-form">
+//                 <div className="chatxp-input-wrapper">
+//                   <input
+//                     type="text"
+//                     value={input}
+//                     onChange={(e) => {
+//                       setInput(e.target.value);
+//                       setIsUserTyping(true);
+//                     }}
+//                     onBlur={() => setIsUserTyping(false)}
+//                     placeholder="What do you want to know?"
+//                     aria-label="Chat input"
+//                     className="chatxp-input-minimal"
+//                   />
+//                   {suggestions.length > 0 && (
+//                     <div className="chatxp-suggestions">
+//                       {suggestions.map((suggestion, i) => (
+//                         <div
+//                           key={i}
+//                           className="chatxp-suggestion"
+//                           onClick={() => {
+//                             setInput(suggestion);
+//                             setSuggestions([]);
+//                             handleSubmit();
+//                           }}
+//                           tabIndex={0}
+//                           role="button"
+//                           aria-label={`Select suggestion: ${suggestion}`}
+//                           onKeyPress={(e) =>
+//                             e.key === "Enter" && (setInput(suggestion), setSuggestions([]), handleSubmit())
+//                           }
+//                         >
+//                           {suggestion}
+//                         </div>
+//                       ))}
+//                     </div>
+//                   )}
+//                   <motion.button
+//                     type="button"
+//                     onClick={handleVoiceInput}
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                     className={`chatxp-voice-button ${isListening ? "chatxp-voice-active" : ""}`}
+//                     aria-label={isListening ? "Stop voice input" : "Start voice input"}
+//                     title={isListening ? "Stop voice input" : "Start voice input"}
+//                   >
+//                     <Mic size={20} />
+//                   </motion.button>
+//                   <motion.button
+//                     type="submit"
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                     disabled={isTyping || isSubmitting}
+//                     aria-label="Send message"
+//                     className="chatxp-submit-button"
+//                   >
+//                     <Send size={20} />
+//                   </motion.button>
+//                 </div>
+//               </form>
+//             </>
+//           )}
+//         </div>
+//       </div>
+
+//       {/* Saved Chats Modal */}
+//       {showSavedChatsModal && (
+//         <motion.div
+//           className="chatxp-saved-chats-modal"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//         >
+//           <div className="chatxp-saved-chats-modal-content">
+//             <div className="chatxp-saved-chats-modal-header">
+//               <h2>Saved Chats</h2>
+//               <motion.button
+//                 onClick={() => setShowSavedChatsModal(false)}
+//                 whileHover={{ scale: 1.1 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 aria-label="Close saved chats modal"
+//               >
+//                 <X size={20} />
+//               </motion.button>
+//             </div>
+//             <div className="chatxp-saved-chats-search">
+//               <Search size={16} />
+//               <input
+//                 type="text"
+//                 value={savedChatsSearch}
+//                 onChange={(e) => setSavedChatsSearch(e.target.value)}
+//                 placeholder="Search saved chats..."
+//                 aria-label="Search saved chats"
+//               />
+//             </div>
+//             <div className="chatxp-saved-chats-list">
+//               {filteredSavedChats.length > 0 ? (
+//                 filteredSavedChats.map((chat) => (
+//                   <motion.div
+//                     key={chat.id}
+//                     className="chatxp-saved-chat-item"
+//                     whileHover={{ scale: 1.02 }}
+//                     transition={{ duration: 0.2 }}
+//                   >
+//                     <div className="chatxp-saved-chat-info">
+//                       <span className="chatxp-saved-chat-title">{chat.title}</span>
+//                       <span className="chatxp-saved-chat-date">{chat.date}</span>
+//                     </div>
+//                     <div className="chatxp-saved-chat-actions">
+//                       <motion.button
+//                         onClick={() => handleLoadChat(chat)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         className="chatxp-load-chat"
+//                       >
+//                         Load
+//                       </motion.button>
+//                       <motion.button
+//                         onClick={() => handleDeleteChat(chat.id)}
+//                         whileHover={{ scale: 1.1 }}
+//                         whileTap={{ scale: 0.9 }}
+//                         className="chatxp-delete-chat"
+//                       >
+//                         <Trash2 size={16} />
+//                       </motion.button>
+//                     </div>
+//                   </motion.div>
+//                 ))
 //               ) : (
-//                 <Download size={20} />
+//                 <p className="chatxp-no-chats">No saved chats found.</p>
 //               )}
-//             </motion.button>
+//             </div>
+//           </div>
+//         </motion.div>
+//       )}
+
+//       {/* Settings Modal */}
+//       {showSettings && (
+//         <motion.div
+//           className="chatxp-settings-modal"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//         >
+//           <div className="chatxp-settings-header">
+//             <h2>Settings</h2>
 //             <motion.button
-//               onClick={handleExportPDF}
+//               onClick={() => setShowSettings(false)}
 //               whileHover={{ scale: 1.1 }}
 //               whileTap={{ scale: 0.9 }}
-//               className="chatxp-export-pdf-button"
-//               aria-label="Export as PDF"
-//               disabled={downloading}
-//             >
-//               {downloading ? (
-//                 <span className="chatxp-loading">Exporting...</span>
-//               ) : (
-//                 <FileText size={20} />
-//               )}
-//             </motion.button>
-//             <motion.button
-//               onClick={onClose}
-//               whileHover={{ scale: 1.1 }}
-//               whileTap={{ scale: 0.9 }}
-//               className="chatxp-close-button"
-//               aria-label="Close chat"
+//               aria-label="Close settings"
 //             >
 //               <X size={20} />
 //             </motion.button>
 //           </div>
-//         </div>
-
-//         <div className="chatxp-content">
-//           <motion.div
-//             className={`chatxp-sidebar ${isSidebarOpen ? "open" : ""}`}
-//             initial={{ x: -250 }}
-//             animate={{ x: isSidebarOpen ? 0 : -250 }}
-//             transition={{ duration: 0.3, ease: "easeInOut" }}
-//           >
-//             <div className="chatxp-sidebar-tabs">
-//               {["Options", "Saved Chats"].map((tab) => (
-//                 <motion.button
-//                   key={tab}
-//                   className={`chatxp-sidebar-tab ${
-//                     activeTab === tab ? "active" : ""
-//                   }`}
-//                   onClick={() => handleTabClick(tab, "")}
-//                   whileHover={{ scale: 1.02 }}
-//                   whileTap={{ scale: 0.98 }}
-//                   transition={{ duration: 0.2 }}
-//                   aria-label={`Switch to ${tab} tab`}
-//                 >
-//                   {tab}
-//                   {activeTab === tab && (
-//                     <motion.div
-//                       className="chatxp-tab-underline"
-//                       layoutId="tab-underline"
-//                       transition={{ duration: 0.3, ease: "easeInOut" }}
-//                     />
-//                   )}
-//                 </motion.button>
-//               ))}
-//             </div>
-
-//             {activeTab === "Options" ? (
-//               <div className="chatxp-sidebar-options">
-//                 {options.map((option) => (
-//                   <motion.div
-//                     key={option.name}
-//                     className="chatxp-sidebar-item"
-//                     onClick={() => handleTabClick(option.name, option.query)}
-//                     whileHover={{
-//                       backgroundColor: isDarkMode ? "#374151" : "#e5e7eb",
-//                       x: 5,
-//                     }}
-//                     transition={{ duration: 0.2 }}
-//                     tabIndex={0}
-//                     role="button"
-//                     aria-label={`Select ${option.name} option`}
-//                     onKeyPress={(e) =>
-//                       e.key === "Enter" &&
-//                       handleTabClick(option.name, option.query)
-//                     }
-//                   >
-//                     <span className="chatxp-sidebar-icon">{option.icon}</span>
-//                     {option.name}
-//                   </motion.div>
-//                 ))}
-//               </div>
-//             ) : (
-//               <div className="chatxp-sidebar-saved-chats">
-//                 <div className="chatxp-search-bar">
-//                   <Search size={16} />
-//                   <input
-//                     type="text"
-//                     placeholder="Search chats..."
-//                     value={searchQuery}
-//                     onChange={(e) => setSearchQuery(e.target.value)}
-//                     aria-label="Search saved chats"
-//                   />
-//                 </div>
-//                 {filteredChats.length === 0 ? (
-//                   <p>No saved chats available.</p>
-//                 ) : (
-//                   filteredChats.map((conversation) => (
-//                     <div
-//                       key={conversation.id}
-//                       className="chatxp-history-item"
-//                       onClick={() => handleLoadConversation(conversation)}
-//                       tabIndex={0}
-//                       role="button"
-//                       aria-label={`Load conversation starting with ${conversation.messages[0]?.text.slice(
-//                         0,
-//                         30
-//                       )}`}
-//                       onKeyPress={(e) =>
-//                         e.key === "Enter" &&
-//                         handleLoadConversation(conversation)
-//                       }
-//                     >
-//                       <div className="chatxp-history-preview">
-//                         {conversation.messages[0]?.text.slice(0, 30)}...
-//                       </div>
-//                       <div className="chatxp-history-timestamp">
-//                         {conversation.messages[0]?.timestamp}
-//                       </div>
-//                     </div>
-//                   ))
-//                 )}
-//               </div>
-//             )}
-//           </motion.div>
-
-//           <div className="chatxp-chat-area">
-//             <div className="chatxp-messages" ref={chatContainerRef}>
-//               {pinnedMessages.length > 0 && (
-//                 <div className="chatxp-pinned-messages">
-//                   <div className="chatxp-pinned-header">Pinned Messages</div>
-//                   {pinnedMessages.map((msg, index) => (
-//                     <motion.div
-//                       key={index}
-//                       className={`chatxp-message ${msg.sender} pinned`}
-//                       initial={{ opacity: 0, y: 20 }}
-//                       animate={{ opacity: 1, y: 0 }}
-//                       transition={{ duration: 0.3 }}
-//                     >
-//                       {msg.sender === "user" && (
-//                         <div className="chatxp-message-avatar">
-//                           {msg.text.charAt(0).toUpperCase()}
-//                         </div>
-//                       )}
-//                       <div className="chatxp-message-content">
-//                         <div className="chatxp-message-text">
-//                           {msg.text}
-//                           {msg.links?.map((link, i) => (
-//                             <div key={i}>
-//                               <a
-//                                 href={link.url}
-//                                 target="_blank"
-//                                 rel="noopener noreferrer"
-//                               >
-//                                 {link.text}
-//                               </a>
-//                             </div>
-//                           ))}
-//                         </div>
-//                         <div className="chatxp-message-meta">
-//                           <span className="chatxp-message-timestamp">
-//                             {msg.timestamp}
-//                           </span>
-//                           <div className="chatxp-message-actions">
-//                             <motion.button
-//                               onClick={() =>
-//                                 handleCopyMessage(
-//                                   messages.indexOf(msg),
-//                                   msg.text
-//                                 )
-//                               }
-//                               whileHover={{ scale: 1.1 }}
-//                               whileTap={{ scale: 0.9 }}
-//                               className="chatxp-action-button"
-//                               aria-label="Copy message"
-//                             >
-//                               {copiedMessageIndex === messages.indexOf(msg) ? (
-//                                 <span className="chatxp-tooltip">Copied!</span>
-//                               ) : (
-//                                 <Copy size={16} />
-//                               )}
-//                             </motion.button>
-//                             <motion.button
-//                               onClick={() =>
-//                                 handlePinMessage(messages.indexOf(msg))
-//                               }
-//                               whileHover={{ scale: 1.1 }}
-//                               whileTap={{ scale: 0.9 }}
-//                               className="chatxp-action-button"
-//                               aria-label={
-//                                 msg.pinned ? "Unpin message" : "Pin message"
-//                               }
-//                             >
-//                               <Pin
-//                                 size={16}
-//                                 className={msg.pinned ? "pinned" : ""}
-//                               />
-//                             </motion.button>
-//                             <motion.button
-//                               onClick={() =>
-//                                 setShowEmojiPicker(messages.indexOf(msg))
-//                               }
-//                               whileHover={{ scale: 1.1 }}
-//                               whileTap={{ scale: 0.9 }}
-//                               className="chatxp-action-button"
-//                               aria-label="Add reaction"
-//                             >
-//                               <Smile size={16} />
-//                             </motion.button>
-//                             {msg.sender === "bot" && (
-//                               <div className="chatxp-message-feedback">
-//                                 <motion.button
-//                                   onClick={() =>
-//                                     handleFeedback(messages.indexOf(msg), "up")
-//                                   }
-//                                   whileHover={{ scale: 1.1 }}
-//                                   whileTap={{ scale: 0.9 }}
-//                                   className={`chatxp-action-button ${
-//                                     msg.feedback === "up" ? "active" : ""
-//                                   }`}
-//                                   aria-label="Like message"
-//                                 >
-//                                   <ThumbsUp size={16} />
-//                                 </motion.button>
-//                                 <motion.button
-//                                   onClick={() =>
-//                                     handleFeedback(
-//                                       messages.indexOf(msg),
-//                                       "down"
-//                                     )
-//                                   }
-//                                   whileHover={{ scale: 1.1 }}
-//                                   whileTap={{ scale: 0.9 }}
-//                                   className={`chatxp-action-button ${
-//                                     msg.feedback === "down" ? "active" : ""
-//                                   }`}
-//                                   aria-label="Dislike message"
-//                                 >
-//                                   <ThumbsDown size={16} />
-//                                 </motion.button>
-//                               </div>
-//                             )}
-//                           </div>
-//                         </div>
-//                         {msg.reactions.length > 0 && (
-//                           <div className="chatxp-message-reactions">
-//                             {msg.reactions.map((reaction, i) => (
-//                               <span key={i} className="chatxp-reaction">
-//                                 {reaction}
-//                               </span>
-//                             ))}
-//                           </div>
-//                         )}
-//                         {showEmojiPicker === messages.indexOf(msg) && (
-//                           <div className="chatxp-emoji-picker">
-//                             {["😊", "👍", "❤️", "😂", "🤓"].map((emoji) => (
-//                               <button
-//                                 key={emoji}
-//                                 onClick={() =>
-//                                   handleAddReaction(
-//                                     messages.indexOf(msg),
-//                                     emoji
-//                                   )
-//                                 }
-//                                 aria-label={`Add ${emoji} reaction`}
-//                               >
-//                                 {emoji}
-//                               </button>
-//                             ))}
-//                           </div>
-//                         )}
-//                       </div>
-//                     </motion.div>
-//                   ))}
-//                 </div>
-//               )}
-
-//               {unpinnedMessages.map((msg, index) => (
-//                 <motion.div
-//                   key={index}
-//                   className={`chatxp-message ${msg.sender}`}
-//                   initial={{ opacity: 0, y: 20 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   transition={{ duration: 0.3 }}
-//                 >
-//                   {msg.sender === "user" && (
-//                     <div className="chatxp-message-avatar">
-//                       {msg.text.charAt(0).toUpperCase()}
-//                     </div>
-//                   )}
-//                   <div className="chatxp-message-content">
-//                     <div className="chatxp-message-text">
-//                       {msg.text}
-//                       {msg.links?.map((link, i) => (
-//                         <div key={i}>
-//                           <a
-//                             href={link.url}
-//                             target="_blank"
-//                             rel="noopener noreferrer"
-//                           >
-//                             {link.text}
-//                           </a>
-//                         </div>
-//                       ))}
-//                     </div>
-//                     <div className="chatxp-message-meta">
-//                       <span className="chatxp-message-timestamp">
-//                         {msg.timestamp}
-//                       </span>
-//                       <div className="chatxp-message-actions">
-//                         <motion.button
-//                           onClick={() =>
-//                             handleCopyMessage(messages.indexOf(msg), msg.text)
-//                           }
-//                           whileHover={{ scale: 1.1 }}
-//                           whileTap={{ scale: 0.9 }}
-//                           className="chatxp-action-button"
-//                           aria-label="Copy message"
-//                         >
-//                           {copiedMessageIndex === messages.indexOf(msg) ? (
-//                             <span className="chatxp-tooltip">Copied!</span>
-//                           ) : (
-//                             <Copy size={16} />
-//                           )}
-//                         </motion.button>
-//                         <motion.button
-//                           onClick={() =>
-//                             handlePinMessage(messages.indexOf(msg))
-//                           }
-//                           whileHover={{ scale: 1.1 }}
-//                           whileTap={{ scale: 0.9 }}
-//                           className="chatxp-action-button"
-//                           aria-label={
-//                             msg.pinned ? "Unpin message" : "Pin message"
-//                           }
-//                         >
-//                           <Pin
-//                             size={16}
-//                             className={msg.pinned ? "pinned" : ""}
-//                           />
-//                         </motion.button>
-//                         <motion.button
-//                           onClick={() =>
-//                             setShowEmojiPicker(messages.indexOf(msg))
-//                           }
-//                           whileHover={{ scale: 1.1 }}
-//                           whileTap={{ scale: 0.9 }}
-//                           className="chatxp-action-button"
-//                           aria-label="Add reaction"
-//                         >
-//                           <Smile size={16} />
-//                         </motion.button>
-//                         {msg.sender === "bot" && (
-//                           <div className="chatxp-message-feedback">
-//                             <motion.button
-//                               onClick={() =>
-//                                 handleFeedback(messages.indexOf(msg), "up")
-//                               }
-//                               whileHover={{ scale: 1.1 }}
-//                               whileTap={{ scale: 0.9 }}
-//                               className={`chatxp-action-button ${
-//                                 msg.feedback === "up" ? "active" : ""
-//                               }`}
-//                               aria-label="Like message"
-//                             >
-//                               <ThumbsUp size={16} />
-//                             </motion.button>
-//                             <motion.button
-//                               onClick={() =>
-//                                 handleFeedback(messages.indexOf(msg), "down")
-//                               }
-//                               whileHover={{ scale: 1.1 }}
-//                               whileTap={{ scale: 0.9 }}
-//                               className={`chatxp-action-button ${
-//                                 msg.feedback === "down" ? "active" : ""
-//                               }`}
-//                               aria-label="Dislike message"
-//                             >
-//                               <ThumbsDown size={16} />
-//                             </motion.button>
-//                           </div>
-//                         )}
-//                       </div>
-//                     </div>
-//                     {msg.reactions.length > 0 && (
-//                       <div className="chatxp-message-reactions">
-//                         {msg.reactions.map((reaction, i) => (
-//                           <span key={i} className="chatxp-reaction">
-//                             {reaction}
-//                           </span>
-//                         ))}
-//                       </div>
-//                     )}
-//                     {showEmojiPicker === messages.indexOf(msg) && (
-//                       <div className="chatxp-emoji-picker">
-//                         {["😊", "👍", "❤️", "😂", "🤓"].map((emoji) => (
-//                           <button
-//                             key={emoji}
-//                             onClick={() =>
-//                               handleAddReaction(messages.indexOf(msg), emoji)
-//                             }
-//                             aria-label={`Add ${emoji} reaction`}
-//                           >
-//                             {emoji}
-//                           </button>
-//                         ))}
-//                       </div>
-//                     )}
-//                     {msg.quickReplies?.length > 0 && (
-//                       <div className="chatxp-quick-replies">
-//                         {msg.quickReplies.map((reply, i) => (
-//                           <motion.button
-//                             key={i}
-//                             onClick={() => handleQuickReply(reply)}
-//                             whileHover={{ scale: 1.05 }}
-//                             whileTap={{ scale: 0.95 }}
-//                             aria-label={`Quick reply: ${reply}`}
-//                           >
-//                             {reply}
-//                           </motion.button>
-//                         ))}
-//                       </div>
-//                     )}
-//                   </div>
-//                 </motion.div>
-//               ))}
-//               {isUserTyping && (
-//                 <motion.div
-//                   className="chatxp-typing user"
-//                   initial={{ opacity: 0 }}
-//                   animate={{ opacity: 1 }}
-//                   transition={{ duration: 0.3 }}
-//                 >
-//                   <span>You are typing...</span>
-//                 </motion.div>
-//               )}
-//               {isTyping && (
-//                 <motion.div
-//                   className="chatxp-typing bot"
-//                   initial={{ opacity: 0 }}
-//                   animate={{ opacity: 1 }}
-//                   transition={{ duration: 0.3 }}
-//                 >
-//                   <div className="chatxp-typing-dots">
-//                     <span></span>
-//                     <span></span>
-//                     <span></span>
-//                   </div>
-//                 </motion.div>
-//               )}
-//             </div>
-
-//             <form onSubmit={handleSubmit} className="chatxp-input-form">
-//               <div className="chatxp-input-wrapper">
-//                 <input
-//                   type="text"
-//                   value={input}
-//                   onChange={(e) => {
-//                     setInput(e.target.value);
-//                     setIsUserTyping(true);
-//                   }}
-//                   onBlur={() => setIsUserTyping(false)}
-//                   placeholder="What do you want to know?"
-//                   aria-label="Chat input"
-//                 />
-//                 {suggestions.length > 0 && (
-//                   <div className="chatxp-suggestions">
-//                     {suggestions.map((suggestion, i) => (
-//                       <div
-//                         key={i}
-//                         className="chatxp-suggestion"
-//                         onClick={() => {
-//                           setInput(suggestion);
-//                           setSuggestions([]);
-//                         }}
-//                         tabIndex={0}
-//                         role="button"
-//                         aria-label={`Select suggestion: ${suggestion}`}
-//                         onKeyPress={(e) =>
-//                           e.key === "Enter" &&
-//                           (setInput(suggestion), setSuggestions([]))
-//                         }
-//                       >
-//                         {suggestion}
-//                       </div>
-//                     ))}
-//                   </div>
-//                 )}
-//               </div>
-//               <motion.button
-//                 type="button"
-//                 onClick={handleVoiceInput}
-//                 whileHover={{ scale: 1.1 }}
-//                 whileTap={{ scale: 0.9 }}
-//                 className={isListening ? "chatxp-voice-active" : ""}
-//                 aria-label={
-//                   isListening ? "Stop voice input" : "Start voice input"
-//                 }
-//               >
-//                 <Mic size={20} />
-//               </motion.button>
-//               <motion.button
-//                 type="submit"
-//                 whileHover={{ scale: 1.1 }}
-//                 whileTap={{ scale: 0.9 }}
-//                 disabled={isTyping}
-//                 aria-label="Send message"
-//               >
-//                 <Send size={20} />
-//               </motion.button>
-//             </form>
+//           <div className="chatxp-settings-tabs">
+//             <button
+//               className={settingsTab === "Appearance" ? "active" : ""}
+//               onClick={() => setSettingsTab("Appearance")}
+//             >
+//               Appearance
+//             </button>
+//             <button
+//               className={settingsTab === "Chat" ? "active" : ""}
+//               onClick={() => setSettingsTab("Chat")}
+//             >
+//               Chat
+//             </button>
 //           </div>
-//         </div>
-//       </motion.div>
+//           {settingsTab === "Appearance" && (
+//             <div className="chatxp-settings-content">
+//               <label>Theme</label>
+//               <div className="chatxp-theme-toggle">
+//                 <motion.div
+//                   className={`chatxp-theme-switch ${isDarkMode ? "dark" : "light"}`}
+//                   onClick={() => setIsDarkMode(!isDarkMode)}
+//                   whileTap={{ scale: 0.95 }}
+//                 >
+//                   <motion.div
+//                     className="chatxp-theme-switch-handle"
+//                     layout
+//                     transition={{ type: "spring", stiffness: 700, damping: 30 }}
+//                   />
+//                   <Sun size={20} className="chatxp-theme-icon light" />
+//                   <Moon size={20} className="chatxp-theme-icon dark" />
+//                 </motion.div>
+//               </div>
+//             </div>
+//           )}
+//           {settingsTab === "Chat" && (
+//             <div className="chatxp-settings-content">
+//               <button onClick={() => setShowClearChatModal(true)}>
+//                 <Trash2 size={16} /> Clear Chat
+//               </button>
+//               {showClearChatModal && (
+//                 <motion.div
+//                   className="chatxp-clear-chat-modal"
+//                   initial={{ opacity: 0 }}
+//                   animate={{ opacity: 1 }}
+//                   exit={{ opacity: 0 }}
+//                 >
+//                   <h3>Clear Chat</h3>
+//                   <p>Are you sure you want to clear the chat? This action cannot be undone.</p>
+//                   <div className="chatxp-clear-chat-actions">
+//                     <button onClick={() => setShowClearChatModal(false)}>Cancel</button>
+//                     <button
+//                       onClick={() => {
+//                         handleTabClick("Clear Chat", "");
+//                         setShowClearChatModal(false);
+//                       }}
+//                     >
+//                       Clear
+//                     </button>
+//                   </div>
+//                 </motion.div>
+//               )}
+//             </div>
+//           )}
+//         </motion.div>
+//       )}
+
+//       {/* Webcam Modal */}
+//       {showWebcamModal && (
+//         <motion.div
+//           className="chatxp-webcam-modal"
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//         >
+//           <div className="chatxp-webcam-header">
+//             <h3>Take a Selfie</h3>
+//             <button onClick={() => setShowWebcamModal(false)}>
+//               <X size={20} />
+//             </button>
+//           </div>
+//           {!capturedImage ? (
+//             <div className="chatxp-webcam-capture">
+//               {webcamError && <p className="chatxp-webcam-error">{webcamError}</p>}
+//               <React.Suspense fallback={<div>Loading webcam...</div>}>
+//                 <LazyWebcam
+//                   audio={false}
+//                   ref={webcamRef}
+//                   screenshotFormat="image/jpeg"
+//                   width="100%"
+//                   videoConstraints={{
+//                     width: 1280,
+//                     height: 720,
+//                     facingMode: "user",
+//                   }}
+//                   onUserMediaError={(error) => {
+//                     console.error("Webcam error:", error);
+//                     let errorMessage = "Unable to access webcam. Please check permissions and try again.";
+//                     if (error.name === "NotAllowedError") {
+//                       errorMessage = "Camera access denied. Please allow camera permissions in your browser settings.";
+//                     } else if (error.name === "NotFoundError") {
+//                       errorMessage = "No camera found. Please connect a camera and try again.";
+//                     }
+//                     setWebcamError(errorMessage);
+//                   }}
+//                 />
+//               </React.Suspense>
+//               <motion.button
+//                 onClick={captureImage}
+//                 whileHover={{ scale: 1.1 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 className="chatxp-capture-button"
+//               >
+//                 Capture
+//               </motion.button>
+//             </div>
+//           ) : (
+//             <div className="chatxp-webcam-edit">
+//               <ReactCrop
+//                 src={capturedImage}
+//                 crop={crop}
+//                 onChange={(newCrop) => setCrop(newCrop)}
+//                 onComplete={(c) => setCompletedCrop(c)}
+//               >
+//                 <img
+//                   src={capturedImage}
+//                   alt="Captured selfie"
+//                   style={{ filter: `brightness(${brightness}%)` }}
+//                 />
+//               </ReactCrop>
+//               <div className="chatxp-webcam-controls">
+//                 <label>Brightness: {brightness}%</label>
+//                 <input
+//                   type="range"
+//                   min="50"
+//                   max="150"
+//                   value={brightness}
+//                   onChange={(e) => setBrightness(e.target.value)}
+//                 />
+//               </div>
+//               <canvas ref={canvasRef} style={{ display: "none" }} />
+//               <div className="chatxp-webcam-actions">
+//                 <motion.button
+//                   onClick={() => {
+//                     setCapturedImage(null);
+//                     setBrightness(100);
+//                   }}
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="chatxp-retake-button"
+//                 >
+//                   Retake
+//                 </motion.button>
+//                 <motion.button
+//                   onClick={saveImage}
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                   className="chatxp-save-button"
+//                 >
+//                   Save to Gallery
+//                 </motion.button>
+//               </div>
+//             </div>
+//           )}
+//         </motion.div>
+//       )}
 //     </div>
 //   );
 // };
 
 // export default ChatXP;
-
-import React from 'react'
-
-const ChatXP = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default ChatXP

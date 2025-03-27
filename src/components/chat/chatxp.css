@@ -1,622 +1,328 @@
 /* .chatxp-container {
-    position: fixed;
-    top: 140px;
-    right: 35px;
-    width: 100%;
-    max-width: 1300px;
-    height: 80vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    z-index: 1000;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: #f5f7fa;
+    font-family: 'Inter', sans-serif;
 }
 
-.chatxp-container.dark-mode {
-    background: rgba(255, 255, 255, 0.1);
+.chatxp-content {
+    display: flex;
+    flex: 1;
 }
 
-.chatxp-window {
-    background-color: #ffffff;
+.chatxp-sidebar {
+    width: 250px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.chatxp-new-chat,
+.chatxp-saved-chats {
+    width: 100%;
+    background: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.chatxp-new-chat:hover,
+.chatxp-saved-chats:hover {
+    background: #2a7e2d;
+}
+
+.chatxp-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    color: #555;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.chatxp-tab:hover {
+    background: #e5e7eb;
+}
+
+.chatxp-tab.active {
+    background: #4CAF50;
+    color: #ffffff;
+}
+
+.chatxp-main {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.chatxp-container.dark-mode .chatxp-window {
-    background-color: #111827;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .chatxp-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 16px;
-    background-color: #f4f4f5;
+    padding: 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.chatxp-container.dark-mode .chatxp-header {
-    background-color: #1f2937;
+.chatxp-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A237E;
 }
 
-.chatxp-menu-button {
-    display: none;
+.chatxp-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chatxp-settings-button,
+.chatxp-user-button,
+.chatxp-more-button,
+.chatxp-webcam-button {
     background: none;
     border: none;
-    color: #4b5563;
+    color: #555;
     cursor: pointer;
     padding: 6px;
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
 
-.chatxp-container.dark-mode .chatxp-menu-button {
-    color: #9ca3af;
+.chatxp-settings-button:hover,
+.chatxp-user-button:hover,
+.chatxp-more-button:hover,
+.chatxp-webcam-button:hover {
+    background: #e5e7eb;
 }
 
-.chatxp-menu-button:hover {
-    background-color: #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-menu-button:hover {
-    background-color: #374151;
-}
-
-.chatxp-header-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.chatxp-dark-mode-button,
-.chatxp-share-button,
-.chatxp-export-pdf-button,
-.chatxp-close-button {
-    position: relative;
-    background: none;
-    border: none;
-    color: #4b5563;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.chatxp-container.dark-mode .chatxp-dark-mode-button,
-.chatxp-container.dark-mode .chatxp-share-button,
-.chatxp-container.dark-mode .chatxp-export-pdf-button,
-.chatxp-container.dark-mode .chatxp-close-button {
-    color: #9ca3af;
-}
-
-.chatxp-dark-mode-button:hover,
-.chatxp-share-button:hover,
-.chatxp-export-pdf-button:hover,
-.chatxp-close-button:hover {
-    background-color: #e5e7eb;
-    color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-dark-mode-button:hover,
-.chatxp-container.dark-mode .chatxp-share-button:hover,
-.chatxp-container.dark-mode .chatxp-export-pdf-button:hover,
-.chatxp-container.dark-mode .chatxp-close-button:hover {
-    background-color: #374151;
-    color: #93c5fd;
-}
-
-.chatxp-tooltip,
-.chatxp-loading {
+.chatxp-user-dropdown,
+.chatxp-more-menu-dropdown {
     position: absolute;
-    top: -30px;
-    background-color: #1f2937;
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.chatxp-container.dark-mode .chatxp-tooltip,
-.chatxp-container.dark-mode .chatxp-loading {
-    background-color: #d1d5db;
-    color: #111827;
-}
-
-.chatxp-content {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-}
-
-.chatxp-sidebar {
-    width: 220px;
-    background-color: #f9fafb;
-    overflow-y: auto;
-    display: block;
-    border-right: 1px solid #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar {
-    background-color: #1f2937;
-    border-right: 1px solid #374151;
-}
-
-.chatxp-sidebar.open {
-    display: block;
-}
-
-.chatxp-sidebar-tabs {
-    display: flex;
-    position: relative;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-tabs {
-    border-bottom: 1px solid #374151;
-}
-
-.chatxp-sidebar-tab {
-    flex: 1;
-    padding: 12px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
-    color: #4b5563;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-tab {
-    color: #9ca3af;
-}
-
-.chatxp-sidebar-tab:hover {
-    color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-tab:hover {
-    color: #93c5fd;
-}
-
-.chatxp-sidebar-tab.active {
-    color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-tab.active {
-    color: #93c5fd;
-}
-
-.chatxp-tab-underline {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 40px;
     right: 0;
-    height: 2px;
-    background-color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-tab-underline {
-    background-color: #93c5fd;
-}
-
-.chatxp-sidebar-options,
-.chatxp-sidebar-saved-chats {
-    padding: 10px 0;
-}
-
-.chatxp-sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #111827;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-item {
-    color: #d1d5db;
-}
-
-.chatxp-sidebar-item:hover {
-    background-color: #e5e7eb;
-    transform: translateX(4px);
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-item:hover {
-    background-color: #374151;
-}
-
-.chatxp-sidebar-icon {
-    color: #6b7280;
-}
-
-.chatxp-container.dark-mode .chatxp-sidebar-icon {
-    color: #9ca3af;
-}
-
-.chatxp-search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-search-bar {
-    border-bottom: 1px solid #374151;
-}
-
-.chatxp-search-bar svg {
-    color: #6b7280;
-}
-
-.chatxp-container.dark-mode .chatxp-search-bar svg {
-    color: #9ca3af;
-}
-
-.chatxp-search-bar input {
-    flex: 1;
-    border: none;
-    background: none;
-    font-size: 15px;
-    color: #111827;
-}
-
-.chatxp-container.dark-mode .chatxp-search-bar input {
-    color: #d1d5db;
-}
-
-.chatxp-search-bar input:focus {
-    outline: none;
-}
-
-.chatxp-history-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 16px;
-    margin: 4px 8px;
-    background-color: #f3f4f6;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.chatxp-user-dropdown button,
+.chatxp-more-menu-dropdown button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    color: #1A237E;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.chatxp-user-dropdown button:hover,
+.chatxp-more-menu-dropdown button:hover {
+    background: #f5f7fa;
+}
+
+.chatxp-welcome-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    background: #f5f7fa;
+}
+
+.chatxp-welcome-greeting {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1A237E;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.chatxp-quick-suggestions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.chatxp-suggestion-button {
+    background: #4CAF50;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.chatxp-container.dark-mode .chatxp-history-item {
-    background-color: #374151;
+.chatxp-suggestion-button:hover {
+    background: #2a7e2d;
 }
 
-.chatxp-history-item:hover {
-    background-color: #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-history-item:hover {
-    background-color: #4b5563;
-}
-
-.chatxp-history-preview {
-    font-size: 15px;
-    color: #111827;
-}
-
-.chatxp-container.dark-mode .chatxp-history-preview {
-    color: #d1d5db;
-}
-
-.chatxp-history-timestamp {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.chatxp-container.dark-mode .chatxp-history-timestamp {
-    color: #9ca3af;
-}
-
-.chatxp-chat-area {
-    flex: 1;
+.chatxp-mood-selector {
     display: flex;
-    flex-direction: column;
-    background: #ffffff;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
 }
 
-.chatxp-container.dark-mode .chatxp-chat-area {
-    background: #111827;
+.chatxp-mood-selector span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
+}
+
+.chatxp-mood-selector button {
+    background: #e5e7eb;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chatxp-mood-selector button.active {
+    background: #4CAF50;
+    color: #ffffff;
+}
+
+.chatxp-mood-selector button:hover {
+    background: #2a7e2d;
+    color: #ffffff;
 }
 
 .chatxp-messages {
     flex: 1;
+    padding: 16px;
     overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.chatxp-pinned-messages {
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-pinned-messages {
-    border-bottom: 1px solid #374151;
-}
-
-.chatxp-pinned-header {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1d4ed8;
-    margin-bottom: 10px;
-}
-
-.chatxp-container.dark-mode .chatxp-pinned-header {
-    color: #93c5fd;
+    background: #f5f7fa;
 }
 
 .chatxp-message {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    width: 100%;
-}
-
-.chatxp-message.pinned {
-    background-color: #f3f4f6;
-    padding: 8px 12px;
-    border-radius: 6px;
-}
-
-.chatxp-container.dark-mode .chatxp-message.pinned {
-    background-color: #374151;
-}
-
-.chatxp-message.bot {
-    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 16px;
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .chatxp-message.user {
-    justify-content: flex-end;
-}
-
-.chatxp-message-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #1d4ed8;
+    background: #4CAF50;
     color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 15px;
+    align-self: flex-end;
 }
 
-.chatxp-message-content {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.chatxp-message-text {
-    padding: 12px 16px;
-    border-radius: 8px;
-    line-height: 1.5;
-    font-size: 15px;
-    max-width: 70%;
-    border: 1px solid #e5e7eb;
-}
-
-.chatxp-message.bot .chatxp-message-text {
-    background-color: #f9fafb;
-    color: #111827;
-    border-color: #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-message.bot .chatxp-message-text {
-    background-color: #1f2937;
-    color: #d1d5db;
-    border-color: #374151;
-}
-
-.chatxp-message.user .chatxp-message-text {
-    background-color: #1d4ed8;
+.chatxp-message.bot {
+    background: #1A237E;
     color: #ffffff;
-    border-color: #1d4ed8;
+    align-self: flex-start;
 }
 
-.chatxp-message-text a {
-    color: #1d4ed8;
-    text-decoration: underline;
+.chatxp-message.pinned {
+    border: 2px solid #4CAF50;
 }
 
-.chatxp-container.dark-mode .chatxp-message-text a {
-    color: #93c5fd;
-}
-
-.chatxp-message-meta {
+.chatxp-message-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-    font-size: 13px;
-    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 4px;
 }
 
-.chatxp-container.dark-mode .chatxp-message-meta {
-    color: #9ca3af;
+.chatxp-message-sender {
+    font-weight: 600;
 }
 
 .chatxp-message-timestamp {
-    margin-right: 12px;
+    color: #ffffff;
+}
+
+.chatxp-message-content p {
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 .chatxp-message-actions {
     display: flex;
     gap: 8px;
+    margin-top: 8px;
 }
 
-.chatxp-action-button {
-    position: relative;
+.chatxp-message-actions button {
     background: none;
     border: none;
-    border-radius: 4px;
-    padding: 4px;
-    color: #6b7280;
+    color: #ffffff;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: opacity 0.3s ease;
 }
 
-.chatxp-container.dark-mode .chatxp-action-button {
-    color: #9ca3af;
-}
-
-.chatxp-action-button:hover {
-    background-color: #e5e7eb;
-    color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-action-button:hover {
-    background-color: #374151;
-    color: #93c5fd;
-}
-
-.chatxp-action-button.active,
-.chatxp-action-button.pinned {
-    color: #1d4ed8;
-}
-
-.chatxp-container.dark-mode .chatxp-action-button.active,
-.chatxp-container.dark-mode .chatxp-action-button.pinned {
-    color: #93c5fd;
-}
-
-.chatxp-message-reactions {
-    display: flex;
-    gap: 6px;
-    margin-top: 6px;
-}
-
-.chatxp-reaction {
-    font-size: 15px;
-    padding: 2px 6px;
-    background-color: #e5e7eb;
-    border-radius: 4px;
-}
-
-.chatxp-container.dark-mode .chatxp-reaction {
-    background-color: #374151;
+.chatxp-message-actions button:hover {
+    opacity: 0.7;
 }
 
 .chatxp-emoji-picker {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 8px;
     display: flex;
-    gap: 6px;
-    margin-top: 6px;
-    background-color: #f3f4f6;
-    padding: 6px;
-    border-radius: 4px;
-}
-
-.chatxp-container.dark-mode .chatxp-emoji-picker {
-    background-color: #374151;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
 .chatxp-emoji-picker button {
     background: none;
     border: none;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
-    transition: transform 0.2s ease;
 }
 
-.chatxp-emoji-picker button:hover {
-    transform: scale(1.2);
-}
-
-.chatxp-quick-replies {
+.chatxp-typing-indicator {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 4px;
 }
 
-.chatxp-quick-replies button {
-    background-color: #e5e7eb;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #111827;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.chatxp-container.dark-mode .chatxp-quick-replies button {
-    background-color: #374151;
-    color: #d1d5db;
-}
-
-.chatxp-quick-replies button:hover {
-    background-color: #d1d5db;
-    transform: translateY(-1px);
-}
-
-.chatxp-container.dark-mode .chatxp-quick-replies button:hover {
-    background-color: #4b5563;
-}
-
-.chatxp-typing {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: #6b7280;
-    padding: 10px;
-}
-
-.chatxp-container.dark-mode .chatxp-typing {
-    color: #9ca3af;
-}
-
-.chatxp-typing.user {
-    justify-content: flex-end;
-}
-
-.chatxp-typing.bot .chatxp-typing-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.chatxp-typing-dots span {
+.chatxp-typing-indicator span {
     width: 8px;
     height: 8px;
-    background-color: #6b7280;
+    background: #555;
     border-radius: 50%;
-    animation: bounce 0.6s infinite;
+    animation: typing 1s infinite;
 }
 
-.chatxp-container.dark-mode .chatxp-typing-dots span {
-    background-color: #9ca3af;
-}
-
-.chatxp-typing-dots span:nth-child(2) {
+.chatxp-typing-indicator span:nth-child(2) {
     animation-delay: 0.2s;
 }
 
-.chatxp-typing-dots span:nth-child(3) {
+.chatxp-typing-indicator span:nth-child(3) {
     animation-delay: 0.4s;
 }
 
-@keyframes bounce {
+@keyframes typing {
 
     0%,
     100% {
@@ -624,253 +330,456 @@
     }
 
     50% {
-        transform: translateY(-4px);
+        transform: translateY(-5px);
     }
 }
 
 .chatxp-input-form {
-    padding: 14px 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #f4f4f5;
-    position: relative;
+    padding: 16px;
+    background: #ffffff;
     border-top: 1px solid #e5e7eb;
-}
-
-.chatxp-container.dark-mode .chatxp-input-form {
-    background: #1f2937;
-    border-top: 1px solid #374151;
 }
 
 .chatxp-input-wrapper {
     flex: 1;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.chatxp-input-form input {
+.chatxp-input-minimal {
     width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
     font-size: 15px;
-    color: #111827;
-    background-color: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #1A237E;
+    padding: 10px 40px 10px 12px;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
 }
 
-.chatxp-container.dark-mode .chatxp-input-form input {
-    border: 1px solid #4b5563;
-    color: #d1d5db;
-    background-color: #1f2937;
-}
-
-.chatxp-input-form input:focus {
+.chatxp-input-minimal:focus {
     outline: none;
-    border-color: #1d4ed8;
-    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.1);
+    border-color: #4CAF50;
+}
+
+.chatxp-input-minimal::placeholder {
+    color: #555;
+}
+
+.chatxp-welcome-input-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    padding: 0 16px;
+}
+
+.chatxp-welcome-input-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s ease;
+}
+
+.chatxp-welcome-input-wrapper:focus-within {
+    border-color: #4CAF50;
+}
+
+.chatxp-input-minimal.chatxp-input-welcome {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #1A237E;
+    padding: 12px 40px 12px 16px;
+    border-radius: 6px;
+}
+
+.chatxp-input-minimal.chatxp-input-welcome:focus {
+    outline: none;
+}
+
+.chatxp-input-minimal.chatxp-input-welcome::placeholder {
+    color: #6b7280;
+    font-style: italic;
 }
 
 .chatxp-suggestions {
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% + 8px);
     left: 0;
     right: 0;
-    background-color: #ffffff;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-height: 150px;
+    max-height: 200px;
     overflow-y: auto;
-}
-
-.chatxp-container.dark-mode .chatxp-suggestions {
-    background-color: #1f2937;
-    border: 1px solid #4b5563;
+    z-index: 10;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .chatxp-suggestion {
-    padding: 10px 14px;
+    padding: 12px 16px;
+    color: #1A237E;
     font-size: 15px;
-    color: #111827;
+    font-weight: 400;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f3f5;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.chatxp-suggestion:last-child {
+    border-bottom: none;
+}
+
+.chatxp-suggestion:hover {
+    background: #4CAF50;
+    color: #ffffff;
+}
+
+.chatxp-suggestion:focus {
+    background: #4CAF50;
+    color: #ffffff;
+    outline: none;
+}
+
+.chatxp-voice-button,
+.chatxp-submit-button {
+    position: absolute;
+    background: none;
+    color: #555;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.chatxp-voice-button {
+    right: 40px;
+}
+
+.chatxp-submit-button {
+    right: 10px;
+}
+
+.chatxp-voice-button:hover,
+.chatxp-submit-button:hover {
+    color: #4CAF50;
+}
+
+.chatxp-submit-button:disabled {
+    color: #d1d5db;
+    cursor: not-allowed;
+}
+
+.chatxp-saved-chats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.chatxp-saved-chats-modal-content {
+    background: #ffffff;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chatxp-saved-chats-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.chatxp-saved-chats-modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A237E;
+}
+
+.chatxp-saved-chats-modal-header button {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+}
+
+.chatxp-saved-chats-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.chatxp-saved-chats-search svg {
+    color: #555;
+}
+
+.chatxp-saved-chats-search input {
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 15px;
+    color: #1A237E;
+}
+
+.chatxp-saved-chats-search input:focus {
+    outline: none;
+}
+
+.chatxp-saved-chats-search input::placeholder {
+    color: #555;
+}
+
+.chatxp-saved-chats-list {
+    padding: 16px;
+}
+
+.chatxp-saved-chat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f5f7fa;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.chatxp-saved-chat-item:hover {
+    background: #e5e7eb;
+}
+
+.chatxp-saved-chat-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1A237E;
+}
+
+.chatxp-saved-chat-date {
+    font-size: 13px;
+    color: #555;
+}
+
+.chatxp-saved-chat-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.chatxp-load-chat {
+    background: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.chatxp-container.dark-mode .chatxp-suggestion {
-    color: #d1d5db;
+.chatxp-load-chat:hover {
+    background: #2a7e2d;
 }
 
-.chatxp-suggestion:hover {
-    background-color: #f3f4f6;
-}
-
-.chatxp-container.dark-mode .chatxp-suggestion:hover {
-    background-color: #374151;
-}
-
-.chatxp-input-form button {
-    background-color: #1d4ed8;
-    color: white;
+.chatxp-delete-chat {
+    background: #ef4444;
+    color: #ffffff;
     border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 40px;
-    height: 40px;
+    transition: background-color 0.3s ease;
 }
 
-.chatxp-input-form button:hover {
-    background-color: #1e40af;
-    transform: scale(1.05);
+.chatxp-delete-chat:hover {
+    background: #dc2626;
 }
 
-.chatxp-input-form button:disabled {
-    background-color: #d1d5db;
-    cursor: not-allowed;
+.chatxp-toggle-button {
+    display: none;
 }
 
-.chatxp-container.dark-mode .chatxp-input-form button:disabled {
-    background-color: #4b5563;
-}
-
-.chatxp-voice-active {
-    background-color: #ef4444 !important;
-}
-
-@media (min-width: 1024px) {
-    .chatxp-window {
-        width: 100%;
-        height: 100%;
+@media (max-width: 768px) {
+    .chatxp-toggle-button {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .chatxp-sidebar {
-        width: 220px;
-        display: block;
+    .chatxp-toggle-button:hover {
+        background: #2a7e2d;
     }
 
-    .chatxp-messages {
-        padding: 20px;
-    }
-
-    .chatxp-message-text {
-        font-size: 15px;
-    }
-
-    .chatxp-input-form input {
-        font-size: 15px;
-        padding: 10px 14px;
-    }
-
-    .chatxp-input-form button {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-    .chatxp-window {
-        width: 100%;
-        height: 100%;
-    }
-
-    .chatxp-sidebar {
-        width: 200px;
-        display: block;
-    }
-
-    .chatxp-messages {
-        padding: 16px;
-    }
-
-    .chatxp-message-text {
-        font-size: 15px;
-    }
-
-    .chatxp-input-form input {
-        font-size: 15px;
-        padding: 10px 14px;
-    }
-
-    .chatxp-input-form button {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-@media (max-width: 767px) {
-    .chatxp-container {
-        height: 75vh;
-        top: 100px;
-    }
-
-    .chatxp-window {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-    }
-
-    .chatxp-header {
-        padding: 8px 12px;
-    }
-
-    .chatxp-menu-button {
-        display: block;
-    }
-
-    .chatxp-sidebar {
-        position: absolute;
+    .chatxp-content {
+        position: fixed;
         top: 0;
         left: 0;
-        width: 220px;
+        width: 100%;
         height: 100%;
-        background-color: #f9fafb;
-        z-index: 10;
-        display: none;
+        background: #f5f7fa;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
     }
 
-    .chatxp-container.dark-mode .chatxp-sidebar {
-        background-color: #1f2937;
+    .chatxp-content.open {
+        transform: translateX(0);
     }
 
-    .chatxp-sidebar.open {
-        display: block;
+    .chatxp-container {
+        flex-direction: column;
     }
 
-    .chatxp-sidebar-item {
+    .chatxp-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .chatxp-new-chat,
+    .chatxp-saved-chats {
+        flex: 1;
+        padding: 8px;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .chatxp-tab {
+        padding: 8px;
+        font-size: 14px;
+        flex: 1 0 calc(50% - 8px);
+    }
+
+    .chatxp-header h1 {
+        font-size: 18px;
+    }
+
+    .chatxp-welcome-greeting {
+        font-size: 24px;
+    }
+
+    .chatxp-quick-suggestions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .chatxp-message {
+        max-width: 85%;
+        padding: 10px 14px;
+    }
+
+    .chatxp-welcome-input-form {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+
+    .chatxp-welcome-input-wrapper {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .chatxp-input-minimal.chatxp-input-welcome {
+        font-size: 14px;
+        padding: 10px 36px 10px 12px;
+    }
+
+    .chatxp-voice-button {
+        right: 36px;
+    }
+
+    .chatxp-suggestions {
+        max-width: 100%;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .chatxp-suggestion {
         font-size: 14px;
         padding: 10px 12px;
     }
+}
 
-    .chatxp-messages {
-        padding: 16px;
+@media (max-width: 480px) {
+    .chatxp-welcome-greeting {
+        font-size: 20px;
     }
 
-    .chatxp-message-text {
-        font-size: 14px;
-        max-width: 80%;
+    .chatxp-mood-selector {
+        flex-direction: column;
+        gap: 8px;
     }
 
-    .chatxp-message-avatar {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+    .chatxp-message {
+        max-width: 90%;
     }
 
-    .chatxp-input-form {
-        padding: 12px 16px;
+    .chatxp-welcome-input-form {
+        padding: 0 8px;
     }
 
-    .chatxp-input-form input {
-        font-size: 14px;
-        padding: 8px 12px;
+    .chatxp-input-minimal.chatxp-input-welcome {
+        font-size: 13px;
+        padding: 8px 32px 8px 10px;
     }
 
-    .chatxp-input-form button {
-        width: 36px;
-        height: 36px;
+    .chatxp-voice-button {
+        right: 32px;
     }
+
+    .chatxp-suggestions {
+        max-width: 100%;
+        border-radius: 4px;
+    }
+
+    .chatxp-suggestion {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+}
+
+.chatxp-tab:focus,
+.chatxp-new-chat:focus,
+.chatxp-saved-chats:focus,
+.chatxp-suggestion-button:focus,
+.chatxp-voice-button:focus,
+.chatxp-submit-button:focus,
+.chatxp-suggestion:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
 } */

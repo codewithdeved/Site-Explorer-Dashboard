@@ -1,6 +1,6 @@
 /* Sidebar Starts */
 
-.sidebar-container {
+.sitexp-sidebar-container {
     position: fixed;
     top: 90px;
     width: 250px;
@@ -10,43 +10,43 @@
     transition: width 0.3s ease;
 }
 
-.sidebar-container.close {
+.sitexp-sidebar-container.sitexp-sidebar-container-close {
     width: 0;
     transition: width 0.3s ease;
 }
 
-.sidebar-container::-webkit-scrollbar {
+.sitexp-sidebar-container::-webkit-scrollbar {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.sidebar-container:hover::-webkit-scrollbar {
+.sitexp-sidebar-container:hover::-webkit-scrollbar {
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.sidebar-container:hover::-webkit-scrollbar-thumb {
+.sitexp-sidebar-container:hover::-webkit-scrollbar-thumb {
     background-color: #e8e8e8;
 }
 
-.sidebar-container:hover::-webkit-scrollbar-track {
+.sitexp-sidebar-container:hover::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.sidebar {
+.sitexp-sidebar {
     padding: 15px 0;
 }
 
-.sidebar-nav {
+.sitexp-sidebar-nav {
     list-style: none;
     padding: 0;
     margin: 0;
     /* margin-top: 5px; */
 }
 
-.nav-item {
+.sitexp-sidebar-item {
     padding: 5px 20px;
     cursor: pointer;
     display: flex;
@@ -57,23 +57,23 @@
     transition: background-color 0.2s ease;
 }
 
-.overview-active,
-.item-active {
+.sitexp-sidebar-overview-item-active,
+.sitexp-sidebar-item-active {
     color: #ffffff !important;
     border: 1px solid #1A237E;
     background-color: #1A237E;
 }
 
-.overview svg {
+.sitexp-sidebar-overview-item svg {
     fill: black;
     display: none;
 }
 
-.overview-active svg {
+.sitexp-sidebar-overview-item-active svg {
     fill: white !important;
 }
 
-.section-header {
+.sitexp-sidebar-nav-section-header {
     padding: 10px 20px;
     cursor: pointer;
     display: flex;
@@ -85,12 +85,12 @@
     transition: background-color 0.2s ease;
 }
 
-.toggle-icon {
+.sitexp-sidebar-nav-section-header-toggle-icon {
     font-size: 10px;
     transition: transform 0.3s ease;
 }
 
-.sub-menu {
+.sitexp-sidebar-nav-section-header-sub-menu {
     list-style: none;
     padding: 0;
     max-height: 0;
@@ -98,11 +98,11 @@
     transition: max-height 0.3s ease;
 }
 
-.sub-menu.expanded {
+.sitexp-sidebar-nav-section-header-sub-menu.expanded {
     max-height: 500px;
 }
 
-.sub-item {
+.sitexp-sidebar-sub-item {
     padding: 5px 20px;
     cursor: pointer;
     color: #555;
@@ -110,11 +110,11 @@
     transition: background-color 0.2s ease;
 }
 
-.sub-item:hover:not(.overview-active, .item-active) {
+.sitexp-sidebar-sub-item:hover:not(.sitexp-sidebar-overview-item-active, .sitexp-sidebar-item-active) {
     background-color: #ebebeb;
 }
 
-.badge {
+.sitexp-sidebar-item-badge {
     background: #141821;
     background-image:
         linear-gradient(180deg, #141821 0%, #1D2331 100%),
@@ -131,7 +131,7 @@
 }
 
 @media (max-width: 768px) {
-    .sidebar-container {
+    .sitexp-sidebar-container {
         width: 0;
         height: calc(100vh - 90px);
         background-color: #ffffff;
@@ -140,13 +140,13 @@
         transition: transform 0.3s ease;
     }
 
-    .sidebar-container.close {
+    .sitexp-sidebar-container.sitexp-sidebar-container-close {
         width: 250px;
         transform: translateX(0);
         transition: all 0.3s ease;
     }
 
-    .overview svg {
+    .sitexp-sidebar-overview-item svg {
         display: block;
         position: relative;
         z-index: 11;

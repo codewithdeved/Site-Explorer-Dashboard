@@ -40,7 +40,9 @@ const Sidebar = () => {
     isBestByLinksButtonClick,
     handleBestByLinksButtonClick,
     isChatXPButtonClick,
-    handleChatXPButtonClick
+    handleChatXPButtonClick,
+    isSpinXPButtonClick,
+    handleSpinXPButtonClick
   } = useSidebarFunctions();
 
   return (
@@ -49,17 +51,17 @@ const Sidebar = () => {
       <div
         ref={sidebarRef}
         className={
-          !isSidebarClose ? "sidebar-container" : "sidebar-container close"
+          !isSidebarClose ? "sitexp-sidebar-container" : "sitexp-sidebar-container sitexp-sidebar-container-close"
         }
       >
         
-        <nav className="sidebar">
+        <nav className="sitexp-sidebar">
           
-          <ul className="sidebar-nav">
+          <ul className="sitexp-sidebar-nav">
             
             <li
-              className={`nav-item overview ${
-                isSidebarMenuItemClick[0] ? "overview-active" : ""
+              className={`sitexp-sidebar-item sitexp-sidebar-overview-item ${
+                isSidebarMenuItemClick[0] ? "sitexp-sidebar-overview-item-active" : ""
               }`}
               onClick={() => {
                 handleOverviewButtonClick();
@@ -84,22 +86,22 @@ const Sidebar = () => {
 
             <li
               style={{ textDecoration: "underline" }}
-              className={`nav-item ${
-                isSidebarMenuItemClick[1] ? "item-active" : ""
+              className={`sitexp-sidebar-item ${
+                isSidebarMenuItemClick[1] ? "sitexp-sidebar-item-active" : ""
               }`}
               onClick={() => {
                 handleChatXPButtonClick();
                 handleSidebarMenuItemClick(1);
               }}
             >
-              ChatXP
-            <span className="badge">New</span>
+              Chat XP
+            <span className="sitexp-sidebar-item-badge">New</span>
             </li>
 
             <li
               style={{ textDecoration: "underline" }}
-              className={`nav-item ${
-                isSidebarMenuItemClick[2] ? "item-active" : ""
+              className={`sitexp-sidebar-item ${
+                isSidebarMenuItemClick[2] ? "sitexp-sidebar-item-active" : ""
               }`}
               onClick={() => {
                 handleSeoXpressButtonClick();
@@ -107,13 +109,13 @@ const Sidebar = () => {
               }}
             >
               SEO XPress
-            <span className="badge">New</span>
+            <span className="sitexp-sidebar-item-badge">New</span>
             </li>
 
             <li
               style={{ textDecoration: "underline" }}
-              className={`nav-item ${
-                isSidebarMenuItemClick[3] ? "item-active" : ""
+              className={`sitexp-sidebar-item ${
+                isSidebarMenuItemClick[3] ? "sitexp-sidebar-item-active" : ""
               }`}
               onClick={() => {
                 handleCalendarButtonClick();
@@ -121,29 +123,43 @@ const Sidebar = () => {
               }}
             >
               Calendar
-              <span className="badge">New</span>
+              <span className="sitexp-sidebar-item-badge">New</span>
             </li>
 
-            <li className="nav-section">
+            <li
+              style={{ textDecoration: "underline" }}
+              className={`sitexp-sidebar-item ${
+                isSidebarMenuItemClick[4] ? "sitexp-sidebar-item-active" : ""
+              }`}
+              onClick={() => {
+                handleSpinXPButtonClick();
+                handleSidebarMenuItemClick(4);
+              }}
+            >
+              Spin XP
+              <span className="sitexp-sidebar-item-badge">New</span>
+            </li>
+
+            <li className="sitexp-sidebar-nav-section">
               <div
-                className="section-header"
+                className="sitexp-sidebar-nav-section-header"
                 onClick={() => toggleSection("Backlink profile")}
               >
                 <span>Backlink profile</span>
-                <span className="toggle-icon">
+                <span className="sitexp-sidebar-nav-section-header-toggle-icon">
                   {expanded["Backlink profile"] ? "▼" : "▲"}
                 </span>
               </div>
 
               <ul
-                className={`sub-menu ${
+                className={`sitexp-sidebar-nav-section-header-sub-menu ${
                   expanded["Backlink profile"] ? "expanded" : ""
                 }`}
               >
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[5] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[5] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleBacklinksButtonClick();
@@ -153,12 +169,12 @@ const Sidebar = () => {
                   Backlinks
                 </li>
 
-                <li className="sub-item">Broken backlinks</li>
+                <li className="sitexp-sidebar-sub-item">Broken backlinks</li>
 
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[7] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[7] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleReferringDomainsButtonClick();
@@ -168,13 +184,13 @@ const Sidebar = () => {
                   Referring Domains
                 </li>
 
-                <li className="sub-item">Anchors</li>
-                <li className="sub-item">Internal backlinks</li>
+                <li className="sitexp-sidebar-sub-item">Anchors</li>
+                <li className="sitexp-sidebar-sub-item">Internal backlinks</li>
 
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[10] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[10] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleReferringIPsButtonClick();
@@ -184,29 +200,29 @@ const Sidebar = () => {
                   Referring IPs
                 </li>
 
-                <li className="sub-item">Link intersect</li>
+                <li className="sitexp-sidebar-sub-item">Link intersect</li>
               </ul>
             </li>
 
-            <li className="nav-section">
+            <li className="sitexp-sidebar-nav-section">
               <div
-                className="section-header"
+                className="sitexp-sidebar-nav-section-header"
                 onClick={() => toggleSection("Organic search")}
               >
                 <span>Organic search</span>
-                <span className="toggle-icon">
+                <span className="sitexp-sidebar-nav-section-header-toggle-icon">
                   {expanded["Organic search"] ? "▼" : "▲"}
                 </span>
               </div>
               <ul
-                className={`sub-menu ${
+                className={`sitexp-sidebar-nav-section-header-sub-menu ${
                   expanded["Organic search"] ? "expanded" : ""
                 }`}
               >
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[12] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[12] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleOrganicKeywordsButtonClick();
@@ -218,8 +234,8 @@ const Sidebar = () => {
 
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[13] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[13] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleTopPagesButtonClick();
@@ -229,35 +245,35 @@ const Sidebar = () => {
                   Top Pages
                 </li>
 
-                <li className="sub-item">Top subfolders</li>
-                <li className="sub-item">Top subdomains</li>
-                <li className="sub-item">Organic competitors</li>
-                <li className="sub-item">Content gap</li>
+                <li className="sitexp-sidebar-sub-item">Top subfolders</li>
+                <li className="sitexp-sidebar-sub-item">Top subdomains</li>
+                <li className="sitexp-sidebar-sub-item">Organic competitors</li>
+                <li className="sitexp-sidebar-sub-item">Content gap</li>
               </ul>
             </li>
 
-            <li className="nav-section">
+            <li className="sitexp-sidebar-nav-section">
               <div
-                className="section-header"
+                className="sitexp-sidebar-nav-section-header"
                 onClick={() => toggleSection("Paid search")}
               >
                 <span>Paid search</span>
-                <span className="toggle-icon">
+                <span className="sitexp-sidebar-nav-section-header-toggle-icon">
                   {expanded["Paid search"] ? "▼" : "▲"}
                 </span>
               </div>
               <ul
-                className={`sub-menu ${
+                className={`sitexp-sidebar-nav-section-header-sub-menu ${
                   expanded["Paid search"] ? "expanded" : ""
                 }`}
               >
                 
-                <li className="sub-item">Paid keywords</li>
+                <li className="sitexp-sidebar-sub-item">Paid keywords</li>
 
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[19] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[19] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleAdsButtonClick();
@@ -267,29 +283,29 @@ const Sidebar = () => {
                   Ads
                 </li>
                 
-                <li className="sub-item">Paid pages</li>
+                <li className="sitexp-sidebar-sub-item">Paid pages</li>
               
               </ul>
             
             </li>
 
-            <li className="nav-section">
+            <li className="sitexp-sidebar-nav-section">
               <div
-                className="section-header"
+                className="sitexp-sidebar-nav-section-header"
                 onClick={() => toggleSection("Pages")}
               >
                 <span>Pages</span>
-                <span className="toggle-icon">
+                <span className="sitexp-sidebar-nav-section-header-toggle-icon">
                   {expanded["Pages"] ? "▼" : "▲"}
                 </span>
               </div>
               
-              <ul className={`sub-menu ${expanded["Pages"] ? "expanded" : ""}`}>
+              <ul className={`sitexp-sidebar-nav-section-header-sub-menu ${expanded["Pages"] ? "expanded" : ""}`}>
 
                 <li
                   style={{ textDecoration: "underline" }}
-                  className={`sub-item ${
-                    isSidebarMenuItemClick[21] ? "item-active" : ""
+                  className={`sitexp-sidebar-sub-item ${
+                    isSidebarMenuItemClick[21] ? "sitexp-sidebar-item-active" : ""
                   }`}
                   onClick={() => {
                     handleBestByLinksButtonClick();
@@ -323,6 +339,7 @@ const Sidebar = () => {
         isAdsButtonClick={isAdsButtonClick}
         isBestByLinksButtonClick={isBestByLinksButtonClick}
         isChatXPButtonClick={isChatXPButtonClick}
+        isSpinXPButtonClick={isSpinXPButtonClick}
       />
     
     </>
